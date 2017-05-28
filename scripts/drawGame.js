@@ -1,5 +1,5 @@
 // Event Listner setup
-var drawGame = function(mouse, playerList, playerListLength) {
+var drawGame = function(mouse, playerList, playerLength, dotList, dotLength) {
 
   function getMousePos(e) {
     mouse.x = e.clientX;
@@ -11,10 +11,12 @@ var drawGame = function(mouse, playerList, playerListLength) {
   }());
 
   function draw() {
-    for (var i = 0; i < playerListLength; i++) {
+    for (var i = 0; i < playerLength; i++) {
       playerList[i].drawPlayerMove(mouse);
-
       // enemy dot move
+    }
+    for (var i = 0; i < dotLength; i++) {
+      dotList[i].drawDotMove();
     }
   }
 

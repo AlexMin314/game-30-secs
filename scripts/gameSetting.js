@@ -9,7 +9,6 @@
   // World settings
   var frame = 0; // Frames since the start of the game
   var playerList = [];
-  //var playerNumber = 1;
   if (true) {
     var player = new Player();
     playerList.push(player);
@@ -17,11 +16,14 @@
   var pLength = playerList.length;
 
   var dotsList = [];
+  var dotNum = 1;
+  // maybe need to move into render
   if (true) {
-    for(var i = 0; i < settings.round * 1; i++) {
-      dotsList[i] = new Dots();
+    for(var i = 0; i < settings.round * 10; i++) {
+      dotsList[i] = new Dots(i);
     }
   }
+  var dotLength = dotsList.length;
 
   // Vector settings
   var mouse = {};
@@ -64,6 +66,6 @@
   // Custom method here
 
   // Start game
-  drawGame(mouse, playerList, pLength);
+  drawGame(mouse, playerList, pLength, dotsList, dotLength);
 
 }());
