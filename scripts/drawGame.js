@@ -13,6 +13,8 @@ var drawGame = function(mouse, playerList, playerListLength) {
   function draw() {
     for (var i = 0; i < playerListLength; i++) {
       playerList[i].drawPlayerMove(mouse);
+
+      // enemy dot move
     }
   }
 

@@ -2,15 +2,14 @@
 
   // Game settings
   var settings = {}; // Containes all game settings
-  settings.ballSpeed = 8; // The speed of the ball
   settings.round = 1;
   settings.roundScaleSpeed = 1.2;
-  settings.automatic = false; // The ball will move by itself
   settings.godmode = false; // Debug mode
 
   // World settings
   var frame = 0; // Frames since the start of the game
   var playerList = [];
+  //var playerNumber = 1;
   if (true) {
     var player = new Player();
     playerList.push(player);
@@ -19,7 +18,7 @@
 
   var dotsList = [];
   if (true) {
-    for(var i = 0; i < settings.round * 10; i++) {
+    for(var i = 0; i < settings.round * 1; i++) {
       dotsList[i] = new Dots();
     }
   }

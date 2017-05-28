@@ -2,9 +2,9 @@ html {
   background: black;
 }
 
-#ball {
-  height: 100px;
-  width: 100px;
+.ball {
+  height: 50px;
+  width: 50px;
   background-color: red;
   position: absolute;
   top:50px;
