@@ -1,38 +1,37 @@
 (function (window) {
 
   /* Game settings */
+
   var settings = {}; // Containes all game settings
-  settings.round = 1;
+  settings.roundMult = 15;
   settings.speedScale = 0.8;
+  settings.roundModifier = 0.05;
+  settings.playerDotSpeed = 20; // lower = faster respond
+  settings.spawnFrame = 30;
   settings.godmode = false; // Debug mode
 
 
-  /* World settings - DO NOT CHANGE BELOW */
+  /* World settings */
+  /* DO NOT CHANGE BELOW */
+
   var world = {};
   // Player Dots
   world.playerList = [];
-  var player = new Player(); // need to change for multiplayer
-  world.playerList.push(player);
-  world.playerLength = world.playerList.length;
+  world.playerLength = 0;
   // Enemy Dots
   world.dotList = [];
   world.dotNum = 1;
   world.dotLength = 0;
+  world.spwanDist = 15;
   // Miscellaneous
   world.frame = 0; // Frames since the start of the game
-  world.space = false;
+  world.space = false; // for game pause
 
-  // Vector settings
+  // Controller settings
   var mouse = {};
   mouse.x = 0;
   mouse.y = 0;
-  mouse.click = false;
-
-  var accel = {};
-  accel.x = 0;
-  accel.y = 0;
-  accel.amount = 0.005;
-  accel.max = 1;
+  mouse.leftClick = false;
 
   // skill settings
   var skill = {};
@@ -43,16 +42,27 @@
 
   /* Start game */
 
+  // PlayerSpawn
+  // need to change for multiplayer
+  var player = new Player(settings, world);
+  world.playerList.push(player);
+  world.playerLength = world.playerList.length;
+
+  // Dot enemy spawn
   // need to change round or second base
   function dotSpawn() {
-    if (world.frame % 24 === 0 && world.frame < 480) {
-      var i = world.frame / 24;
-      world.dotList[i] = new Dots(i, settings.speedScale);
+    if (world.frame < settings.spawnFrame * settings.roundMult) {
+      if (world.frame % settings.spawnFrame === 0) {
+        var i = world.frame / settings.spawnFrame;
+        world.dotList[i] = new Dots(i, settings, world);
+      }
+      world.dotLength = world.dotList.length;
     }
-    world.dotLength = world.dotList.length;
+    // round up??
   }
 
-  function draw() {
+  // Draw movement
+  function drawMovements() {
     for (var i = 0; i < world.playerLength; i++) {
       world.playerList[i].drawPlayerMove(mouse);
     }
@@ -61,13 +71,15 @@
     }
   }
 
+  // Render Loops
   (function animloop() {
     requestAnimFrame(animloop);
     dotSpawn();
-    draw();
+    drawMovements();
     world.frame++;
   }());
 
+  // Event Listening
   function getMousePos(e) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
