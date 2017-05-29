@@ -30,6 +30,7 @@
   world.frame = 0; // Frames since the start of the game
   world.space = false; // for game pause
   world.score = 0;
+  world.dotNum = 0;
 
   // Controller settings
   var mouse = {};
@@ -48,7 +49,8 @@
 
   // World Creation
   starter(world);
-  var scoreBoard = document.getElementById('score')
+  var scoreBoard = document.getElementById('score');
+  var dotNumBoard = document.getElementById('dotNum');
   // PlayerSpawn
   // need to change for multiplayer
   var player = new Player(settings, world);
@@ -84,10 +86,11 @@
     drawMovements();
     if (true) {
       dotSpawn();
-      scoring(scoreBoard, world);
+      updatingBoard(scoreBoard, dotNumBoard, world);
     }
     world.frame++;
     world.score = Math.floor(world.frame / settings.FPS)
+    world.dotNum = world.dotLength;
   }());
 
   // Event Listening

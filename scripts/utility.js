@@ -3,14 +3,21 @@
   // Game Starter
   window.starter = function (world) {
     var gameBoard = document.getElementById('board')
+    // Adding Score at right side of game board
     var score = document.createElement('div');
     score.id = 'score';
-    score.innerHTML = 'score<br>' + world.score;
+    score.innerHTML = 'Score<br>' + world.score;
     gameBoard.appendChild(score);
+    // Adding Dot number at right side of game board
+    var dotNum = document.createElement('div');
+    dotNum.id = 'dotNum';
+    dotNum.innerHTML = 'Dots<br>' + world.dotNum;
+    gameBoard.appendChild(dotNum);
   };
 
-  window.scoring = function (scoreBoard, world) {
-    scoreBoard.innerHTML = 'score<br>' + world.score;
+  window.updatingBoard = function (scoreBoard, dotNumBoard, world) {
+    scoreBoard.innerHTML = 'Score<br>' + world.score;
+    dotNumBoard.innerHTML = 'Dots<br>' + world.dotNum;
   };
 
   // Gives wall limit
