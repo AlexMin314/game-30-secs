@@ -101,8 +101,7 @@
       drawMovements();
       dotSpawn();
       updatingBoard(scoreBoard, dotNumBoard, world);
-      console.log(window.gameoverChecker);
-      if (!window.gameoverChecker) {
+      if (!window.showChecker().checker) {
         world.frame++;
         world.score = Math.floor(world.frame / settings.FPS);
         world.dotNum = world.dotLength;

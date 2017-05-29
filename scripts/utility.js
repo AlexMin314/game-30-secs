@@ -1,7 +1,7 @@
 (function (window) {
 
   var gameBoard = document.getElementById('board');
-  window.gameoverChecker = false;
+  var gameoverChecker = false;
 
   // Append Start Button div.
   window.startButton = function () {
@@ -140,6 +140,10 @@
     setTimeout(function () {
       startButtonText.innerHTML = '1'
     }, 2400);
+  }
+
+  window.showChecker = function(){
+    return {checker: gameoverChecker};
   }
 
   // Cross browsing
