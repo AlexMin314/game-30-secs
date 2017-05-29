@@ -19,3 +19,15 @@ html {
   left:50px;
   border-radius: 50%;
 }
+
+#gameOver {
+  height: 200px;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%);
+  background-color: white;
+  text-align: center;
+  font-size: 80px;
+}

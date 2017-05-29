@@ -20,7 +20,8 @@
     }
   }
 
-  window.collision = function (arr, arrLength) {
+  window.collision = function (arr, arrLength, gameOver) {
+    // Circle collision detection
     var xThis = Math.floor(this.showCoordinate().x);
     var yThis = Math.floor(this.showCoordinate().y);
     var pRadius = Math.floor(this.showCoordinate().radius);
@@ -30,8 +31,9 @@
       var yTarget = Math.floor(arr[i].showCoordinate().y);
       var dRadius = Math.floor(arr[i].showCoordinate().radius);
       var distance = Math.sqrt(Math.pow(xThis-xTarget,2)+Math.pow(yThis-yTarget,2));
-      if(distance < pRadius + dRadius) {
-        console.log('Collide' + arr[i]);
+      if(distance < pRadius + dRadius && gameOver === true) {
+        clearDots();
+        break;
       }
     }
 
@@ -49,7 +51,12 @@
 
   // Clear the Doms
   window.clearDots = function () {
-
+    var gameBoard = document.getElementById('board')
+    gameBoard.innerHTML = '';
+    var gameOverDiv = document.createElement('div')
+    gameOverDiv.id = 'gameOver';
+    gameOverDiv.innerHTML = 'GAME OVER';
+    gameBoard.appendChild(gameOverDiv);
   }
 
   // Cross browsing

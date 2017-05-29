@@ -3,12 +3,14 @@
   /* Game settings */
 
   var settings = {}; // Containes all game settings
-  settings.roundMult = 15;
-  settings.speedScale = 0.8;
+  settings.FPS = 60;
+  settings.roundStart = 20;
+  settings.roundUpTimer = FPS * 10;
+  settings.roundUpSpawn = 1;
+  settings.speedScale = 1.2;
   settings.roundModifier = 0.05;
   settings.playerDotSpeed = 20; // lower = faster respond
-  settings.spawnFrame = 60;
-  settings.FPS = 60;
+  settings.spawnFrame = 15;
   settings.godmode = false; // Debug mode
 
 
@@ -43,6 +45,8 @@
 
   /* Start game */
 
+  // World Creation
+
   // PlayerSpawn
   // need to change for multiplayer
   var player = new Player(settings, world);
@@ -51,7 +55,7 @@
 
   // Dot enemy spawn
   function dotSpawn() {
-    if (world.frame < settings.spawnFrame * settings.roundMult) {
+    if (world.frame < settings.spawnFrame * settings.roundStart) {
       if (world.frame % settings.spawnFrame === 0) {
         var i = world.frame / settings.spawnFrame;
         world.dotList[i] = new Dots(i, settings, world);
@@ -65,19 +69,20 @@
   function drawMovements() {
     for (var i = 0; i < world.playerLength; i++) {
       world.playerList[i].drawPlayerMove(mouse);
-      collision.call(world.playerList[i], world.dotList, world.dotLength);
+      collision.call(world.playerList[i], world.dotList, world.dotLength, true);
     }
     for (var i = 0; i < world.dotLength; i++) {
       world.dotList[i].drawDotMove();
     }
-
   }
 
   // Render Loops
   (function animloop() {
     requestAnimFrame(animloop);
-    dotSpawn();
     drawMovements();
+    if (true) {
+      dotSpawn();
+    }
     world.frame++;
   }());
 
