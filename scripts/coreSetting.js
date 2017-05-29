@@ -5,12 +5,12 @@
   var settings = {}; // Containes all game settings
   settings.FPS = 60;
   settings.roundStart = 20;
-  settings.roundUpTimer = FPS * 10;
+  settings.roundUpTimer = settings.FPS * 10;
   settings.roundUpSpawn = 1;
   settings.speedScale = 1.2;
   settings.roundModifier = 0.05;
   settings.playerDotSpeed = 20; // lower = faster respond
-  settings.spawnFrame = 15;
+  settings.spawnFrame = 10;
   settings.godmode = false; // Debug mode
 
 
@@ -29,6 +29,7 @@
   // Miscellaneous
   world.frame = 0; // Frames since the start of the game
   world.space = false; // for game pause
+  world.score = 0;
 
   // Controller settings
   var mouse = {};
@@ -46,7 +47,8 @@
   /* Start game */
 
   // World Creation
-
+  starter(world);
+  var scoreBoard = document.getElementById('score')
   // PlayerSpawn
   // need to change for multiplayer
   var player = new Player(settings, world);
@@ -67,13 +69,13 @@
 
   // Draw movement
   function drawMovements() {
-    for (var i = 0; i < world.playerLength; i++) {
-      world.playerList[i].drawPlayerMove(mouse);
-      collision.call(world.playerList[i], world.dotList, world.dotLength, true);
-    }
-    for (var i = 0; i < world.dotLength; i++) {
-      world.dotList[i].drawDotMove();
-    }
+    world.playerList.map(function(e,i,arr) {
+      collision.call(e, world.dotList, world, true);
+      return e.drawPlayerMove(mouse);
+    });
+    world.dotList.map(function(e) {
+      return e.drawDotMove();
+    });
   }
 
   // Render Loops
@@ -82,8 +84,10 @@
     drawMovements();
     if (true) {
       dotSpawn();
+      scoring(scoreBoard, world);
     }
     world.frame++;
+    world.score = Math.floor(world.frame / settings.FPS)
   }());
 
   // Event Listening

@@ -1,5 +1,18 @@
 (function (window) {
 
+  // Game Starter
+  window.starter = function (world) {
+    var gameBoard = document.getElementById('board')
+    var score = document.createElement('div');
+    score.id = 'score';
+    score.innerHTML = 'score<br>' + world.score;
+    gameBoard.appendChild(score);
+  };
+
+  window.scoring = function (scoreBoard, world) {
+    scoreBoard.innerHTML = 'score<br>' + world.score;
+  };
+
   // Gives wall limit
   window.wall = function () {
     var rect = this.getBoundingClientRect();
@@ -20,24 +33,21 @@
     }
   }
 
-  window.collision = function (arr, arrLength, gameOver) {
+  window.collision = function (arr, world, gameOver) {
     // Circle collision detection
     var xThis = Math.floor(this.showCoordinate().x);
     var yThis = Math.floor(this.showCoordinate().y);
     var pRadius = Math.floor(this.showCoordinate().radius);
-
-    for(var i = 0; i < arrLength; i++) {
-      var xTarget = Math.floor(arr[i].showCoordinate().x);
-      var yTarget = Math.floor(arr[i].showCoordinate().y);
-      var dRadius = Math.floor(arr[i].showCoordinate().radius);
-      var distance = Math.sqrt(Math.pow(xThis-xTarget,2)+Math.pow(yThis-yTarget,2));
-      if(distance < pRadius + dRadius && gameOver === true) {
-        clearDots();
-        break;
+    // iterate on target array
+    arr.map(function (e) {
+      var xTarget = Math.floor(e.showCoordinate().x);
+      var yTarget = Math.floor(e.showCoordinate().y);
+      var dRadius = Math.floor(e.showCoordinate().radius);
+      var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
+      if (distance < pRadius + dRadius && gameOver === true) {
+        return clearDots(world);
       }
-    }
-
-
+    });
   };
 
   // Create Doms for new dots
@@ -50,13 +60,18 @@
   }
 
   // Clear the Doms
-  window.clearDots = function () {
-    var gameBoard = document.getElementById('board')
+  window.clearDots = function (world) {
+    var saveScore = world.score;
+    var gameBoard = document.getElementById('board');
     gameBoard.innerHTML = '';
-    var gameOverDiv = document.createElement('div')
+    var gameOverDiv = document.createElement('div');
     gameOverDiv.id = 'gameOver';
     gameOverDiv.innerHTML = 'GAME OVER';
     gameBoard.appendChild(gameOverDiv);
+    var scoreResultDiv = document.createElement('div');
+    scoreResultDiv.id = 'scoreResult';
+    scoreResultDiv.innerHTML = 'Score : ' + saveScore;
+    gameBoard.appendChild(scoreResultDiv);
   }
 
   // Cross browsing
