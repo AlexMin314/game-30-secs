@@ -115,6 +115,8 @@
   }
 
   function startClick(e) {
+    document.getElementById('gameStart').removeEventListener('click', startClick, false);
+    document.getElementById('playerDot1').removeEventListener('click', startClick, false);
     var startButtonText = document.getElementById('gameStart');
     tutorial(startButtonText);
     setTimeout(function () {
@@ -126,6 +128,7 @@
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false)
+    document.getElementById('playerDot1').addEventListener('click', startClick, false)
   }());
 
 }(window));

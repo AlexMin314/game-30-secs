@@ -94,7 +94,7 @@
         var startButtonText = document.getElementById('gameStart');
     setTimeout(function () {
       startButtonText.innerHTML = 'DODGE<br>DOTS'
-    }, 1000);
+    }, 500);
     setTimeout(function () {
       startButtonText.innerHTML = 'GOOD<br>LUCK'
     }, 2000);
