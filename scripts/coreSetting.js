@@ -4,14 +4,14 @@
 
   var settings = {}; // Containes all game settings
   settings.FPS = 60;
-  settings.roundStart = 20;
-  settings.roundUpTimer = settings.FPS * 10;
+  settings.roundStart = 15;
+  settings.roundUpTimer = settings.FPS * 30;
   settings.roundUpSpawn = 1;
-  settings.speedScale = 1.2;
+  settings.speedScale = 1.1;
   settings.roundModifier = 0.05;
-  settings.playerDotSpeed = 20; // lower = faster respond
+  settings.playerDotSpeed = 15; // lower = faster respond
   settings.spawnFrame = 10;
-  settings.godmode = false; // Debug mode
+  settings.godmode = true; // Debug mode
 
 
   /* World settings */
@@ -25,7 +25,8 @@
   world.dotList = [];
   world.dotNum = 1;
   world.dotLength = 0;
-  world.spwanDist = 15;
+  world.dotIndexSave = 0;
+  world.spwanDist = 50;
   // Miscellaneous
   world.frame = 0; // Frames since the start of the game
   world.space = false; // for game pause
@@ -59,23 +60,31 @@
 
   // Dot enemy spawn
   function dotSpawn() {
-    if (world.frame < settings.spawnFrame * settings.roundStart) {
-      if (world.frame % settings.spawnFrame === 0) {
-        var i = world.frame / settings.spawnFrame;
-        world.dotList[i] = new Dots(i, settings, world);
-      }
+    var limiter = settings.spawnFrame * settings.roundStart;
+    // Starter Dots spawns
+    if (world.frame < limiter && world.frame % settings.spawnFrame === 0) {
+      var i = Math.floor(world.frame / settings.spawnFrame);
+      world.dotList[i] = new Dots(i, settings, world);
       world.dotLength = world.dotList.length;
+      world.dotIndexSave = world.dotLength;
     }
-    // round up??
+    // Round scale up spawns
+    if (world.frame >= limiter) {
+      if (world.frame % settings.roundUpTimer === 0) {
+        var j = Math.floor((world.frame - limiter) / settings.roundUpTimer) + world.dotIndexSave;
+        world.dotList.push(new Dots(j, settings, world));
+        world.dotLength = world.dotList.length;
+      }
+    }
   }
 
   // Draw movement
   function drawMovements() {
-    world.playerList.map(function(e,i,arr) {
-      collision.call(e, world.dotList, world, true);
+    world.playerList.map(function (e, i, arr) {
+      collision.call(e, world.dotList, world, settings, true);
       return e.drawPlayerMove(mouse);
     });
-    world.dotList.map(function(e) {
+    world.dotList.map(function (e) {
       return e.drawDotMove();
     });
   }

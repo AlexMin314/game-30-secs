@@ -40,7 +40,7 @@
     }
   }
 
-  window.collision = function (arr, world, gameOver) {
+  window.collision = function (arr, world, settings, gameOver) {
     // Circle collision detection
     var xThis = Math.floor(this.showCoordinate().x);
     var yThis = Math.floor(this.showCoordinate().y);
@@ -51,7 +51,7 @@
       var yTarget = Math.floor(e.showCoordinate().y);
       var dRadius = Math.floor(e.showCoordinate().radius);
       var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
-      if (distance < pRadius + dRadius && gameOver === true) {
+      if (distance < pRadius + dRadius && gameOver === true && settings.godmode === false) {
         return clearDots(world);
       }
     });
