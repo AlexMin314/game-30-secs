@@ -1,4 +1,4 @@
-(function(window){
+(function (window) {
 
   // Gives wall limit
   window.wall = function () {
@@ -20,6 +20,25 @@
     }
   }
 
+  window.collision = function (arr, arrLength) {
+    var xThis = Math.floor(this.showCoordinate().x);
+    var yThis = Math.floor(this.showCoordinate().y);
+    var pRadius = Math.floor(this.showCoordinate().radius);
+
+    for(var i = 0; i < arrLength; i++) {
+      var xTarget = Math.floor(arr[i].showCoordinate().x);
+      var yTarget = Math.floor(arr[i].showCoordinate().y);
+      var dRadius = Math.floor(arr[i].showCoordinate().radius);
+      var distance = Math.sqrt(Math.pow(xThis-xTarget,2)+Math.pow(yThis-yTarget,2));
+      if(distance < pRadius + dRadius) {
+        console.log('Collide' + arr[i]);
+      }
+    }
+
+
+  };
+
+  // Create Doms for new dots
   window.createDots = function (type, pNum, dNum) {
     var newDiv = document.createElement('div');
     newDiv.className = type;
@@ -28,6 +47,7 @@
     return document.getElementById(newDiv.id);
   }
 
+  // Clear the Doms
   window.clearDots = function () {
 
   }
@@ -38,10 +58,10 @@
       window.webkitRequestAnimationFrame ||
       window.mozRequestAnimationFrame ||
       function (callback) {
-        window.setTimeout(callback, 1000 / 60);
+        window.setTimeout(callback, 1000 / settings.FPS);
       };
   })();
 
-// Polypill here
+  // Polypill here
 
 }(window));

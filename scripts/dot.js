@@ -2,6 +2,9 @@ var Dots = function (dotNum, settings, world) {
 
   // Settings
   var dots = null;
+  var x = 0;
+  var y = 0;
+  var radius = 0;
   // Speed Seed randomizing
   var speedX = Math.floor(Math.random() * 4 + 2);
   var speedY = Math.floor(Math.random() * 4 + 2);
@@ -27,11 +30,13 @@ var Dots = function (dotNum, settings, world) {
     dots.style.backgroundColor = colorSelect;
   }());
 
+
   // Drawing dot movement
   this.drawDotMove = function () {
     var dRect = dots.getBoundingClientRect();
-    var x = dRect.left;
-    var y = dRect.top;
+    x = dRect.left;
+    y = dRect.top;
+    radius = dRect.width / 2;
     // Wall bouncing
     if (x + dx > window.innerWidth - dRect.width) {
       dx = -dx;
@@ -55,6 +60,9 @@ var Dots = function (dotNum, settings, world) {
     dots.style.top = y + 'px';
   };
 
+  this.showCoordinate = function() {
+    return {x: x + radius, y: y + radius, radius: radius};
+  };
 };
 
 // following enemy Constructor

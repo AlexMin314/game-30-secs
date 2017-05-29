@@ -7,7 +7,8 @@
   settings.speedScale = 0.8;
   settings.roundModifier = 0.05;
   settings.playerDotSpeed = 20; // lower = faster respond
-  settings.spawnFrame = 30;
+  settings.spawnFrame = 60;
+  settings.FPS = 60;
   settings.godmode = false; // Debug mode
 
 
@@ -49,7 +50,6 @@
   world.playerLength = world.playerList.length;
 
   // Dot enemy spawn
-  // need to change round or second base
   function dotSpawn() {
     if (world.frame < settings.spawnFrame * settings.roundMult) {
       if (world.frame % settings.spawnFrame === 0) {
@@ -65,10 +65,12 @@
   function drawMovements() {
     for (var i = 0; i < world.playerLength; i++) {
       world.playerList[i].drawPlayerMove(mouse);
+      collision.call(world.playerList[i], world.dotList, world.dotLength);
     }
     for (var i = 0; i < world.dotLength; i++) {
       world.dotList[i].drawDotMove();
     }
+
   }
 
   // Render Loops
@@ -88,6 +90,5 @@
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
   }());
-
 
 }(window));
