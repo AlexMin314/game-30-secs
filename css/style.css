@@ -3,6 +3,7 @@ html {
   font-family: sans-serif;
 }
 
+
 .playerDot {
   height: 40px;
   width: 40px;
@@ -35,6 +36,10 @@ html {
   border: 3px solid white;
 }
 
+ #gameStart {
+  width: 400px;   
+ }
+
 #score {
   float: right;
   color: yellow;
@@ -43,7 +48,7 @@ html {
 }
 
 #dotNum {
-  float: left;  
+  float: left;
   color: white;
   font-size: 30px;
   margin-left: 30px;

@@ -3,6 +3,8 @@
   /* Game settings */
 
   var settings = {}; // Containes all game settings
+  settings.godmode = false; // Debug mode
+
   settings.FPS = 60;
   settings.roundStart = 15;
   settings.roundUpTimer = settings.FPS * 30;
@@ -11,7 +13,6 @@
   settings.roundModifier = 0.05;
   settings.playerDotSpeed = 15; // lower = faster respond
   settings.spawnFrame = 10;
-  settings.godmode = true; // Debug mode
 
 
   /* World settings */
@@ -32,6 +33,7 @@
   world.space = false; // for game pause
   world.score = 0;
   world.dotNum = 0;
+  world.start = false;
 
   // Controller settings
   var mouse = {};
@@ -47,6 +49,7 @@
 
 
   /* Start game */
+  startButton();
 
   // World Creation
   starter(world);
@@ -92,15 +95,18 @@
   // Render Loops
   (function animloop() {
     requestAnimFrame(animloop);
-    drawMovements();
-    if (true) {
-      dotSpawn();
-      updatingBoard(scoreBoard, dotNumBoard, world);
+    if (world.start) {
+      drawMovements();
+      if (true) {
+        dotSpawn();
+        updatingBoard(scoreBoard, dotNumBoard, world);
+      }
+      world.frame++;
+      world.score = Math.floor(world.frame / settings.FPS)
+      world.dotNum = world.dotLength;
     }
-    world.frame++;
-    world.score = Math.floor(world.frame / settings.FPS)
-    world.dotNum = world.dotLength;
   }());
+
 
   // Event Listening
   function getMousePos(e) {
@@ -108,8 +114,18 @@
     mouse.y = e.clientY;
   }
 
+  function startClick(e) {
+    var startButtonText = document.getElementById('gameStart');
+    tutorial(startButtonText);
+    setTimeout(function () {
+      document.getElementById('board').removeChild(startButtonText);
+      return world.start = true;
+    }, 4500);
+  }
+
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
+    document.getElementById('gameStart').addEventListener('click', startClick, false)
   }());
 
 }(window));

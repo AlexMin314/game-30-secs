@@ -1,8 +1,16 @@
 (function (window) {
 
+  var gameBoard = document.getElementById('board');
+
+  window.startButton = function () {
+    var sButton = document.createElement('div');
+    sButton.id = 'gameStart';
+    sButton.innerHTML = 'START<br>BUTTON';
+    gameBoard.appendChild(sButton);
+  };
+
   // Game Starter
   window.starter = function (world) {
-    var gameBoard = document.getElementById('board')
     // Adding Score at right side of game board
     var score = document.createElement('div');
     score.id = 'score';
@@ -15,12 +23,13 @@
     gameBoard.appendChild(dotNum);
   };
 
+  // Updating Dot Numbers and Scores on gameBoard
   window.updatingBoard = function (scoreBoard, dotNumBoard, world) {
     scoreBoard.innerHTML = 'Score<br>' + world.score;
     dotNumBoard.innerHTML = 'Dots<br>' + world.dotNum;
   };
 
-  // Gives wall limit
+  // Gives wall limit to target
   window.wall = function () {
     var rect = this.getBoundingClientRect();
     var w = Math.floor(window.innerWidth);
@@ -40,6 +49,7 @@
     }
   }
 
+  // collision detection for Player Pattern
   window.collision = function (arr, world, settings, gameOver) {
     // Circle collision detection
     var xThis = Math.floor(this.showCoordinate().x);
@@ -62,14 +72,13 @@
     var newDiv = document.createElement('div');
     newDiv.className = type;
     newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
-    document.getElementById('board').appendChild(newDiv);
+    gameBoard.appendChild(newDiv);
     return document.getElementById(newDiv.id);
   }
 
   // Clear the Doms
   window.clearDots = function (world) {
     var saveScore = world.score;
-    var gameBoard = document.getElementById('board');
     gameBoard.innerHTML = '';
     var gameOverDiv = document.createElement('div');
     gameOverDiv.id = 'gameOver';
@@ -79,6 +88,25 @@
     scoreResultDiv.id = 'scoreResult';
     scoreResultDiv.innerHTML = 'Score : ' + saveScore;
     gameBoard.appendChild(scoreResultDiv);
+  }
+
+  window.tutorial = function (startButtonText) {
+        var startButtonText = document.getElementById('gameStart');
+    setTimeout(function () {
+      startButtonText.innerHTML = 'DODGE<br>DOTS'
+    }, 1000);
+    setTimeout(function () {
+      startButtonText.innerHTML = 'GOOD<br>LUCK'
+    }, 2000);
+    setTimeout(function () {
+      startButtonText.innerHTML = '3'
+    }, 2500);
+    setTimeout(function () {
+      startButtonText.innerHTML = '2'
+    }, 3000);
+    setTimeout(function () {
+      startButtonText.innerHTML = '1'
+    }, 3500);
   }
 
   // Cross browsing

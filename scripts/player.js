@@ -10,13 +10,14 @@ var Player = function (settings, world) {
   (function init() {
     playerDot = createDots('playerDot', playerNum);
     // Starting Point : Center
-    playerDot.style.top = Math.floor(window.innerHeight / 2) + 'px';
-    playerDot.style.left = Math.floor(window.innerWidth / 2) + 'px';
+    var center = playerDot.getBoundingClientRect().width / 2;
+    playerDot.style.top = Math.floor(window.innerHeight / 2 - center) + 'px';
+    playerDot.style.left = Math.floor(window.innerWidth / 2 - center) + 'px';
   }());
 
   // Draw Player move
   this.drawPlayerMove = function (mouse) {
-    var pRect = playerDot.getBoundingClientRect();
+    pRect = playerDot.getBoundingClientRect();
     pRadius = pRect.width / 2;
     pX = pRect.left;
     pY = pRect.top;
