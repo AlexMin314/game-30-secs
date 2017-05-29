@@ -1,35 +1,39 @@
 (function (window) {
 
   var gameBoard = document.getElementById('board');
+  window.gameoverChecker = false;
 
+  // Append Start Button div.
   window.startButton = function () {
     var sButton = document.createElement('div');
     sButton.id = 'gameStart';
     sButton.innerHTML = 'START<br>BUTTON';
+    //sButton.style.fontSize = '90px';
+    //sButton.style.paddingTop = '5px';
     gameBoard.appendChild(sButton);
   };
 
-  // Game Starter
-  window.starter = function (world) {
-    // Adding Score at right side of game board
-    var score = document.createElement('div');
-    score.id = 'score';
-    score.innerHTML = 'Score<br>' + world.score;
-    gameBoard.appendChild(score);
-    // Adding Dot number at right side of game board
+  // Game Starter.
+  window.gameStarter = function (world) {
+    // Adding Score at right side of game board.
+    var scoreDiv = document.createElement('div');
+    scoreDiv.id = 'score';
+    scoreDiv.innerHTML = 'SCORE<br>' + world.score;
+    gameBoard.appendChild(scoreDiv);
+    // Adding Dot number at right side of game board.
     var dotNum = document.createElement('div');
     dotNum.id = 'dotNum';
-    dotNum.innerHTML = 'Dots<br>' + world.dotNum;
+    dotNum.innerHTML = 'DOTS<br>' + world.dotNum;
     gameBoard.appendChild(dotNum);
   };
 
-  // Updating Dot Numbers and Scores on gameBoard
+  // Updating Dot Numbers and Scores on gameBoard.
   window.updatingBoard = function (scoreBoard, dotNumBoard, world) {
-    scoreBoard.innerHTML = 'Score<br>' + world.score;
-    dotNumBoard.innerHTML = 'Dots<br>' + world.dotNum;
+    scoreBoard.innerHTML = 'SCORE<br>' + world.score;
+    dotNumBoard.innerHTML = 'DOTS<br>' + world.dotNum;
   };
 
-  // Gives wall limit to target
+  // Gives wall limit to target(player).
   window.wall = function () {
     var rect = this.getBoundingClientRect();
     var w = Math.floor(window.innerWidth);
@@ -49,64 +53,93 @@
     }
   }
 
-  // collision detection for Player Pattern
+  // collision detection for Player Pattern.
   window.collision = function (arr, world, settings, gameOver) {
     // Circle collision detection
     var xThis = Math.floor(this.showCoordinate().x);
     var yThis = Math.floor(this.showCoordinate().y);
     var pRadius = Math.floor(this.showCoordinate().radius);
-    // iterate on target array
-    arr.map(function (e) {
-      var xTarget = Math.floor(e.showCoordinate().x);
-      var yTarget = Math.floor(e.showCoordinate().y);
-      var dRadius = Math.floor(e.showCoordinate().radius);
-      var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
-      if (distance < pRadius + dRadius && gameOver === true && settings.godmode === false) {
-        return clearDots(world);
-      }
-    });
+
+    // Checking debug mode and game over or not.
+    if (!settings.godmode && !gameoverChecker) {
+      arr.map(function (e) {
+        var xTarget = Math.floor(e.showCoordinate().x);
+        var yTarget = Math.floor(e.showCoordinate().y);
+        var dRadius = Math.floor(e.showCoordinate().radius);
+        var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
+        if (distance < pRadius + dRadius && gameOver === true) {
+          // game over.
+          gameoverChecker = true;
+          return gameOverAndResult(world);
+        }
+      });
+    }
   };
 
   // Create Doms for new dots
   window.createDots = function (type, pNum, dNum) {
-    var newDiv = document.createElement('div');
-    newDiv.className = type;
-    newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
-    gameBoard.appendChild(newDiv);
-    return document.getElementById(newDiv.id);
-  }
+      var newDiv = document.createElement('div');
+      newDiv.className = type;
+      newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
+      gameBoard.appendChild(newDiv);
+      return document.getElementById(newDiv.id);
+  };
 
-  // Clear the Doms
-  window.clearDots = function (world) {
+  // Game over and Showing game result.
+  window.gameOverAndResult = function (world) {
     var saveScore = world.score;
+
+    // Removing dot elements.
     gameBoard.innerHTML = '';
+
+    // Appending WrapperDiv to game board.
+    var wrapperDiv = document.createElement('div');
+    wrapperDiv.id = 'wrapper';
+    gameBoard.appendChild(wrapperDiv);
+    wrapperDiv = document.getElementById('wrapper');
+
+    // Appending scoreResultDiv to the wrapper
+    var scoreResultDiv = document.createElement('div');
+    scoreResultDiv.id = 'scoreResult';
+    scoreResultDiv.innerHTML = 'SCORE: ' + saveScore;
+    wrapperDiv.appendChild(scoreResultDiv);
+
+    // Appending gameOverDiv to the wrapper
     var gameOverDiv = document.createElement('div');
     gameOverDiv.id = 'gameOver';
     gameOverDiv.innerHTML = 'GAME OVER';
-    gameBoard.appendChild(gameOverDiv);
-    var scoreResultDiv = document.createElement('div');
-    scoreResultDiv.id = 'scoreResult';
-    scoreResultDiv.innerHTML = 'Score : ' + saveScore;
-    gameBoard.appendChild(scoreResultDiv);
+    wrapperDiv.appendChild(gameOverDiv);
+
+    // Appending retryDiv to the wrapper
+    var retryDiv = document.createElement('div');
+    retryDiv.id = 'retry';
+    retryDiv.innerHTML = '<i class="fa fa-repeat" aria-hidden="true"></i>  RETRY';
+    wrapperDiv.appendChild(retryDiv);
+    // reloading document for retrying
+    document.getElementById('retry').addEventListener('click', function(e) {
+      window.location.reload(false);
+    }, false);
   }
 
   window.tutorial = function (startButtonText) {
-        var startButtonText = document.getElementById('gameStart');
+    var startButtonText = document.getElementById('gameStart');
     setTimeout(function () {
       startButtonText.innerHTML = 'DODGE<br>DOTS'
-    }, 500);
+    }, 0);
     setTimeout(function () {
       startButtonText.innerHTML = 'GOOD<br>LUCK'
-    }, 2000);
+    }, 700);
     setTimeout(function () {
+      startButtonText.style.fontSize = '200px';
+      startButtonText.style.paddingTop = '0px';
       startButtonText.innerHTML = '3'
-    }, 2500);
+    }, 1400);
     setTimeout(function () {
       startButtonText.innerHTML = '2'
-    }, 3000);
+    }, 1900);
     setTimeout(function () {
       startButtonText.innerHTML = '1'
-    }, 3500);
+    }, 2400);
   }
 
   // Cross browsing
@@ -120,5 +153,6 @@
   })();
 
   // Polypill here
+
 
 }(window));

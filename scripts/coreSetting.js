@@ -6,12 +6,12 @@
   settings.godmode = false; // Debug mode
 
   settings.FPS = 60;
-  settings.roundStart = 15;
-  settings.roundUpTimer = settings.FPS * 30;
+  settings.roundStart = 20;
+  settings.roundUpTimer = settings.FPS * 20;
   settings.roundUpSpawn = 1;
-  settings.speedScale = 1.1;
+  settings.speedScale = 1.2;
   settings.roundModifier = 0.05;
-  settings.playerDotSpeed = 15; // lower = faster respond
+  settings.playerDotSpeed = 20; // lower = faster respond
   settings.spawnFrame = 10;
 
 
@@ -34,6 +34,7 @@
   world.score = 0;
   world.dotNum = 0;
   world.start = false;
+  world.gameOver = false;
 
   // Controller settings
   var mouse = {};
@@ -52,9 +53,10 @@
   startButton();
 
   // World Creation
-  starter(world);
+  gameStarter(world);
   var scoreBoard = document.getElementById('score');
   var dotNumBoard = document.getElementById('dotNum');
+
   // PlayerSpawn
   // need to change for multiplayer
   var player = new Player(settings, world);
@@ -72,12 +74,11 @@
       world.dotIndexSave = world.dotLength;
     }
     // Round scale up spawns
-    if (world.frame >= limiter) {
-      if (world.frame % settings.roundUpTimer === 0) {
-        var j = Math.floor((world.frame - limiter) / settings.roundUpTimer) + world.dotIndexSave;
-        world.dotList.push(new Dots(j, settings, world));
-        world.dotLength = world.dotList.length;
-      }
+    if (world.frame >= limiter && world.frame % settings.roundUpTimer === 0) {
+      var j = Math.floor((world.frame - limiter) / settings.roundUpTimer);
+      j += world.dotIndexSave;
+      world.dotList.push(new Dots(j, settings, world));
+      world.dotLength = world.dotList.length;
     }
   }
 
@@ -95,15 +96,18 @@
   // Render Loops
   (function animloop() {
     requestAnimFrame(animloop);
+    // Check start button is pressed or not.
     if (world.start) {
       drawMovements();
-      if (true) {
-        dotSpawn();
-        updatingBoard(scoreBoard, dotNumBoard, world);
+      dotSpawn();
+      updatingBoard(scoreBoard, dotNumBoard, world);
+      console.log(window.gameoverChecker);
+      if (!window.gameoverChecker) {
+        world.frame++;
+        world.score = Math.floor(world.frame / settings.FPS);
+        world.dotNum = world.dotLength;
       }
-      world.frame++;
-      world.score = Math.floor(world.frame / settings.FPS)
-      world.dotNum = world.dotLength;
+      // ending Spawn?
     }
   }());
 
@@ -115,20 +119,24 @@
   }
 
   function startClick(e) {
+    // Remove click events
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     document.getElementById('playerDot1').removeEventListener('click', startClick, false);
+
     var startButtonText = document.getElementById('gameStart');
+    // Loading start messages.
     tutorial(startButtonText);
+    // removing start button div
     setTimeout(function () {
       document.getElementById('board').removeChild(startButtonText);
       return world.start = true;
-    }, 4500);
+    }, 2900);
   }
 
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
-    document.getElementById('gameStart').addEventListener('click', startClick, false)
-    document.getElementById('playerDot1').addEventListener('click', startClick, false)
+    document.getElementById('gameStart').addEventListener('click', startClick, false);
+    document.getElementById('playerDot1').addEventListener('click', startClick, false);
   }());
 
 }(window));

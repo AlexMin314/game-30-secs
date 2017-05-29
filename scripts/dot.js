@@ -5,31 +5,34 @@ var Dots = function (dotNum, settings, world) {
   var x = 0;
   var y = 0;
   var radius = 0;
-  // Speed Seed randomizing
+
+  // Speed/Direction Seed randomizing.
   var speedX = Math.floor(Math.random() * 4 + 2);
   var speedY = Math.floor(Math.random() * 4 + 2);
   var mult = settings.speedScale;
-  // Starting Vector randomizing
+  // Starting Vector randomizing.
   var dx = Math.random() > 0.5 ? speedX * mult : -speedX * mult;
   var dy = Math.random() > 0.5 ? speedY * mult : -speedY * mult;
-  // Coloring the dots
-  var colorSeed = [, , 'rgb(0, 255, 18)', 'rgb(0, 247, 255)', 'rgb(250, 255, 0)', 'rgb(214, 18, 231)'];
-  var colorSelect = colorSeed[speedX];
+  // Coloring the dots.
+  var colorSeed = [, , '#14ff00', '#00fff7', '#faff00', '#ff00de'];
+  var colorDot = colorSeed[speedX];
 
   (function init() {
+    // Create an enemy dot.
     dots = createDots('dots', null, dotNum);
-    // Starting Point : random + avoiding center
+    // Starting Point : random.
     var h = window.innerHeight;
     var w = window.innerWidth;
-    var d = world.spwanDist;
+    var d = world.spwanDist; // avoiding center
+
     var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 25;
     var upside = Math.random() * (h / d) + 25;
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
     dots.style.top = Math.floor(randomSeed) + 'px';
     dots.style.left = Math.floor(Math.random() * (w - 100) + 50) + 'px';
-    dots.style.backgroundColor = colorSelect;
-  }());
 
+    dots.style.backgroundColor = colorDot;
+  }());
 
   // Drawing dot movement
   this.drawDotMove = function () {
@@ -40,7 +43,6 @@ var Dots = function (dotNum, settings, world) {
     // Wall bouncing
     if (x + dx > window.innerWidth - dRect.width) {
       dx = -dx;
-      // prevent ball disapearing when resizing browser
       // need to research on Pause mode
       x = window.innerWidth - dRect.width - 2;
     }
@@ -60,9 +62,11 @@ var Dots = function (dotNum, settings, world) {
     dots.style.top = y + 'px';
   };
 
-  this.showCoordinate = function() {
-    return {x: x + radius, y: y + radius, radius: radius};
+  // Return Coordinate for public usage
+  this.showCoordinate = function () {
+    return { x: x + radius, y: y + radius, radius: radius };
   };
+
 };
 
 // following enemy Constructor
