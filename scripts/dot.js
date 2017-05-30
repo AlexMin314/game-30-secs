@@ -60,8 +60,13 @@ var Dots = function (dotNum, settings, world, bonus) {
   };
 
   // Return Coordinate for public usage
-  this.showCoordinate = function () {
-    return { x: x + radius, y: y + radius, radius: radius };
+  this.showInfo = function () {
+    return {
+      x: x + radius,
+      y: y + radius,
+      radius: radius,
+      dots: dots
+     };
   };
 
 };

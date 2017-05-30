@@ -40,8 +40,12 @@ var Player = function (settings, world) {
   };
 
   // Return Coordinate for public usage
-  this.showCoordinate = function() {
-    return {x: pX + pRadius, y: pY + pRadius, radius: pRadius};
+  this.showInfo = function() {
+    return {
+      x: pX + pRadius,
+      y: pY + pRadius,
+      radius: pRadius
+    };
   };
 
 };

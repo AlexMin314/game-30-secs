@@ -5,17 +5,17 @@
   var settings = {};
   settings.FPS = 60;
   // Dots
-  settings.roundStart = 2;
-  settings.roundStartMax = 20;
+  settings.roundStart = 3;
+  settings.roundStartMax = 15;
   settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1;
   settings.speedScale = 1.2;
-  settings.spawnSpeed = 500; // ms
+  settings.spawnSpeed = 2000; // ms
   settings.bounceBuffer = 1;
   // bonus
   settings.bonusSpawn = 1;
   settings.bonusMax = 2;
-  settings.bonusSpawnSpeed = 5000;
+  settings.bonusSpawnSpeed = 4000;
   // Player related
   settings.playerDotSpeed = 20; // lower = faster respond
   // Debug mode
@@ -39,6 +39,7 @@
   world.bonus = [];
   world.bonusIdx = 0;
   world.bonusLength = 0;
+  world.bonusScore = 100;
   // Miscellaneous
   world.score = 0;
   world.start = false;
@@ -75,11 +76,23 @@
     boardInfo(world);
     scoreBoard = document.getElementById('score');
     dotNumBoard = document.getElementById('dotNum');
+
+    // initial dot spawn
+    for (var k = 0; k < settings.roundStart; k++) {
+      dotSpawner(settings, world, false);
+    }
+
     // Dot spwan
-    dotSpawnStart();
+    setInterval(function () {
+      dotSpawnStart();
+    }, settings.spawnSpeed)
+
     // bonuse spwan
-    bonusSpawnStart();
-    // Score++
+    setInterval(function () {
+      bonusSpawnStart();
+    }, settings.bonusSpawnSpeed)
+
+    // Score Tracking
     setInterval(function () {
       world.score++;
     }, 1000)
@@ -87,34 +100,28 @@
 
   // Dot enemy spawn
   function dotSpawnStart() {
-    // initial spawn
-    for (var k = 0; k < settings.roundStart; k++) {
-      dotSpawner(settings, world, false);
-    }
-    // addtional spawn
-    var moreSpawns = setInterval(function () {
+    if (world.dotLength < settings.roundStartMax) {
       for (var i = 0; i < settings.roundUpSpawn; i++) {
         dotSpawner(settings, world, false);
-        if (world.dotLength === settings.roundStartMax) clearInterval(moreSpawns);
       }
-    }, settings.roundUpTimer);
+    }
   }
 
   // bonus spawn
   function bonusSpawnStart() {
-    var bonusSpawns = setInterval(function () {
+    if (world.bonusLength < settings.bonusMax) {
       for (var j = 0; j < settings.bonusSpawn; j++) {
         dotSpawner(settings, world, true);
-        if (world.bonusLength === settings.bonusMax) clearInterval(bonusSpawns);
       }
-    }, settings.bonusSpawnSpeed);
+    }
   }
 
 
   // Draw movement of player and dots
   function drawMovements() {
     world.playerList.map(function (e, i, arr) {
-      collision.call(e, world.dotList, world, settings, true);
+      collision.call(e, world.dotList, world, settings, true, false);
+      collision.call(e, world.bonus, world, settings, true, true);
       return e.drawPlayerMove(mouse);
     });
     world.dotList.map(function (e) {

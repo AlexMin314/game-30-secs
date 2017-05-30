@@ -14,7 +14,7 @@
       sound: soundE,
       gameBoard: gameBoard,
       wrapper: wrapper
-     };
+    };
   }
 
   /* Start and GameOver Divs */
@@ -103,7 +103,6 @@
     if (!settings.godmode) {
       godModeE.style.color = 'white';
       godModeE.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
-      console.log(debugE);
       if (debugE !== undefined) wrapper.removeChild(debugE);
     }
     if (settings.godmode) {
@@ -130,27 +129,44 @@
   };
 
   // collision detection for Player Pattern.
-  window.collision = function (arr, world, settings, gameOver) {
+  window.collision = function (arr, world, settings, gameOver, bonus) {
     // Circle collision detection
-    var xThis = Math.floor(this.showCoordinate().x);
-    var yThis = Math.floor(this.showCoordinate().y);
-    var pRadius = Math.floor(this.showCoordinate().radius);
+    var xThis = Math.floor(this.showInfo().x);
+    var yThis = Math.floor(this.showInfo().y);
+    var pRadius = Math.floor(this.showInfo().radius);
 
     // Checking debug mode and game over or not.
-    if (!settings.godmode && !gameoverChecker) {
-      arr.map(function (e) {
-        var xTarget = Math.floor(e.showCoordinate().x);
-        var yTarget = Math.floor(e.showCoordinate().y);
-        var dRadius = Math.floor(e.showCoordinate().radius);
+    //if (!settings.godmode && !gameoverChecker) {
+    if (!gameoverChecker) {
+      // CONSIDER CHANGE THIS TO FOR LOOP FOR BREAK
+      arr.map(function (e, i) {
+        var xTarget = Math.floor(e.showInfo().x);
+        var yTarget = Math.floor(e.showInfo().y);
+        var dRadius = Math.floor(e.showInfo().radius);
         var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
-        if (distance < pRadius + dRadius && gameOver === true) {
+        // enemy collision
+        if (distance < pRadius + dRadius &&
+          gameOver === true &&
+          bonus === false &&
+          !settings.godmode) {
           // game over.
           gameoverChecker = true;
-          return gameOverAndResult(world);
+          gameOverAndResult(world);
+        }
+        // bonus collision
+        if (distance < pRadius + dRadius && bonus === true) {
+          world.score += world.bonusScore;
+          removeBonus(e, i, world);
         }
       });
     }
   };
+
+  window.removeBonus = function(e, i, world) {
+    gameBoard.removeChild(e.showInfo().dots);
+    world.bonus.splice(i,1);
+    world.bonusLength = world.bonus.length;
+  }
 
   // Gives wall limit to target(player).
   window.wall = function () {
