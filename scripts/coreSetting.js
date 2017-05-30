@@ -33,7 +33,7 @@
   world.dotList = [];
   world.dotNumIdx = 0;
   world.dotLength = 0;
-  world.spwanDist = 120;
+  world.spwanDist = 70;
   world.colorSeed = [, , '#14ff00', '#00fff7', '#faff00', '#ff00de'];
   // Bonus obj
   world.bonus = [];
