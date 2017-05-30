@@ -2,21 +2,22 @@
 
   /* Game settings */
 
-  var settings = {}; // Containes all game settings
-  settings.godmode = false; // Debug mode
-
+  var settings = {};
   settings.FPS = 60;
-  settings.roundStart = 20;
-  settings.roundUpTimer = settings.FPS * 20;
+  settings.roundStart = 2;
+  settings.roundStartMax = 20;
+  settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1;
   settings.speedScale = 1.2;
   settings.roundModifier = 0.05;
   settings.playerDotSpeed = 20; // lower = faster respond
-  settings.spawnFrame = 10;
+  settings.spawnSpeed = 500; // ms
+  // Debug mode
+  settings.godmode = true;
 
+  /* DO NOT CHANGE BELOW */
 
   /* World settings */
-  /* DO NOT CHANGE BELOW */
 
   var world = {};
   // Player Dots
@@ -24,17 +25,15 @@
   world.playerLength = 0;
   // Enemy Dots
   world.dotList = [];
-  world.dotNum = 1;
+  world.dotNumIdx = 0;
   world.dotLength = 0;
-  world.dotIndexSave = 0;
-  world.spwanDist = 50;
+  world.spwanDist = 120;
+  world.colorSeed = [, , '#14ff00', '#00fff7', '#faff00', '#ff00de'];
   // Miscellaneous
-  world.frame = 0; // Frames since the start of the game
-  world.space = false; // for game pause
   world.score = 0;
-  world.dotNum = 0;
   world.start = false;
   world.gameOver = false;
+  world.spaceBar = false;
 
   // Controller settings
   var mouse = {};
@@ -46,43 +45,43 @@
   var skill = {};
   skill.q = false;
   skill.w = false;
-  skill.e = false;
 
 
-  /* Start game */
-  startButton();
+  /* DOM element variable */
 
-  // World Creation
-  gameStarter(world);
-  var scoreBoard = document.getElementById('score');
-  var dotNumBoard = document.getElementById('dotNum');
+  var scoreBoard;
+  var dotNumBoard;
+  var startButtonText;
 
-  // PlayerSpawn
-  // need to change for multiplayer
-  var player = new Player(settings, world);
-  world.playerList.push(player);
-  world.playerLength = world.playerList.length;
 
-  // Dot enemy spawn
-  function dotSpawn() {
-    var limiter = settings.spawnFrame * settings.roundStart;
-    // Starter Dots spawns
-    if (world.frame < limiter && world.frame % settings.spawnFrame === 0) {
-      var i = Math.floor(world.frame / settings.spawnFrame);
-      world.dotList[i] = new Dots(i, settings, world);
-      world.dotLength = world.dotList.length;
-      world.dotIndexSave = world.dotLength;
-    }
-    // Round scale up spawns
-    if (world.frame >= limiter && world.frame % settings.roundUpTimer === 0) {
-      var j = Math.floor((world.frame - limiter) / settings.roundUpTimer);
-      j += world.dotIndexSave;
-      world.dotList.push(new Dots(j, settings, world));
-      world.dotLength = world.dotList.length;
-    }
+  /* Game Starter functions */
+
+  function gameStarter() {
+    document.getElementById('board').removeChild(startButtonText);
+    world.start = true;
+    dotSpawnStart();
+    setInterval(function() {
+      world.score++;
+    }, 1000)
   }
 
-  // Draw movement
+  // Dot enemy spawn
+  function dotSpawnStart() {
+    // initial spawn
+    for (var i = 0; i < settings.roundStart; i++) {
+      dotSpawner(settings, world);
+    }
+    // addtional spawn
+    var moreSpawns = setInterval(function () {
+      for (var i = 0; i < settings.roundUpSpawn; i++) {
+        dotSpawner(settings, world);
+        if (world.dotLength === settings.roundStartMax) clearInterval(moreSpawns);
+      }
+    }, settings.roundUpTimer);
+  }
+
+
+  // Draw movement of player and dots
   function drawMovements() {
     world.playerList.map(function (e, i, arr) {
       collision.call(e, world.dotList, world, settings, true);
@@ -93,25 +92,34 @@
     });
   }
 
-  // Render Loops
-  (function animloop() {
-    requestAnimFrame(animloop);
-    // Check start button is pressed or not.
+
+  /* Board init start! */
+
+  // Display Start Button.
+  startButton();
+  // Display Score + Dot number.
+  boardInfo(world);
+  // PlayerSpawn
+  playerSpawner(settings, world);
+
+  scoreBoard = document.getElementById('score');
+  dotNumBoard = document.getElementById('dotNum');
+
+
+  /* Render Loops */
+
+  (function renderLoop() {
+    requestAnimFrame(renderLoop);
+    // Check start button is pressed.
     if (world.start) {
       drawMovements();
-      dotSpawn();
       updatingBoard(scoreBoard, dotNumBoard, world);
-      if (!window.showChecker().checker) {
-        world.frame++;
-        world.score = Math.floor(world.frame / settings.FPS);
-        world.dotNum = world.dotLength;
-      }
-      // ending Spawn?
     }
   }());
 
 
-  // Event Listening
+  /* Event Listener related */
+
   function getMousePos(e) {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
@@ -122,13 +130,12 @@
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
-    var startButtonText = document.getElementById('gameStart');
+    startButtonText = document.getElementById('gameStart');
     // Loading start messages.
     tutorial(startButtonText);
-    // removing start button div
     setTimeout(function () {
-      document.getElementById('board').removeChild(startButtonText);
-      return world.start = true;
+      // removing start button and start game.
+      gameStarter();
     }, 2900);
   }
 

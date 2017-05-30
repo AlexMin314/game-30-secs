@@ -8,13 +8,11 @@
     var sButton = document.createElement('div');
     sButton.id = 'gameStart';
     sButton.innerHTML = 'START<br>BUTTON';
-    //sButton.style.fontSize = '90px';
-    //sButton.style.paddingTop = '5px';
     gameBoard.appendChild(sButton);
   };
 
-  // Game Starter.
-  window.gameStarter = function (world) {
+  // Append Score and Dot number
+  window.boardInfo = function (world) {
     // Adding Score at right side of game board.
     var scoreDiv = document.createElement('div');
     scoreDiv.id = 'score';
@@ -23,35 +21,15 @@
     // Adding Dot number at right side of game board.
     var dotNum = document.createElement('div');
     dotNum.id = 'dotNum';
-    dotNum.innerHTML = 'DOTS<br>' + world.dotNum;
+    dotNum.innerHTML = 'DOTS<br>' + world.dotLength;
     gameBoard.appendChild(dotNum);
   };
 
   // Updating Dot Numbers and Scores on gameBoard.
   window.updatingBoard = function (scoreBoard, dotNumBoard, world) {
     scoreBoard.innerHTML = 'SCORE<br>' + world.score;
-    dotNumBoard.innerHTML = 'DOTS<br>' + world.dotNum;
+    dotNumBoard.innerHTML = 'DOTS<br>' + world.dotLength;
   };
-
-  // Gives wall limit to target(player).
-  window.wall = function () {
-    var rect = this.getBoundingClientRect();
-    var w = Math.floor(window.innerWidth);
-    var h = Math.floor(window.innerHeight);
-
-    if (rect.bottom > h) {
-      this.style.top = (h - rect.height) + 'px';
-    }
-    if (rect.top < 0) {
-      this.style.top = '0px';
-    }
-    if (rect.left < 0) {
-      this.style.left = '0px';
-    }
-    if (rect.right > w) {
-      this.style.left = (w - rect.width) + 'px';
-    }
-  }
 
   // collision detection for Player Pattern.
   window.collision = function (arr, world, settings, gameOver) {
@@ -85,6 +63,26 @@
       return document.getElementById(newDiv.id);
   };
 
+  // Gives wall limit to target(player).
+  window.wall = function () {
+    var rect = this.getBoundingClientRect();
+    var w = Math.floor(window.innerWidth);
+    var h = Math.floor(window.innerHeight);
+
+    if (rect.bottom > h) {
+      this.style.top = (h - rect.height) + 'px';
+    }
+    if (rect.top < 0) {
+      this.style.top = '0px';
+    }
+    if (rect.left < 0) {
+      this.style.left = '0px';
+    }
+    if (rect.right > w) {
+      this.style.left = (w - rect.width) + 'px';
+    }
+  }
+
   // Game over and Showing game result.
   window.gameOverAndResult = function (world) {
     var saveScore = world.score;
@@ -115,8 +113,10 @@
     retryDiv.id = 'retry';
     retryDiv.innerHTML = '<i class="fa fa-repeat" aria-hidden="true"></i>  RETRY';
     wrapperDiv.appendChild(retryDiv);
-    // reloading document for retrying
+
+    // Event Listening on RETRY.
     document.getElementById('retry').addEventListener('click', function(e) {
+      // need to research on this.
       window.location.reload(false);
     }, false);
   }

@@ -15,8 +15,6 @@ html {
   width: 40px;
   background-color: red;
   position: absolute;
-  top: 50px;
-  left: 50px;
   border-radius: 50%;
 }
 
@@ -41,7 +39,7 @@ html {
 
 #dotNum {
   float: left;
-  color: white;
+  color: rgb(200, 200, 200);
   font-size: 30px;
   margin-left: 30px;
 }
@@ -83,6 +81,7 @@ html {
   transform: translate(-50%, -50%);
   background-color: black;
   padding-top: 20px;
+  border: 1px solid white;
 }
 
 #scoreResult, #retry {
