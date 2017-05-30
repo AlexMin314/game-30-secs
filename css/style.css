@@ -8,6 +8,7 @@ html {
   box-sizing: inherit;
 }
 
+
 /* Dots */
 
 .playerDot {
@@ -22,9 +23,16 @@ html {
   height: 20px;
   width: 20px;
   position: absolute;
-  top: 50px;
-  left: 50px;
   border-radius: 50%;
+}
+
+.bonus {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  font-size: 27px;
+  text-align: center;
+  color: rgb(255, 222, 3);
 }
 
 
@@ -117,6 +125,7 @@ html {
   text-align: center;
 }
 
+
 /* hover */
 
 #gameStart:hover {
@@ -127,7 +136,7 @@ html {
   color: yellow;
 }
 
-#gameOver:hover, {
+#gameOver:hover {
   color: rgb(0, 224, 255);
 }
 

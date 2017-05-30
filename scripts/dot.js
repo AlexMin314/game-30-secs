@@ -1,4 +1,4 @@
-var Dots = function (dotNum, settings, world) {
+var Dots = function (dotNum, settings, world, bonus) {
 
   // Settings
   var dots = null;
@@ -17,7 +17,7 @@ var Dots = function (dotNum, settings, world) {
 
   (function init() {
     // Create an enemy dot.
-    dots = createDots('dots', null, dotNum);
+    dots = bonus ? createDots('bonus', null, dotNum) : createDots('dots', null, dotNum);
 
     // distance from the center
     var d = world.spwanDist;
@@ -31,7 +31,8 @@ var Dots = function (dotNum, settings, world) {
     dots.style.top = Math.floor(randomSeed) + 'px';
     dots.style.left = Math.floor(Math.random() * (w - 100) + 50) + 'px';
     // coloring
-    dots.style.backgroundColor = world.colorSeed[speedX];
+    if (!bonus) dots.style.backgroundColor = world.colorSeed[speedX];
+    if (bonus) dots.innerHTML = '<i class="fa fa-star fa-spin"></i>';
   }());
 
   // Drawing dot movement
@@ -42,13 +43,13 @@ var Dots = function (dotNum, settings, world) {
     radius = dRect.width / 2;
 
     // Wall bouncing
-    if (x + dx > window.innerWidth - dRect.width) {
+    if (x + dx > window.innerWidth - dRect.width - settings.bounceBuffer) {
       dx = -dx;
-      x = window.innerWidth - dRect.width - 2;
+      x = window.innerWidth - dRect.width - 3 * settings.bounceBuffer;
     }
-    if (y + dy > window.innerHeight - dRect.width) {
+    if (y + dy > window.innerHeight - dRect.width - settings.bounceBuffer) {
       dy = -dy;
-      y = window.innerHeight - dRect.width - 2;
+      y = window.innerHeight - dRect.width - 3 * settings.bounceBuffer;
     }
     if (x + dx < 0) dx = -dx;
     if (y + dy < 0) dy = -dy;
@@ -65,10 +66,17 @@ var Dots = function (dotNum, settings, world) {
 
 };
 
-var dotSpawner = function (settings, world) {
-  if (!showVar().checker) {
-    world.dotList.push(new Dots(world.dotNumIdx, settings, world));
+var dotSpawner = function (settings, world, bonus) {
+  // enemy dot
+  if (!showVar().checker && bonus === false) {
+    world.dotList.push(new Dots(world.dotNumIdx, settings, world, bonus));
     world.dotNumIdx++;
     world.dotLength = world.dotList.length;
+  }
+  // bonus dot
+  if (!showVar().checker && bonus === true) {
+    world.bonus.push(new Dots(world.bonusIdx, settings, world, bonus));
+    world.bonusIdx++;
+    world.bonusLength = world.bonus.length;
   }
 };

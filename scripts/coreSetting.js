@@ -4,14 +4,20 @@
 
   var settings = {};
   settings.FPS = 60;
+  // Dots
   settings.roundStart = 2;
   settings.roundStartMax = 20;
   settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1;
   settings.speedScale = 1.2;
-  settings.roundModifier = 0.05;
-  settings.playerDotSpeed = 20; // lower = faster respond
   settings.spawnSpeed = 500; // ms
+  settings.bounceBuffer = 1;
+  // bonus
+  settings.bonusSpawn = 1;
+  settings.bonusMax = 2;
+  settings.bonusSpawnSpeed = 5000;
+  // Player related
+  settings.playerDotSpeed = 20; // lower = faster respond
   // Debug mode
   settings.godmode = false;
 
@@ -29,6 +35,10 @@
   world.dotLength = 0;
   world.spwanDist = 120;
   world.colorSeed = [, , '#14ff00', '#00fff7', '#faff00', '#ff00de'];
+  // Bonus obj
+  world.bonus = [];
+  world.bonusIdx = 0;
+  world.bonusLength = 0;
   // Miscellaneous
   world.score = 0;
   world.start = false;
@@ -67,6 +77,9 @@
     dotNumBoard = document.getElementById('dotNum');
     // Dot spwan
     dotSpawnStart();
+    // bonuse spwan
+    bonusSpawnStart();
+    // Score++
     setInterval(function () {
       world.score++;
     }, 1000)
@@ -75,16 +88,26 @@
   // Dot enemy spawn
   function dotSpawnStart() {
     // initial spawn
-    for (var i = 0; i < settings.roundStart; i++) {
-      dotSpawner(settings, world);
+    for (var k = 0; k < settings.roundStart; k++) {
+      dotSpawner(settings, world, false);
     }
     // addtional spawn
     var moreSpawns = setInterval(function () {
       for (var i = 0; i < settings.roundUpSpawn; i++) {
-        dotSpawner(settings, world);
+        dotSpawner(settings, world, false);
         if (world.dotLength === settings.roundStartMax) clearInterval(moreSpawns);
       }
     }, settings.roundUpTimer);
+  }
+
+  // bonus spawn
+  function bonusSpawnStart() {
+    var bonusSpawns = setInterval(function () {
+      for (var j = 0; j < settings.bonusSpawn; j++) {
+        dotSpawner(settings, world, true);
+        if (world.bonusLength === settings.bonusMax) clearInterval(bonusSpawns);
+      }
+    }, settings.bonusSpawnSpeed);
   }
 
 
@@ -95,6 +118,9 @@
       return e.drawPlayerMove(mouse);
     });
     world.dotList.map(function (e) {
+      return e.drawDotMove();
+    });
+    world.bonus.map(function (e) {
       return e.drawDotMove();
     });
   }
