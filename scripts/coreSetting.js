@@ -13,7 +13,7 @@
   settings.playerDotSpeed = 20; // lower = faster respond
   settings.spawnSpeed = 500; // ms
   // Debug mode
-  settings.godmode = true;
+  settings.godmode = false;
 
   /* DO NOT CHANGE BELOW */
 
@@ -32,6 +32,7 @@
   // Miscellaneous
   world.score = 0;
   world.start = false;
+  world.sound = true;
   world.gameOver = false;
   world.spaceBar = false;
 
@@ -52,15 +53,21 @@
   var scoreBoard;
   var dotNumBoard;
   var startButtonText;
+  var theWrapper;
 
 
   /* Game Starter functions */
 
   function gameStarter() {
-    document.getElementById('board').removeChild(startButtonText);
+    document.getElementById('board').removeChild(theWrapper);
     world.start = true;
+    // Display Score + Dot number.
+    boardInfo(world);
+    scoreBoard = document.getElementById('score');
+    dotNumBoard = document.getElementById('dotNum');
+    // Dot spwan
     dotSpawnStart();
-    setInterval(function() {
+    setInterval(function () {
       world.score++;
     }, 1000)
   }
@@ -97,14 +104,8 @@
 
   // Display Start Button.
   startButton();
-  // Display Score + Dot number.
-  boardInfo(world);
   // PlayerSpawn
   playerSpawner(settings, world);
-
-  scoreBoard = document.getElementById('score');
-  dotNumBoard = document.getElementById('dotNum');
-
 
   /* Render Loops */
 
@@ -130,7 +131,12 @@
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
+    theWrapper = showVar().wrapper;
     startButtonText = document.getElementById('gameStart');
+
+    theWrapper.removeChild(showVar().sound);
+    theWrapper.removeChild(showVar().godMode);
+
     // Loading start messages.
     tutorial(startButtonText);
     setTimeout(function () {
@@ -139,9 +145,21 @@
     }, 2900);
   }
 
+  function soundButton(e) {
+    world.sound = !(world.sound);
+    soundOnOff(world);
+  }
+
+  function godButton(e) {
+    settings.godmode = !(settings.godmode);
+    godOnOff(settings);
+  }
+
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
+    document.getElementById('sound').addEventListener('click', soundButton, false);
+    document.getElementById('godmode').addEventListener('click', godButton, false);
     document.getElementById('playerDot1').addEventListener('click', startClick, false);
   }());
 

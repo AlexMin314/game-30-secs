@@ -66,7 +66,7 @@ var Dots = function (dotNum, settings, world) {
 };
 
 var dotSpawner = function (settings, world) {
-  if (!window.showChecker().checker) {
+  if (!showVar().checker) {
     world.dotList.push(new Dots(world.dotNumIdx, settings, world));
     world.dotNumIdx++;
     world.dotLength = world.dotList.length;
