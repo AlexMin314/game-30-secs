@@ -5,7 +5,6 @@
   var soundE;
   var godModeE;
   var debugE;
-  var bgSound;
   var gameoverChecker = false;
 
   // Show information to public.
@@ -109,18 +108,17 @@
   window.backgroundSound = function (world, gameOver) {
     if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true);
     if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false);
-    if (!world.sound) gameBoard.removeChild(bgSound);
+    if (!world.sound) gameBoard.removeChild(document.getElementById('bgSound'));
   };
 
   window.audioTagHelper = function (id, src, loop) {
-    var bgSoundTag = document.createElement('audio');
-    bgSoundTag.id = id;
-    bgSoundTag.loop = loop;
-    bgSoundTag.src = src;
-    bgSoundTag.autoplay = true;
-    bgSoundTag.volume = 0.4;
-    gameBoard.appendChild(bgSoundTag);
-    bgSound = document.getElementById('bgSound');
+    var audioTag = document.createElement('audio');
+    audioTag.id = id;
+    audioTag.loop = loop;
+    audioTag.src = src;
+    audioTag.autoplay = true;
+    audioTag.volume = 0.4;
+    gameBoard.appendChild(audioTag);
   };
 
   // Change godMode(debug) button when it is clicked.
