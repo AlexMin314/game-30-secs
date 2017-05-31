@@ -209,13 +209,13 @@
     if (rect.right > w) this.style.left = (w - rect.width) + 'px';
   }
 
-  // Line event between the 2 dots.
-  window.drawLine =  function(x1, y1, x2, y2, id) {
+  // Line event - drawing line 
+  window.drawLine = function (x1, y1, x2, y2, id) {
     // calculate angle
-    var calc = Math.atan2(x2 - x1, y2 - y1);
+    var calc = Math.atan2(y2 - y1, x2 - x1);
     calc = calc * 180 / Math.PI;
     // line length
-    var length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    var length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) -5;
     // CSS
     var temp = document.getElementById(id);
     temp.style.height = '2px';
@@ -229,6 +229,23 @@
     temp.style['-webkit-transform'] = 'rotate(' + calc + 'deg)';
     temp.style['-webkit-transform-origin'] = '0% 0%';
     temp.style['-ms-transform'] = 'rotate(' + calc + 'deg)';
+  };
+
+  // Line event trigger
+  window.lineEventTrigger = function (world) {
+    // Append line div
+    var lineDiv = document.createElement('div');
+    lineDiv.id = 'line';
+    gameBoard.appendChild(lineDiv);
+    // pick 2 dots.
+    var dotIdx1 = Math.floor(Math.random() * world.dotLength);
+    var dotIdx2 = Math.floor(Math.random() * world.dotLength);
+    while (dotIdx1 === dotIdx2) dotIdx2 = Math.floor(Math.random() * world.dotLength);
+    world.dot1 = world.dotList[dotIdx1];
+    world.dot2 = world.dotList[dotIdx2];
+    //
+    world.lineEvent = true;
+    //drawLine(dot1.showInfo().x, dot1.showInfo().y, dot2.showInfo().x, dot2.showInfo().y)
   };
 
   /* Game info related */

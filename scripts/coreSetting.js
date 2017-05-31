@@ -41,6 +41,11 @@
   world.bonusLength = 0;
   world.bonusScore = 100;
   world.bonusCounter = 0;
+  // Line Event
+  world.lineEvent = false;
+  world.dot1 = null;
+  world.dot2 = null;
+  world.lineEventTimer = 5000;
   // Miscellaneous
   world.score = 0;
   world.pause = false;
@@ -93,7 +98,10 @@
       bonusSpawnStart();
     }, settings.bonusSpawnSpeed)
 
-    //
+    // Line event triggering
+    setTimeout(function () {
+      lineEventTrigger(world);
+    }, world.lineEventTimer)
 
     // Score Tracking
     setInterval(function () {
@@ -122,17 +130,22 @@
 
   // Draw movement of player and dots
   function drawMovements() {
+    // player movement.
     world.playerList.map(function (e, i, arr) {
       collision.call(e, world.dotList, world, settings, true, false);
       collision.call(e, world.bonus, world, settings, true, true);
       return e.drawPlayerMove(mouse);
     });
+    // dot movement.
     world.dotList.map(function (e) {
       return e.drawDotMove();
     });
+    // bonus(star) movement.
     world.bonus.map(function (e) {
       return e.drawDotMove();
     });
+    // line movement.
+    if (world.lineEvent) drawLine(world.dot1.showInfo().x, world.dot1.showInfo().y, world.dot2.showInfo().x, world.dot2.showInfo().y, 'line');
   }
 
 
