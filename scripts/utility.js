@@ -8,7 +8,9 @@
   var starE1;
   var starE2;
   var counterE;
+  var lineLength;
   var gameoverChecker = false;
+  var calc;
 
   // Show information to public.
   window.showVar = function () {
@@ -162,9 +164,7 @@
     var pRadius = Math.floor(this.showInfo().radius);
 
     // Checking debug mode and game over or not.
-    //if (!settings.godmode && !gameoverChecker) {
     if (!gameoverChecker) {
-      // CONSIDER CHANGE THIS TO FOR LOOP FOR BREAK
       arr.map(function (e, i) {
         var xTarget = Math.floor(e.showInfo().x);
         var yTarget = Math.floor(e.showInfo().y);
@@ -188,6 +188,18 @@
           if (world.sound && world.bonusCounter % 2 === 0) starE2.play();
         }
       });
+      // Line collision
+      if (world.lineEvent && gameOver === true) {
+        var distA = Math.sqrt(Math.pow(world.dot1.showInfo().x-xThis,2) + Math.pow(world.dot1.showInfo().y-yThis,2));
+        var distB =Math.sqrt(Math.pow(world.dot2.showInfo().x-xThis,2) + Math.pow(world.dot2.showInfo().y-yThis,2));
+        console.log(Math.floor(lineLength));
+        console.log(Math.floor(distA + distB));
+        if (distA + distB < lineLength + 7 && distA + distB > lineLength - 7) {
+          // gameover
+          gameoverChecker = true;
+          gameOverAndResult(world);
+        }
+      }
     }
   };
 
@@ -209,18 +221,18 @@
     if (rect.right > w) this.style.left = (w - rect.width) + 'px';
   }
 
-  // Line event - drawing line 
+  // Line event - drawing line
   window.drawLine = function (x1, y1, x2, y2, id) {
     // calculate angle
-    var calc = Math.atan2(y2 - y1, x2 - x1);
+    calc = Math.atan2(y2 - y1, x2 - x1);
     calc = calc * 180 / Math.PI;
     // line length
-    var length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) -5;
+    lineLength = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)) - 5;
     // CSS
     var temp = document.getElementById(id);
     temp.style.height = '2px';
-    temp.style.width = length + 'px';
-    temp.style.backgroundColor = 'orange';
+    temp.style.width = lineLength + 'px';
+    temp.style.backgroundColor = 'red';
     temp.style.position = 'absolute';
     temp.style.top = y1 + 'px';
     temp.style.left = x1 + 'px';

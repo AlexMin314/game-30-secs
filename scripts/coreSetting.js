@@ -10,7 +10,7 @@
   settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1;
   settings.speedScale = 1.2;
-  settings.spawnSpeed = 2000; // ms
+  settings.spawnSpeed = 4000; // ms
   settings.bounceBuffer = 1;
   // bonus
   settings.bonusSpawn = 1;
