@@ -184,8 +184,8 @@
           world.score += world.bonusScore;
           world.bonusCounter++;
           removeBonus(e, i, world);
-          if (world.sound && world.bonusCounter % 2 === 0) starE1.play();
-          if (world.sound) starE2.play();
+          if (world.sound && world.bonusCounter % 2 === 1) starE1.play();
+          if (world.sound && world.bonusCounter % 2 === 0) starE2.play();
         }
       });
     }
@@ -209,6 +209,27 @@
     if (rect.right > w) this.style.left = (w - rect.width) + 'px';
   }
 
+  // Line event between the 2 dots.
+  window.drawLine =  function(x1, y1, x2, y2, id) {
+    // calculate angle
+    var calc = Math.atan2(x2 - x1, y2 - y1);
+    calc = calc * 180 / Math.PI;
+    // line length
+    var length = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    // CSS
+    var temp = document.getElementById(id);
+    temp.style.height = '2px';
+    temp.style.width = length + 'px';
+    temp.style.backgroundColor = 'orange';
+    temp.style.position = 'absolute';
+    temp.style.top = y1 + 'px';
+    temp.style.left = x1 + 'px';
+    temp.style.transform = 'rotate(' + calc + 'deg)';
+    temp.style.transformOrigin = '0%';
+    temp.style['-webkit-transform'] = 'rotate(' + calc + 'deg)';
+    temp.style['-webkit-transform-origin'] = '0% 0%';
+    temp.style['-ms-transform'] = 'rotate(' + calc + 'deg)';
+  };
 
   /* Game info related */
 

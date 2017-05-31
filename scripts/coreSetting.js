@@ -43,7 +43,7 @@
   world.bonusCounter = 0;
   // Miscellaneous
   world.score = 0;
-  world.start = false;
+  world.pause = false;
   world.sound = true;
   world.gameOver = false;
   world.spaceBar = false;
@@ -92,6 +92,8 @@
     setInterval(function () {
       bonusSpawnStart();
     }, settings.bonusSpawnSpeed)
+
+    //
 
     // Score Tracking
     setInterval(function () {
@@ -150,9 +152,9 @@
   /* Render Loops */
 
   (function renderLoop() {
-    requestAnimFrame(renderLoop);
     // Check start button is pressed.
-    if (world.start) {
+    requestAnimFrame(renderLoop);
+    if (world.start && !world.pause) {
       drawMovements();
       updatingBoard(scoreBoard, dotNumBoard, world);
     }
@@ -196,8 +198,14 @@
     godOnOff(settings);
   }
 
+  // press spaceBar = pause
+  function gamePause(e) {
+    if (e.keyCode === 32) world.pause = !world.pause;
+  }
+
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
+    document.addEventListener('keydown', gamePause, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
     document.getElementById('sound').addEventListener('click', soundButton, false);
     document.getElementById('godmode').addEventListener('click', godButton, false);
