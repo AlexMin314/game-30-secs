@@ -40,6 +40,7 @@
   world.bonusIdx = 0;
   world.bonusLength = 0;
   world.bonusScore = 100;
+  world.bonusCounter = 0;
   // Miscellaneous
   world.score = 0;
   world.start = false;
@@ -141,6 +142,10 @@
   playerSpawner(settings, world);
   // Background sound Start
   backgroundSound(world, world.gameOver);
+  // Append some sound effect
+  audioTagHelper('star1', './src/star.mp3', false, false);
+  audioTagHelper('star2', './src/star.mp3', false, false);
+  audioTagHelper('counter', './src/count.mp3', false, false);
 
   /* Render Loops */
 
@@ -173,7 +178,7 @@
     theWrapper.removeChild(showVar().godMode);
 
     // Loading start messages.
-    tutorial(startButtonText);
+    tutorial(startButtonText, world);
     setTimeout(function () {
       // removing start button and start game.
       gameStarter();

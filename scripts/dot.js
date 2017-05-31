@@ -25,11 +25,11 @@ var Dots = function (dotNum, settings, world, bonus) {
     var w = window.innerWidth;
 
     // Starting Point : random.
-    var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 50;
-    var upside = Math.random() * (h / d) + 50;
+    var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 60;
+    var upside = Math.random() * (h / d) + 60;
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
     dots.style.top = Math.floor(randomSeed) + 'px';
-    dots.style.left = Math.floor(Math.random() * (w - 100) + 20) + 'px';
+    dots.style.left = Math.floor(Math.random() * (w - 130) + 50) + 'px';
     // coloring
     if (!bonus) dots.style.backgroundColor = world.colorSeed[speedX];
     if (bonus) dots.innerHTML = '<i class="fa fa-star fa-spin"></i>';

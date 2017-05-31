@@ -5,6 +5,9 @@
   var soundE;
   var godModeE;
   var debugE;
+  var starE1;
+  var starE2;
+  var counterE;
   var gameoverChecker = false;
 
   // Show information to public.
@@ -106,18 +109,18 @@
 
   // Appending background sound, game over.
   window.backgroundSound = function (world, gameOver) {
-    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true);
-    if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false);
+    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.4);
+    if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false, true, 0.4);
     if (!world.sound) gameBoard.removeChild(document.getElementById('bgSound'));
   };
 
-  window.audioTagHelper = function (id, src, loop) {
+  window.audioTagHelper = function (id, src, loop, auto, volume) {
     var audioTag = document.createElement('audio');
     audioTag.id = id;
-    audioTag.loop = loop;
     audioTag.src = src;
-    audioTag.autoplay = true;
-    audioTag.volume = 0.4;
+    audioTag.loop = loop;
+    audioTag.autoplay = auto;
+    audioTag.volume = volume || 1;
     gameBoard.appendChild(audioTag);
   };
 
@@ -179,7 +182,10 @@
         // bonus collision
         if (distance < pRadius + dRadius && bonus === true) {
           world.score += world.bonusScore;
+          world.bonusCounter++;
           removeBonus(e, i, world);
+          if (world.sound && world.bonusCounter % 2 === 0) starE1.play();
+          if (world.sound) starE2.play();
         }
       });
     }
@@ -227,7 +233,7 @@
     dotNumBoard.innerHTML = 'DOTS<br>' + world.dotLength;
   };
 
-  window.tutorial = function (startButtonText) {
+  window.tutorial = function (startButtonText, world) {
     setTimeout(function () {
       startButtonText.innerHTML = 'DODGE<br>DOTS'
     }, 0);
@@ -235,15 +241,23 @@
       startButtonText.innerHTML = 'GOOD<br>LUCK'
     }, 700);
     setTimeout(function () {
+      // Store element to reducing dom access
+      starE1 = document.getElementById('star1');
+      starE2 = document.getElementById('star2');
+      counterE = document.getElementById('counter');
+      // Counter sound play
+      if (world.sound) counterE.play();
       startButtonText.style.fontSize = '200px';
       startButtonText.style.paddingTop = '0px';
       startButtonText.style.border = '0px';
       startButtonText.innerHTML = '3'
     }, 1400);
     setTimeout(function () {
+      if (world.sound) counterE.play();
       startButtonText.innerHTML = '2'
     }, 1900);
     setTimeout(function () {
+      if (world.sound) counterE.play();
       startButtonText.innerHTML = '1'
     }, 2400);
   }
