@@ -5,6 +5,7 @@
   var soundE;
   var godModeE;
   var debugE;
+  var bgSound;
   var gameoverChecker = false;
 
   // Show information to public.
@@ -93,6 +94,7 @@
 
   /* Sound and Godmode setting */
 
+  // Change sound button when it is clicked.
   window.soundOnOff = function (world) {
     if (world.sound) {
       soundE.style.color = 'white';
@@ -103,23 +105,25 @@
     }
   };
 
+  // Appending background sound, game over.
   window.backgroundSound = function (world, gameOver) {
-    if (!gameOver) {
-      if (world.sound) {
-        var bgSoundDiv = document.createElement('div');
-        bgSoundDiv.id = 'bgSound';
-        bgSoundDiv.innerHTML = '<audio src="src/bg.mp3" autoplay loop></audio>';
-        gameBoard.appendChild(bgSoundDiv);
-      }
-      if (!world.sound) gameBoard.removeChild(document.getElementById('bgSound'));
-    } else {
-      var bgSoundDiv = document.createElement('div');
-      bgSoundDiv.id = 'bgSound';
-      bgSoundDiv.innerHTML = '<audio src="src/over.mp3" autoplay></audio>';
-      gameBoard.appendChild(bgSoundDiv);
-    }
+    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true);
+    if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false);
+    if (!world.sound) gameBoard.removeChild(bgSound);
   };
 
+  window.audioTagHelper = function (id, src, loop) {
+    var bgSoundTag = document.createElement('audio');
+    bgSoundTag.id = id;
+    bgSoundTag.loop = loop;
+    bgSoundTag.src = src;
+    bgSoundTag.autoplay = true;
+    bgSoundTag.volume = 0.4;
+    gameBoard.appendChild(bgSoundTag);
+    bgSound = document.getElementById('bgSound');
+  };
+
+  // Change godMode(debug) button when it is clicked.
   window.godOnOff = function (settings) {
     if (!settings.godmode) {
       godModeE.style.color = 'white';

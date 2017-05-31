@@ -140,7 +140,7 @@
   // PlayerSpawn
   playerSpawner(settings, world);
   // Background sound Start
-  backgroundSound(world, false);
+  backgroundSound(world, world.gameOver);
 
   /* Render Loops */
 
