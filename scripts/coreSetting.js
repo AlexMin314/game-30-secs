@@ -139,6 +139,8 @@
   startButton();
   // PlayerSpawn
   playerSpawner(settings, world);
+  // Background sound Start
+  backgroundSound(world, false);
 
   /* Render Loops */
 
@@ -181,6 +183,7 @@
   function soundButton(e) {
     world.sound = !(world.sound);
     soundOnOff(world);
+    backgroundSound(world);
   }
 
   function godButton(e) {

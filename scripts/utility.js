@@ -4,9 +4,10 @@
   var wrapper;
   var soundE;
   var godModeE;
-  var debugE
+  var debugE;
   var gameoverChecker = false;
 
+  // Show information to public.
   window.showVar = function () {
     return {
       checker: gameoverChecker,
@@ -27,7 +28,7 @@
     wrapper = document.getElementById('wrapper');
   };
 
-  // Append Start Button div.
+  // Appending Start Button div.
   window.startButton = function () {
     // Appending Wrapper to game board.
     makeWrapper();
@@ -58,6 +59,9 @@
   window.gameOverAndResult = function (world) {
     // Removing dot elements.
     gameBoard.innerHTML = '';
+
+    // Game over sound
+    if (world.sound) backgroundSound(world, true);
 
     // Appending Wrapper to game board.
     makeWrapper();
@@ -96,6 +100,23 @@
     } else {
       soundE.style.color = 'grey';
       soundE.innerHTML = '<i class="fa fa-volume-off"></i> mute';
+    }
+  };
+
+  window.backgroundSound = function (world, gameOver) {
+    if (!gameOver) {
+      if (world.sound) {
+        var bgSoundDiv = document.createElement('div');
+        bgSoundDiv.id = 'bgSound';
+        bgSoundDiv.innerHTML = '<audio src="src/bg.mp3" autoplay loop></audio>';
+        gameBoard.appendChild(bgSoundDiv);
+      }
+      if (!world.sound) gameBoard.removeChild(document.getElementById('bgSound'));
+    } else {
+      var bgSoundDiv = document.createElement('div');
+      bgSoundDiv.id = 'bgSound';
+      bgSoundDiv.innerHTML = '<audio src="src/over.mp3" autoplay></audio>';
+      gameBoard.appendChild(bgSoundDiv);
     }
   };
 
@@ -162,9 +183,9 @@
     }
   };
 
-  window.removeBonus = function(e, i, world) {
+  window.removeBonus = function (e, i, world) {
     gameBoard.removeChild(e.showInfo().dots);
-    world.bonus.splice(i,1);
+    world.bonus.splice(i, 1);
     world.bonusLength = world.bonus.length;
   }
 
