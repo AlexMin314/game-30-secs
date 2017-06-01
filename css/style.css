@@ -13,6 +13,11 @@ span {
   font-size: 25px;
 }
 
+p {
+  color: rgb(186, 186, 186);
+  font-size: 20px;
+}
+
 /* Dots */
 
 .playerDot {
@@ -41,7 +46,7 @@ span {
 
 /* Line */
 
-.line {
+#line {
   height: 2px;
   background-color: red;
   position: absolute;
@@ -87,6 +92,13 @@ span {
   font-size: 30px;
   padding-top: 300px;
   margin: 0 auto;
+}
+
+#instruction {
+  color: white;
+  font-size: 25px;
+  text-align: center;
+  padding-top: 310px;
 }
 
 #gameOver, #gameStart {

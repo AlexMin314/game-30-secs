@@ -11,6 +11,7 @@
   divInfo.starE1 = null;
   divInfo.starE2 = null;
   divInfo.counterE = null;
+  divInfo.instruction = null;
 
   // Line(enemy) length
   var lineLength = 0;
@@ -181,6 +182,13 @@
     divInfo.wrapper.appendChild(godmodeButton);
     divInfo.godModeE = document.getElementById('godmode');
 
+    // Appending Instruction texts.
+    var instructionDiv = document.createElement('div');
+    instructionDiv.id = 'instruction';
+    instructionDiv.innerHTML = 'DODGE DOTS | GRAB STARS<br>' +'<p>PAUSE: SPACEBAR</p>';
+    divInfo.wrapper.appendChild(instructionDiv);
+    divInfo.instruction = document.getElementById('instruction');
+
   };
 
   // Game over and Showing game result.
@@ -311,14 +319,11 @@
   window.tutorial = function (startButtonText, world) {
     var interval = 650;
     setTimeout(function () {
-      startButtonText.innerHTML = 'DODGE<br>DOTS'
+      startButtonText.innerHTML = 'EVERY<br>30 SECS'
     }, interval * 0);
     setTimeout(function () {
-      startButtonText.innerHTML = '<i class="fa fa-star fa-spin"></i>GRAB<br>STARS'
-    }, interval * 1);
-    setTimeout(function () {
       startButtonText.innerHTML = 'GOOD<br>LUCK'
-    }, interval * 2);
+    }, interval * 1);
     setTimeout(function () {
       // Store element to reducing dom access
       divInfo.starE1 = document.getElementById('star1');
@@ -330,15 +335,15 @@
       startButtonText.style.paddingTop = '0px';
       startButtonText.style.border = '0px';
       startButtonText.innerHTML = '3'
-    }, interval * 3);
+    }, interval * 2);
     setTimeout(function () {
       if (world.sound) divInfo.counterE.play();
       startButtonText.innerHTML = '2'
-    }, interval * 4);
+    }, interval * 3);
     setTimeout(function () {
       if (world.sound) divInfo.counterE.play();
       startButtonText.innerHTML = '1'
-    }, interval * 5);
+    }, interval * 4);
   }
 
 

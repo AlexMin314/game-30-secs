@@ -212,7 +212,7 @@
     setTimeout(function () {
       // Removing start button and start game.
       gameStarter();
-    }, 3700);
+    }, 3000);
   }
 
   function soundButton(e) {
