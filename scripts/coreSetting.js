@@ -215,7 +215,7 @@
       playerSpawner(settings, world);
       document.getElementById('playerDot1').addEventListener('click', startClick, false);
       gameStarter();
-    }, 3000);
+    }, 3100);
   }
 
   function soundButton(e) {

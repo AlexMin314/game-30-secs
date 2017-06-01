@@ -317,7 +317,7 @@
 
   // Showing starting messages.
   window.tutorial = function (startButtonText, world) {
-    var interval = 650;
+    var interval = 700;
     setTimeout(function () {
       startButtonText.innerHTML = 'EVERY<br>30 SECS'
     }, interval * 0);
