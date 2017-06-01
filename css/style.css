@@ -14,8 +14,8 @@ span {
 }
 
 p {
-  color: rgb(186, 186, 186);
-  font-size: 20px;
+  color: grey;
+  font-size: 19px;
 }
 
 /* Dots */
@@ -96,7 +96,7 @@ p {
 
 #instruction {
   color: white;
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   padding-top: 310px;
 }
