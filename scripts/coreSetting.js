@@ -45,7 +45,7 @@
   world.lineEvent = false;
   world.dot1 = null;
   world.dot2 = null;
-  world.lineEventTimer = 31000;
+  world.lineEventTimer = 30300;
   // Miscellaneous
   world.thirtySec = 30000;
   world.score = 0;
@@ -110,6 +110,7 @@
     // 30 Sec checker
     world.thirtySecBeep = setInterval(function () {
       showVar().countBeep.play();
+      settings.roundStartMax++;
     }, world.thirtySec)
 
     // Score Tracking
