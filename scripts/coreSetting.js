@@ -11,7 +11,7 @@
   settings.roundUpSpawn = 1; // num
   settings.speedScale = 1.2; // multiplyer
   settings.spawnSpeed = 3500; // ms
-  settings.bounceBuffer = 1; // num
+  settings.bounceBuffer = 5; // px
   // bonus
   settings.bonusSpawn = 1; // num
   settings.bonusMax = 2; // num

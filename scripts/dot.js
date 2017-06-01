@@ -25,11 +25,11 @@ var Dots = function (dotNum, settings, world, bonus) {
     var w = window.innerWidth;
 
     // Starting Point : random, avoid center(player protection)
-    var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 60;
-    var upside = Math.random() * (h / d) + 60;
+    var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 70;
+    var upside = Math.random() * (h / d) + 70;
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
     dots.style.top = Math.floor(randomSeed) + 'px';
-    dots.style.left = Math.floor(Math.random() * (w - 130) + 50) + 'px';
+    dots.style.left = Math.floor(Math.random() * (w - 150) + 75) + 'px';
     // coloring
     if (!bonus) dots.style.backgroundColor = world.colorSeed[speedX];
     if (bonus) dots.innerHTML = '<i class="fa fa-star fa-spin"></i>';
@@ -45,14 +45,14 @@ var Dots = function (dotNum, settings, world, bonus) {
     // Wall bouncing
     if (x + dx > window.innerWidth - dRect.width - settings.bounceBuffer) {
       dx = -dx;
-      x = window.innerWidth - dRect.width - 3 * settings.bounceBuffer;
+      x = window.innerWidth - dRect.width - 2 * settings.bounceBuffer;
     }
     if (y + dy > window.innerHeight - dRect.width - settings.bounceBuffer) {
       dy = -dy;
-      y = window.innerHeight - dRect.width - 3 * settings.bounceBuffer;
+      y = window.innerHeight - dRect.width - 2 * settings.bounceBuffer;
     }
-    if (x + dx < 0) dx = -dx;
-    if (y + dy < 0) dy = -dy;
+    if (x + dx < settings.bounceBuffer) dx = -dx;
+    if (y + dy < settings.bounceBuffer) dy = -dy;
     x += dx;
     y += dy;
     dots.style.left = x + 'px';
