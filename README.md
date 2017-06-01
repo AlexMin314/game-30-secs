@@ -1,12 +1,11 @@
 # game-every-30-secs
 Project 1
 
-***
 
 ## Stack
 * Javascript. (no canvas)
 
-***
+
 ## How to play
 * Dodge the dots.
 * Capture the stars.
