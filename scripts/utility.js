@@ -185,7 +185,7 @@
     // Appending Instruction texts.
     var instructionDiv = document.createElement('div');
     instructionDiv.id = 'instruction';
-    instructionDiv.innerHTML = 'DODGE DOTS | GRAB STARS<br>' +'<p>PAUSE: SPACEBAR</p>';
+    instructionDiv.innerHTML = 'DODGE DOTS | GRAB STARS<br>' +'<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
     divInfo.wrapper.appendChild(instructionDiv);
     divInfo.instruction = document.getElementById('instruction');
 
@@ -299,7 +299,7 @@
     // Adding Score at right side of game board.
     var scoreDiv = document.createElement('div');
     scoreDiv.id = 'score';
-    scoreDiv.innerHTML = 'SCORE<br>' + world.score;
+    scoreDiv.innerHTML = 'SCORE.<br>' + world.score;
     divInfo.gameBoard.appendChild(scoreDiv);
 
     // Adding Dot number at right side of game board.
