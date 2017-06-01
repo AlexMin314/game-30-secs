@@ -219,7 +219,7 @@
       world.clickSound.play();
       setInterval(function() {
         window.location.reload(false);
-      }, 700);    
+      }, 700);
     }, false);
   }
 
@@ -309,13 +309,16 @@
 
   // Showing starting messages.
   window.tutorial = function (startButtonText, world) {
-    var interval = 600;
+    var interval = 650;
     setTimeout(function () {
       startButtonText.innerHTML = 'DODGE<br>DOTS'
     }, interval * 0);
     setTimeout(function () {
-      startButtonText.innerHTML = 'GOOD<br>LUCK'
+      startButtonText.innerHTML = '<i class="fa fa-star fa-spin"></i>GRAB<br>STARS'
     }, interval * 1);
+    setTimeout(function () {
+      startButtonText.innerHTML = 'GOOD<br>LUCK'
+    }, interval * 2);
     setTimeout(function () {
       // Store element to reducing dom access
       divInfo.starE1 = document.getElementById('star1');
@@ -327,15 +330,15 @@
       startButtonText.style.paddingTop = '0px';
       startButtonText.style.border = '0px';
       startButtonText.innerHTML = '3'
-    }, interval * 2);
-    setTimeout(function () {
-      if (world.sound) divInfo.counterE.play();
-      startButtonText.innerHTML = '2'
     }, interval * 3);
     setTimeout(function () {
       if (world.sound) divInfo.counterE.play();
-      startButtonText.innerHTML = '1'
+      startButtonText.innerHTML = '2'
     }, interval * 4);
+    setTimeout(function () {
+      if (world.sound) divInfo.counterE.play();
+      startButtonText.innerHTML = '1'
+    }, interval * 5);
   }
 
 
