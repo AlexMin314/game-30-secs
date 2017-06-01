@@ -1,6 +1,5 @@
 html {
   box-sizing: border-box;
-  background: black;
   font-family: sans-serif;
 }
 
@@ -17,6 +16,23 @@ p {
   color: grey;
   font-size: 19px;
 }
+
+video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+}
+
 
 /* Dots */
 
@@ -104,7 +120,6 @@ p {
 #gameOver, #gameStart {
   height: 200px;
   width: 300px;
-  background-color: black;
   text-align: center;
   font-size: 90px;
   color: white;
@@ -136,7 +151,6 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: black;
   padding-top: 20px;
 }
 
@@ -147,7 +161,6 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: black;
   visibility: hidden;
   border: 3px solid white;
   text-align: center;
@@ -169,6 +182,7 @@ p {
 /* hover */
 
 #gameStart:hover {
+  color: rgb(255, 0, 153);
   border: 4px solid white;
 }
 
