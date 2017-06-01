@@ -94,12 +94,12 @@
 
     // Dot spwan
     setInterval(function () {
-      dotSpawnStart();
+      if (!world.pause) dotSpawnStart();
     }, settings.spawnSpeed)
 
     // Bonuse spwan
     setInterval(function () {
-      bonusSpawnStart();
+      if (!world.pause) bonusSpawnStart();
     }, settings.bonusSpawnSpeed)
 
     // Line event triggering
