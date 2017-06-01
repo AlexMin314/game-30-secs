@@ -54,6 +54,7 @@
   world.sound = true;
   world.gameOver = false;
   world.spaceBar = false;
+  world.clickSound = null;
 
   // Controller settings
   var mouse = {};
@@ -107,7 +108,7 @@
     }, world.lineEventTimer)
 
     // 30 Sec checker
-    setInterval(function () {
+    world.thirtySecBeep = setInterval(function () {
       showVar().countBeep.play();
     }, world.thirtySec)
 
@@ -169,6 +170,8 @@
   audioTagHelper('star1', './src/star.mp3', false, false);
   audioTagHelper('star2', './src/star.mp3', false, false);
   audioTagHelper('counter', './src/count.mp3', false, false);
+  audioTagHelper('clicked', './src/clicked.mp3', false, false);
+  world.clickSound = document.getElementById('clicked');
 
   /* Render Loops */
 
@@ -194,6 +197,8 @@
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
+    world.clickSound.play();
+
     theWrapper = showVar().wrapper;
     startButtonText = document.getElementById('gameStart');
 
@@ -211,12 +216,14 @@
   }
 
   function soundButton(e) {
+    world.clickSound.play();
     world.sound = !(world.sound);
     soundOnOff(world);
     backgroundSound(world);
   }
 
   function godButton(e) {
+    world.clickSound.play();
     settings.godmode = !(settings.godmode);
     godOnOff(settings);
   }
@@ -224,6 +231,7 @@
   // press spaceBar = pause
   function gamePause(e) {
     if (e.keyCode === 32 && world.pauseLimit > 0 && world.start) {
+      world.clickSound.play();
       world.pause = !world.pause;
       world.pauseLimit -= 0.5;
       gamePauseScreen(world);

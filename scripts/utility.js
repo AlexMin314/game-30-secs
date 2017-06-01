@@ -187,6 +187,7 @@
   window.gameOverAndResult = function (world) {
     // Removing dot elements.
     divInfo.gameBoard.innerHTML = '';
+    clearInterval(world.thirtySecBeep);
 
     // Game over sound
     if (world.sound) backgroundSound(world, true);
@@ -215,7 +216,10 @@
     // Event Listening on RETRY.
     document.getElementById('retry').addEventListener('click', function (e) {
       // need to research on this.
-      window.location.reload(false);
+      world.clickSound.play();
+      setInterval(function() {
+        window.location.reload(false);
+      }, 700);    
     }, false);
   }
 
