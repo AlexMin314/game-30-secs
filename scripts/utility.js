@@ -3,6 +3,7 @@
   // Caching div info.
   var divInfo = {};
   divInfo.gameBoard = document.getElementById('board');
+  divInfo.pause = document.getElementById('pause');
   divInfo.wrapper = null;
   divInfo.soundE = null;
   divInfo.godModeE = null;
@@ -26,132 +27,6 @@
       countBeep: divInfo.counterE
     };
   }
-
-
-  /* Start and GameOver Divs */
-
-  // wrapper as a helper.
-  window.makeWrapper = function () {
-    var wrapperDiv = document.createElement('div');
-    wrapperDiv.id = 'wrapper';
-    divInfo.gameBoard.appendChild(wrapperDiv);
-    divInfo.wrapper = document.getElementById('wrapper');
-  };
-
-  // Appending Start Button div.
-  window.startButton = function () {
-    // Appending Wrapper to game board.
-    makeWrapper();
-
-    // Appending Start Button to wrapper
-    var sButton = document.createElement('div');
-    sButton.id = 'gameStart';
-    sButton.innerHTML = 'START<br>BUTTON';
-    divInfo.wrapper.appendChild(sButton);
-
-    // Appending Start Button to wrapper
-    var soundButton = document.createElement('div');
-    soundButton.id = 'sound';
-    soundButton.innerHTML = '<i class="fa fa-volume-up"></i> on';
-    divInfo.wrapper.appendChild(soundButton);
-    divInfo.soundE = document.getElementById('sound');
-
-    // Appending Start Button to wrapper
-    var godmodeButton = document.createElement('div');
-    godmodeButton.id = 'godmode';
-    godmodeButton.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
-    divInfo.wrapper.appendChild(godmodeButton);
-    divInfo.godModeE = document.getElementById('godmode');
-
-  };
-
-  // Game over and Showing game result.
-  window.gameOverAndResult = function (world) {
-    // Removing dot elements.
-    divInfo.gameBoard.innerHTML = '';
-
-    // Game over sound
-    if (world.sound) backgroundSound(world, true);
-
-    // Appending Wrapper to game board.
-    makeWrapper();
-
-    // Appending scoreResultDiv to the wrapper
-    var scoreResultDiv = document.createElement('div');
-    scoreResultDiv.id = 'scoreResult';
-    scoreResultDiv.innerHTML = 'SCORE: ' + world.score;
-    divInfo.wrapper.appendChild(scoreResultDiv);
-
-    // Appending gameOverDiv to the wrapper
-    var gameOverDiv = document.createElement('div');
-    gameOverDiv.id = 'gameOver';
-    gameOverDiv.innerHTML = 'GAME OVER';
-    divInfo.wrapper.appendChild(gameOverDiv);
-
-    // Appending retryDiv to the wrapper
-    var retryDiv = document.createElement('div');
-    retryDiv.id = 'retry';
-    retryDiv.innerHTML = '<i class="fa fa-repeat"></i>  RETRY';
-    divInfo.wrapper.appendChild(retryDiv);
-
-    // Event Listening on RETRY.
-    document.getElementById('retry').addEventListener('click', function (e) {
-      // need to research on this.
-      window.location.reload(false);
-    }, false);
-  }
-
-
-  /* Sound and Godmode setting */
-
-  // Change sound button when it is clicked.
-  window.soundOnOff = function (world) {
-    if (world.sound) {
-      divInfo.soundE.style.color = 'white';
-      divInfo.soundE.innerHTML = '<i class="fa fa-volume-up"></i> on';
-    } else {
-      divInfo.soundE.style.color = 'grey';
-      divInfo.soundE.innerHTML = '<i class="fa fa-volume-off"></i> mute';
-    }
-  };
-
-  // Appending background sound, game over.
-  window.backgroundSound = function (world, gameOver) {
-    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.4);
-    if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false, true, 0.4);
-    if (!world.sound) divInfo.gameBoard.removeChild(document.getElementById('bgSound'));
-  };
-
-  // Creating audio tag.
-  window.audioTagHelper = function (id, src, loop, auto, volume) {
-    var audioTag = document.createElement('audio');
-    audioTag.id = id;
-    audioTag.src = src;
-    audioTag.loop = loop;
-    audioTag.autoplay = auto;
-    audioTag.volume = volume || 1;
-    divInfo.gameBoard.appendChild(audioTag);
-  };
-
-  // Change godMode(debug) button when it is clicked.
-  window.godOnOff = function (settings) {
-    if (!settings.godmode) {
-      divInfo.godModeE.style.color = 'white';
-      divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
-      if (divInfo.debugE !== null) divInfo.wrapper.removeChild(divInfo.debugE);
-    }
-    if (settings.godmode) {
-      divInfo.godModeE.style.color = 'red';
-      divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-on fa-lg" title="DebugMode"></i>';
-      // inserd Debug Mode ON message.
-      var debug = document.createElement('div');
-      debug.id = 'debug';
-      debug.innerHTML = 'Debug Mode ON';
-      divInfo.wrapper.appendChild(debug);
-      divInfo.debugE = document.getElementById('debug');
-    }
-  };
-
 
   /* Game Logics */
 
@@ -268,6 +143,140 @@
     world.dot2 = world.dotList[dotIdx2];
     // triggering.
     world.lineEvent = true;
+  };
+
+
+  /* Start and GameOver, Pause Divs */
+
+  // wrapper as a helper.
+  window.makeWrapper = function () {
+    var wrapperDiv = document.createElement('div');
+    wrapperDiv.id = 'wrapper';
+    divInfo.gameBoard.appendChild(wrapperDiv);
+    divInfo.wrapper = document.getElementById('wrapper');
+  };
+
+  // Appending Start Button div.
+  window.startButton = function () {
+    // Appending Wrapper to game board.
+    makeWrapper();
+
+    // Appending Start Button to wrapper
+    var sButton = document.createElement('div');
+    sButton.id = 'gameStart';
+    sButton.innerHTML = 'START<br>BUTTON';
+    divInfo.wrapper.appendChild(sButton);
+
+    // Appending Start Button to wrapper
+    var soundButton = document.createElement('div');
+    soundButton.id = 'sound';
+    soundButton.innerHTML = '<i class="fa fa-volume-up"></i> on';
+    divInfo.wrapper.appendChild(soundButton);
+    divInfo.soundE = document.getElementById('sound');
+
+    // Appending Start Button to wrapper
+    var godmodeButton = document.createElement('div');
+    godmodeButton.id = 'godmode';
+    godmodeButton.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
+    divInfo.wrapper.appendChild(godmodeButton);
+    divInfo.godModeE = document.getElementById('godmode');
+
+  };
+
+  // Game over and Showing game result.
+  window.gameOverAndResult = function (world) {
+    // Removing dot elements.
+    divInfo.gameBoard.innerHTML = '';
+
+    // Game over sound
+    if (world.sound) backgroundSound(world, true);
+
+    // Appending Wrapper to game board.
+    makeWrapper();
+
+    // Appending scoreResultDiv to the wrapper
+    var scoreResultDiv = document.createElement('div');
+    scoreResultDiv.id = 'scoreResult';
+    scoreResultDiv.innerHTML = 'SCORE: ' + world.score;
+    divInfo.wrapper.appendChild(scoreResultDiv);
+
+    // Appending gameOverDiv to the wrapper
+    var gameOverDiv = document.createElement('div');
+    gameOverDiv.id = 'gameOver';
+    gameOverDiv.innerHTML = 'GAME OVER';
+    divInfo.wrapper.appendChild(gameOverDiv);
+
+    // Appending retryDiv to the wrapper
+    var retryDiv = document.createElement('div');
+    retryDiv.id = 'retry';
+    retryDiv.innerHTML = '<i class="fa fa-repeat"></i>  RETRY';
+    divInfo.wrapper.appendChild(retryDiv);
+
+    // Event Listening on RETRY.
+    document.getElementById('retry').addEventListener('click', function (e) {
+      // need to research on this.
+      window.location.reload(false);
+    }, false);
+  }
+
+  window.gamePauseScreen = function(world) {
+    divInfo.pause.style.visibility = 'hidden';
+    if (world.pauseLimit % 1 !== 0) {
+      divInfo.pause.style.visibility = 'visible';
+      divInfo.pause.innerHTML = 'GAME PAUSED<br>';
+      divInfo.pause.innerHTML += '<span>' + (world.pauseLimit - 0.5) + ' TIMES LEFT</span>';
+    }
+  };
+
+
+  /* Sound and Godmode setting */
+
+  // Change sound button when it is clicked.
+  window.soundOnOff = function (world) {
+    if (world.sound) {
+      divInfo.soundE.style.color = 'white';
+      divInfo.soundE.innerHTML = '<i class="fa fa-volume-up"></i> on';
+    } else {
+      divInfo.soundE.style.color = 'grey';
+      divInfo.soundE.innerHTML = '<i class="fa fa-volume-off"></i> mute';
+    }
+  };
+
+  // Appending background sound, game over.
+  window.backgroundSound = function (world, gameOver) {
+    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.4);
+    if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false, true, 0.4);
+    if (!world.sound) divInfo.gameBoard.removeChild(document.getElementById('bgSound'));
+  };
+
+  // Creating audio tag.
+  window.audioTagHelper = function (id, src, loop, auto, volume) {
+    var audioTag = document.createElement('audio');
+    audioTag.id = id;
+    audioTag.src = src;
+    audioTag.loop = loop;
+    audioTag.autoplay = auto;
+    audioTag.volume = volume || 1;
+    divInfo.gameBoard.appendChild(audioTag);
+  };
+
+  // Change godMode(debug) button when it is clicked.
+  window.godOnOff = function (settings) {
+    if (!settings.godmode) {
+      divInfo.godModeE.style.color = 'white';
+      divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
+      if (divInfo.debugE !== null) divInfo.wrapper.removeChild(divInfo.debugE);
+    }
+    if (settings.godmode) {
+      divInfo.godModeE.style.color = 'red';
+      divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-on fa-lg" title="DebugMode"></i>';
+      // inserd Debug Mode ON message.
+      var debug = document.createElement('div');
+      debug.id = 'debug';
+      debug.innerHTML = 'Debug Mode ON';
+      divInfo.wrapper.appendChild(debug);
+      divInfo.debugE = document.getElementById('debug');
+    }
   };
 
 

@@ -50,6 +50,7 @@
   world.thirtySec = 30000;
   world.score = 0;
   world.pause = false;
+  world.pauseLimit = 3;
   world.sound = true;
   world.gameOver = false;
   world.spaceBar = false;
@@ -222,7 +223,11 @@
 
   // press spaceBar = pause
   function gamePause(e) {
-    if (e.keyCode === 32) world.pause = !world.pause;
+    if (e.keyCode === 32 && world.pauseLimit > 0 && world.start) {
+      world.pause = !world.pause;
+      world.pauseLimit -= 0.5;
+      gamePauseScreen(world);
+    }
   }
 
   (function () {
