@@ -35,6 +35,14 @@ html {
   color: rgb(255, 169, 3);
 }
 
+/* Line */
+
+.line {
+  height: 2px;
+  background-color: red;
+  position: absolute;
+}
+
 
 /* Game Board */
 

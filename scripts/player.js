@@ -3,7 +3,6 @@ var Player = function (settings, world) {
   // Settings
   var playerDot = null;
   var playerNum = 1;
-  var bullets = [];
   var pX = 0;
   var pY = 0;
   var pRadius = 0;
@@ -31,12 +30,6 @@ var Player = function (settings, world) {
     playerDot.style.top = nextY + "px";
     // Set wall boundary to player controller
     wall.apply(playerDot);
-  };
-
-
-  // Draw Bullets
-  this.shootBullets = function () {
-
   };
 
   // Return Coordinate for public usage

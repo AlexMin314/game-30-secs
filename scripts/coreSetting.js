@@ -5,20 +5,20 @@
   var settings = {};
   settings.FPS = 60;
   // Dots
-  settings.roundStart = 3;
-  settings.roundStartMax = 15;
+  settings.roundStart = 3; // num
+  settings.roundStartMax = 15; // num
   settings.roundUpTimer = 1500; // ms
-  settings.roundUpSpawn = 1;
-  settings.speedScale = 1.2;
-  settings.spawnSpeed = 4000; // ms
-  settings.bounceBuffer = 1;
+  settings.roundUpSpawn = 1; // num
+  settings.speedScale = 1.2; // multiplyer
+  settings.spawnSpeed = 3500; // ms
+  settings.bounceBuffer = 1; // num
   // bonus
-  settings.bonusSpawn = 1;
-  settings.bonusMax = 2;
-  settings.bonusSpawnSpeed = 4000;
+  settings.bonusSpawn = 1; // num
+  settings.bonusMax = 2; // num
+  settings.bonusSpawnSpeed = 4500; // ms
   // Player related
   settings.playerDotSpeed = 20; // lower = faster respond
-  // Debug mode
+  // Debug mode - don't touch.
   settings.godmode = false;
 
   /* DO NOT CHANGE BELOW */
@@ -45,8 +45,9 @@
   world.lineEvent = false;
   world.dot1 = null;
   world.dot2 = null;
-  world.lineEventTimer = 5000;
+  world.lineEventTimer = 31000;
   // Miscellaneous
+  world.thirtySec = 30000;
   world.score = 0;
   world.pause = false;
   world.sound = true;
@@ -57,9 +58,8 @@
   var mouse = {};
   mouse.x = 0;
   mouse.y = 0;
-  mouse.leftClick = false;
 
-  // skill settings
+  // Skill settings
   var skill = {};
   skill.q = false;
   skill.w = false;
@@ -76,14 +76,16 @@
   /* Game Starter functions */
 
   function gameStarter() {
+    // Remove start screen.
     document.getElementById('board').removeChild(theWrapper);
     world.start = true;
+
     // Display Score + Dot number.
     boardInfo(world);
     scoreBoard = document.getElementById('score');
     dotNumBoard = document.getElementById('dotNum');
 
-    // initial dot spawn
+    // Initial dot spawn.
     for (var k = 0; k < settings.roundStart; k++) {
       dotSpawner(settings, world, false);
     }
@@ -93,7 +95,7 @@
       dotSpawnStart();
     }, settings.spawnSpeed)
 
-    // bonuse spwan
+    // Bonuse spwan
     setInterval(function () {
       bonusSpawnStart();
     }, settings.bonusSpawnSpeed)
@@ -102,6 +104,11 @@
     setTimeout(function () {
       lineEventTrigger(world);
     }, world.lineEventTimer)
+
+    // 30 Sec checker
+    setInterval(function () {
+      showVar().countBeep.play();
+    }, world.thirtySec)
 
     // Score Tracking
     setInterval(function () {
@@ -118,7 +125,7 @@
     }
   }
 
-  // bonus spawn
+  // Bonus spawn
   function bonusSpawnStart() {
     if (world.bonusLength < settings.bonusMax) {
       for (var j = 0; j < settings.bonusSpawn; j++) {
@@ -136,7 +143,7 @@
       collision.call(e, world.bonus, world, settings, true, true);
       return e.drawPlayerMove(mouse);
     });
-    // dot movement.
+    // dot(enemy) movement.
     world.dotList.map(function (e) {
       return e.drawDotMove();
     });
@@ -144,7 +151,7 @@
     world.bonus.map(function (e) {
       return e.drawDotMove();
     });
-    // line movement.
+    // line(enemy) movement.
     if (world.lineEvent) drawLine(world.dot1.showInfo().x, world.dot1.showInfo().y, world.dot2.showInfo().x, world.dot2.showInfo().y, 'line');
   }
 
@@ -165,9 +172,9 @@
   /* Render Loops */
 
   (function renderLoop() {
-    // Check start button is pressed.
     requestAnimFrame(renderLoop);
-    if (world.start && !world.pause) {
+    // Checking start:true, pause:false, gameoverChecker: false.
+    if (world.start && !world.pause && !showVar().checker) {
       drawMovements();
       updatingBoard(scoreBoard, dotNumBoard, world);
     }
@@ -182,20 +189,22 @@
   }
 
   function startClick(e) {
-    // Remove click events
+    // Removing click events.
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
     theWrapper = showVar().wrapper;
     startButtonText = document.getElementById('gameStart');
 
+    // Removing sound, debug button.
     theWrapper.removeChild(showVar().sound);
     theWrapper.removeChild(showVar().godMode);
 
-    // Loading start messages.
+    // Showing start messages.
     tutorial(startButtonText, world);
+
     setTimeout(function () {
-      // removing start button and start game.
+      // Removing start button and start game.
       gameStarter();
     }, 2900);
   }

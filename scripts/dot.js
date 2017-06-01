@@ -24,7 +24,7 @@ var Dots = function (dotNum, settings, world, bonus) {
     var h = window.innerHeight;
     var w = window.innerWidth;
 
-    // Starting Point : random.
+    // Starting Point : random, avoid center(player protection)
     var downside = Math.random() * (h / d) + (h * (d - 1) / d) - 60;
     var upside = Math.random() * (h / d) + 60;
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
