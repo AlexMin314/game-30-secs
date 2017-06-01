@@ -224,7 +224,7 @@
     // Event Listening on RETRY.
     document.getElementById('retry').addEventListener('click', function (e) {
       // need to research on this.
-      world.clickSound.play();
+      if (world.sound) world.clickSound.play();
       setInterval(function() {
         window.location.reload(false);
       }, 700);

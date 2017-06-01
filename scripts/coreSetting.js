@@ -198,7 +198,7 @@
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
     //document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
-    world.clickSound.play();
+    if (world.sound) world.clickSound.play();
 
     theWrapper = showVar().wrapper;
     startButtonText = document.getElementById('gameStart');
@@ -219,14 +219,14 @@
   }
 
   function soundButton(e) {
-    world.clickSound.play();
+    if (world.sound) world.clickSound.play();
     world.sound = !(world.sound);
     soundOnOff(world);
     backgroundSound(world);
   }
 
   function godButton(e) {
-    world.clickSound.play();
+    if (world.sound) world.clickSound.play();
     settings.godmode = !(settings.godmode);
     godOnOff(settings);
   }
@@ -234,7 +234,7 @@
   // press spaceBar = pause
   function gamePause(e) {
     if (e.keyCode === 32 && world.pauseLimit > 0 && world.start) {
-      world.clickSound.play();
+      if (world.sound) world.clickSound.play();
       world.pause = !world.pause;
       world.pauseLimit -= 0.5;
       gamePauseScreen(world);
