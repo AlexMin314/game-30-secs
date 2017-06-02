@@ -1,5 +1,4 @@
 # game-every-30-secs
-Project 
 
 Playable link : https://alexmin314.github.io/game-every-30-secs/
 
