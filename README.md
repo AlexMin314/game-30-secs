@@ -16,5 +16,8 @@ Project 1
 
 
 ## Future update
-* Shild skill
-* Slower skill
+* Shild skill (Q key)
+* Slower skill (W key)
+
+# Sources
+* sound: https://www.youtube.com/audiolibrary/music
