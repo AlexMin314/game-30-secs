@@ -45,7 +45,7 @@
   world.lineEvent = false;
   world.dot1 = null;
   world.dot2 = null;
-  world.lineEventTimer = 30300;
+  world.lineEventTimer = 30300; // sharing with rubberBand
   // Miscellaneous.
   world.thirtySec = 30000;
   world.score = 0;
@@ -235,7 +235,7 @@
       // Player controller event adding(rubberBand).
       setTimeout(function () {
         document.getElementById('playerDot1').className = 'playerDot animated infinite rubberBand';
-      }, world.lineEventTimer * 3);
+      }, world.lineEventTimer * 4);
       //Removing start button and start game.
       gameStarter();
     }, 3100);
