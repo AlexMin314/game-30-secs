@@ -232,6 +232,10 @@
     setTimeout(function () {
       // Player Spawn.
       playerSpawner(settings, world);
+      // Player controller event adding(rubberBand).
+      setTimeout(function () {
+        document.getElementById('playerDot1').className = 'playerDot animated infinite rubberBand';
+      }, world.lineEventTimer * 3);
       //Removing start button and start game.
       gameStarter();
     }, 3100);
