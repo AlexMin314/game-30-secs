@@ -10,7 +10,6 @@ Project 1
 * Dodge the dots.
 * Capture the stars.
 * Keep yourself away from the laser.
-
 * Move your red dot using a mouse.
 * Pause the game with spacebar. (3 times limit)
 
