@@ -106,11 +106,6 @@
       lineEventTrigger(world);
     }, world.lineEventTimer);
 
-    // Test event triggering.
-    setTimeout(function () {
-      settings.speedScale = 0;
-    }, 3000);
-
     // 30 Sec checker.
     world.thirtySecBeep = setInterval(function () {
       showVar().countBeep.play();
