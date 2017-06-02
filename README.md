@@ -23,3 +23,6 @@ Playable link : https://alexmin314.github.io/game-every-30-secs/
 ## Sources
 * Sound: https://www.youtube.com/audiolibrary/music
 * Background video: https://pixabay.com/en/videos/space-star-universe-galaxies-2381/
+
+## Contact
+* Alex Min m98stone@gmail.com
