@@ -79,7 +79,7 @@
         // distance from player to dot1, dot2.
         var distA = Math.sqrt(Math.pow(world.dot1.showInfo().x - xThis, 2) + Math.pow(world.dot1.showInfo().y - yThis, 2));
         var distB = Math.sqrt(Math.pow(world.dot2.showInfo().x - xThis, 2) + Math.pow(world.dot2.showInfo().y - yThis, 2));
-        if (distA + distB < 2 * Math.sqrt(Math.pow(lineLength/2, 2) + Math.pow(pRadius, 2))) {
+        if (distA + distB < 2 * Math.sqrt(Math.pow(lineLength / 2, 2) + Math.pow(pRadius, 2))) {
           // gameover
           gameoverChecker = true;
           gameOverAndResult(world);
@@ -185,7 +185,7 @@
     // Appending Instruction texts.
     var instructionDiv = document.createElement('div');
     instructionDiv.id = 'instruction';
-    instructionDiv.innerHTML = 'DODGE DOTS | GRAB STARS<br>' +'<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
+    instructionDiv.innerHTML = 'DODGE DOTS <i class="fa fa-star fa-spin"></i> GRAB STARS<br>' + '<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
     divInfo.wrapper.appendChild(instructionDiv);
     divInfo.instruction = document.getElementById('instruction');
 
@@ -225,13 +225,14 @@
     document.getElementById('retry').addEventListener('click', function (e) {
       // need to research on this.
       if (world.sound) world.clickSound.play();
-      setInterval(function() {
+      setInterval(function () {
         window.location.reload(false);
       }, 700);
     }, false);
   }
 
-  window.gamePauseScreen = function(world) {
+  // Game Pause Screen display
+  window.gamePauseScreen = function (world) {
     divInfo.pause.style.visibility = 'hidden';
     if (world.pauseLimit % 1 !== 0) {
       divInfo.pause.style.visibility = 'visible';
@@ -360,7 +361,7 @@
 
   // map() polipill from MDN.
   if (!Array.prototype.map) {
-    Array.prototype.map = function(callback, thisArg) {
+    Array.prototype.map = function (callback, thisArg) {
       var T, A, k;
       if (this == null) throw new TypeError(' this is null or not defined');
       var O = Object(this);

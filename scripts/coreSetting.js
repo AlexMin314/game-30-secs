@@ -6,7 +6,7 @@
   settings.FPS = 60;
   // Dots
   settings.roundStart = 3; // num
-  settings.roundStartMax = 15; // num
+  settings.roundStartMax = 18; // num
   settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1; // num
   settings.speedScale = 1.2; // multiplyer
@@ -110,7 +110,7 @@
     // 30 Sec checker
     world.thirtySecBeep = setInterval(function () {
       showVar().countBeep.play();
-      settings.roundStartMax++;
+      if (window.innerWidth > 600) settings.roundStartMax++;
     }, world.thirtySec)
 
     // Score Tracking
@@ -198,14 +198,27 @@
     // Removing click events.
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
 
+    // click sound
     if (world.sound) world.clickSound.play();
 
+    // Removing wrapper div of start page
     theWrapper = showVar().wrapper;
     startButtonText = document.getElementById('gameStart');
 
     // Removing sound, debug button.
     theWrapper.removeChild(showVar().sound);
     theWrapper.removeChild(showVar().godMode);
+
+    // Difficulty re-setting base on width
+      if (window.innerWidth < 1350) settings.roundStartMax = 15;
+      if (window.innerWidth < 1100) settings.roundStartMax = 12;
+      if (window.innerWidth < 750) {
+        settings.roundStartMax = 9;
+        settings.spawnSpeed = 5000;
+      }
+      if (window.innerWidth < 600) settings.roundStartMax = 5;
+      if (window.innerWidth < 420) settings.roundStartMax = 3;
+
 
     // Showing start messages.
     tutorial(startButtonText, world);
