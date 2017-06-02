@@ -13,3 +13,8 @@ Project 1
 
 * Move your red dot using a mouse.
 * Pause the game with spacebar. (3 times limit)
+
+
+## Future update
+* shild skill
+* slower skill
