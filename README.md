@@ -3,7 +3,7 @@ Project 1
 
 
 ## Stack
-* Javascript. (no canvas)
+* Javascript, HTML5(no canvas), CSS3
 
 
 ## How to play
