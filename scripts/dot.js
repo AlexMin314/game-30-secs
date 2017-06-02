@@ -30,6 +30,7 @@ var Dots = function (dotNum, settings, world, bonus) {
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
     dots.style.top = Math.floor(randomSeed) + 'px';
     dots.style.left = Math.floor(Math.random() * (w - 150) + 75) + 'px';
+    
     // coloring
     if (!bonus) dots.style.backgroundColor = world.colorSeed[speedX];
     if (bonus) dots.innerHTML = '<i class="fa fa-star fa-spin"></i>';

@@ -1,3 +1,0 @@
-// follwing dots
-
-// world crosser

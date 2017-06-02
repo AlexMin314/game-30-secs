@@ -10,6 +10,7 @@ var Player = function (settings, world) {
   (function init() {
     // Create Player dot.
     playerDot = createDots('playerDot', playerNum);
+
     // Starting Point : Center
     pRadius = playerDot.getBoundingClientRect().width / 2;
     playerDot.style.top = Math.floor(window.innerHeight / 2 - pRadius) + 'px';
@@ -22,12 +23,15 @@ var Player = function (settings, world) {
     pRect = playerDot.getBoundingClientRect();
     pX = pRect.left;
     pY = pRect.top;
+
     // Reducing approach speed when the cursor and playerDot are closer.
     var nextX = pX + (mouse.x - 25 - pX) / settings.playerDotSpeed;
     var nextY = pY + (mouse.y - 25 - pY) / settings.playerDotSpeed;
+
     // Set new Coordinates for next frame.
     playerDot.style.left = nextX + "px";
     playerDot.style.top = nextY + "px";
+    
     // Set wall boundary to player controller
     wall.apply(playerDot);
   };

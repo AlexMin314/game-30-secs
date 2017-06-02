@@ -13,7 +13,7 @@
   divInfo.counterE = null;
   divInfo.instruction = null;
 
-  // Line(enemy) length
+  // Line(enemy) length.
   var lineLength = 0;
   var gameoverChecker = false;
 
@@ -40,9 +40,9 @@
     return document.getElementById(newDiv.id);
   };
 
-  // collision detection of Player Pattern.
+  // Collision detection of Player Pattern.
   window.collision = function (arr, world, settings, gameOver, bonus) {
-    // player coordinate
+    // Player coordinate.
     var xThis = Math.floor(this.showInfo().x);
     var yThis = Math.floor(this.showInfo().y);
     var pRadius = Math.floor(this.showInfo().radius);
@@ -50,37 +50,40 @@
     // Checking debug mode and game over or not.
     if (!gameoverChecker) {
       arr.map(function (e, i) {
-        // target(enemy,bonus) coordinate.
+        // Target(enemy,bonus) coordinate.
         var xTarget = Math.floor(e.showInfo().x);
         var yTarget = Math.floor(e.showInfo().y);
         var dRadius = Math.floor(e.showInfo().radius);
         var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
-        // enemy collision (Circle)
+
+        // Enemy collision (Circle).
         if (distance < pRadius + dRadius &&
           gameOver === true &&
           bonus === false &&
           !settings.godmode) {
-          // game over.
+          // Game over.
           gameoverChecker = true;
           gameOverAndResult(world);
         }
-        // bonus collision (Circle).
+
+        // Bonus collision (Circle).
         if (distance < pRadius + dRadius && bonus === true) {
           world.score += world.bonusScore;
           world.bonusCounter++;
-          // remove bonus and play sound
+          // Remove bonus and play sound.
           removeBonus(e, i, world);
           if (world.sound && world.bonusCounter % 2 === 1) divInfo.starE1.play();
           if (world.sound && world.bonusCounter % 2 === 0) divInfo.starE2.play();
         }
       });
+
       // Line(enemy) collision.
       if (world.lineEvent && gameOver === true && !settings.godmode) {
-        // distance from player to dot1, dot2.
+        // Distance from player to dot1, dot2.
         var distA = Math.sqrt(Math.pow(world.dot1.showInfo().x - xThis, 2) + Math.pow(world.dot1.showInfo().y - yThis, 2));
         var distB = Math.sqrt(Math.pow(world.dot2.showInfo().x - xThis, 2) + Math.pow(world.dot2.showInfo().y - yThis, 2));
         if (distA + distB < 2 * Math.sqrt(Math.pow(lineLength / 2, 2) + Math.pow(pRadius, 2))) {
-          // gameover
+          // Gameover
           gameoverChecker = true;
           gameOverAndResult(world);
         }
@@ -108,11 +111,13 @@
 
   // Line event - drawing line
   window.drawLine = function (x1, y1, x2, y2, id) {
-    // calculate angle to rotate line div.
+    // Calculate angle to rotate line div.
     var calc = Math.atan2(y2 - y1, x2 - x1);
     calc = calc * 180 / Math.PI;
-    // line length.
+
+    // Line length(distance between the dot1 dot2).
     lineLength = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+
     // CSS.
     if (!gameoverChecker) {
       var lineDiv = document.getElementById(id);
@@ -130,18 +135,20 @@
     }
   };
 
-  // Line event trigger
+  // Line event trigger.
   window.lineEventTrigger = function (world) {
     // Append line div
     var lineDiv = document.createElement('div');
     lineDiv.id = 'line';
     divInfo.gameBoard.appendChild(lineDiv);
+
     // pick 2 dots.
     var dotIdx1 = Math.floor(Math.random() * world.dotLength);
     var dotIdx2 = Math.floor(Math.random() * world.dotLength);
     while (dotIdx1 === dotIdx2) dotIdx2 = Math.floor(Math.random() * world.dotLength);
     world.dot1 = world.dotList[dotIdx1];
     world.dot2 = world.dotList[dotIdx2];
+
     // triggering.
     world.lineEvent = true;
   };
@@ -162,20 +169,20 @@
     // Appending Wrapper to game board.
     makeWrapper();
 
-    // Appending Start Button to wrapper
+    // Appending Start Button to wrapper.
     var sButton = document.createElement('div');
     sButton.id = 'gameStart';
     sButton.innerHTML = 'START<br>BUTTON';
     divInfo.wrapper.appendChild(sButton);
 
-    // Appending Start Button to wrapper
+    // Appending Start Button to wrapper.
     var soundButton = document.createElement('div');
     soundButton.id = 'sound';
     soundButton.innerHTML = '<i class="fa fa-volume-up"></i> on';
     divInfo.wrapper.appendChild(soundButton);
     divInfo.soundE = document.getElementById('sound');
 
-    // Appending Start Button to wrapper
+    // Appending Start Button to wrapper.
     var godmodeButton = document.createElement('div');
     godmodeButton.id = 'godmode';
     godmodeButton.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
@@ -223,15 +230,15 @@
 
     // Event Listening on RETRY.
     document.getElementById('retry').addEventListener('click', function (e) {
-      // need to research on this.
       if (world.sound) world.clickSound.play();
       setInterval(function () {
+        // Reload page.
         window.location.reload(false);
       }, 700);
     }, false);
   }
 
-  // Game Pause Screen display
+  // Game Pause Screen display.
   window.gamePauseScreen = function (world) {
     divInfo.pause.style.visibility = 'hidden';
     if (world.pauseLimit % 1 !== 0) {
