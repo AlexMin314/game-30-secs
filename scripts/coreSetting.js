@@ -163,16 +163,17 @@
 
   // Display Start Button.
   startButton();
-  // PlayerSpawn
-  //playerSpawner(settings, world);
+
   // Background sound Start
   backgroundSound(world, world.gameOver);
+
   // Append some sound effect
   audioTagHelper('star1', './src/star.mp3', false, false);
   audioTagHelper('star2', './src/star.mp3', false, false);
   audioTagHelper('counter', './src/count.mp3', false, false);
   audioTagHelper('clicked', './src/clicked.mp3', false, false);
   world.clickSound = document.getElementById('clicked');
+
 
   /* Render Loops */
 
@@ -196,7 +197,6 @@
   function startClick(e) {
     // Removing click events.
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
-    //document.getElementById('playerDot1').removeEventListener('click', startClick, false);
 
     if (world.sound) world.clickSound.play();
 
@@ -213,7 +213,6 @@
     setTimeout(function () {
       // Removing start button and start game.
       playerSpawner(settings, world);
-      document.getElementById('playerDot1').addEventListener('click', startClick, false);
       gameStarter();
     }, 3100);
   }
@@ -243,6 +242,7 @@
 
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
+    document.addEventListener('touchmove', getMousePos, false);
     document.addEventListener('keydown', gamePause, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
     document.getElementById('sound').addEventListener('click', soundButton, false);
