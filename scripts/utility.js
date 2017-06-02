@@ -1,4 +1,4 @@
-(function (window) {
+(function () {
 
   // Caching div info.
   var divInfo = {};
@@ -390,4 +390,4 @@
     };
   }
 
-}(window));
+}());
