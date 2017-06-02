@@ -204,7 +204,6 @@
     if (world.sound) world.clickSound.play();
 
     // Removing wrapper div of start page
-    console.log(showVar().wrapper);
     divs.theWrapper = showVar().wrapper;
     divs.startButtonText = document.getElementById('gameStart');
 
