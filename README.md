@@ -16,5 +16,5 @@ Project 1
 
 
 ## Future update
-* shild skill
-* slower skill
+* Shild skill
+* Slower skill
