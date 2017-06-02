@@ -35,6 +35,9 @@ video {
     -ms-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-filter: brightness(0.5);
+    -moz-filter: brightness(0.5);
+    -webkit-filter: brightness(0.5);
     transform: translateX(-50%) translateY(-50%);
     background-size: cover;
 }
@@ -138,6 +141,9 @@ video {
   position: absolute;
   top: 50%;
   left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%, -50%);
   padding-top: 5px;
 }
@@ -156,6 +162,9 @@ video {
   position: absolute;
   top: 50%;
   left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%, -50%);
   padding-top: 20px;
 }
@@ -166,6 +175,9 @@ video {
   position: absolute;
   top: 50%;
   left: 50%;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%, -50%);
   visibility: hidden;
   border: 3px solid white;

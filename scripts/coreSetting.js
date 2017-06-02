@@ -246,7 +246,6 @@
     document.getElementById('gameStart').addEventListener('click', startClick, false);
     document.getElementById('sound').addEventListener('click', soundButton, false);
     document.getElementById('godmode').addEventListener('click', godButton, false);
-    //document.getElementById('playerDot1').addEventListener('click', startClick, false);
   }());
 
 }(window));
