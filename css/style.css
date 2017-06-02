@@ -166,7 +166,7 @@ video {
 }
 
 #pause {
-  height: 200px;
+  height: 100px;
   width: 350px;
   position: absolute;
   top: 50%;
@@ -180,7 +180,6 @@ video {
   text-align: center;
   font-size: 40px;
   color: rgb(0, 224, 255);
-  padding-top: 50px;
 }
 
 #scoreResult, #retry {
