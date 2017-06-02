@@ -242,6 +242,8 @@
 
   (function () {
     document.addEventListener('mousemove', getMousePos, false);
+    document.addEventListener('touchstart', getMousePos, false);
+    document.addEventListener('touchend', getMousePos, false);
     document.addEventListener('touchmove', getMousePos, false);
     document.addEventListener('keydown', gamePause, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
