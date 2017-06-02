@@ -20,6 +20,6 @@ Project 1
 * Slower skill (W key)
 
 
-# Sources
+## Sources
 * Sound: https://www.youtube.com/audiolibrary/music
 * Background video: https://pixabay.com/en/videos/space-star-universe-galaxies-2381/
