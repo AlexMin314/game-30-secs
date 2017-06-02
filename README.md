@@ -19,5 +19,7 @@ Project 1
 * Shild skill (Q key)
 * Slower skill (W key)
 
+
 # Sources
-* sound: https://www.youtube.com/audiolibrary/music
+* Sound: https://www.youtube.com/audiolibrary/music
+* Background video: https://pixabay.com/en/videos/space-star-universe-galaxies-2381/
