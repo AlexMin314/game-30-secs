@@ -203,7 +203,7 @@ video {
   color: yellow;
 }
 
-#gameOver:hover, #instruction:hover {
+#instruction:hover {
   color: rgb(0, 224, 255);
 }
 

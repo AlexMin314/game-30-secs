@@ -52,7 +52,6 @@
   world.pause = false;
   world.pauseLimit = 3;
   world.sound = true;
-  world.gameOver = false;
   world.spaceBar = false;
   world.clickSound = null;
 
@@ -72,6 +71,7 @@
   divs.dotNumBoard = null;
   divs.startButtonText = null;
   divs.theWrapper = null;
+  divs.player = null;
 
 
   /* Game Starter functions */
@@ -108,7 +108,7 @@
 
     // 30 Sec checker.
     world.thirtySecBeep = setInterval(function () {
-      showVar().countBeep.play();
+      utility().countBeep.play();
       if (window.innerWidth > 600) settings.roundStartMax++;
     }, world.thirtySec);
 
@@ -136,7 +136,6 @@
     }
   }
 
-
   // Draw movement of player and dots.
   function drawMovements() {
     // player movement.
@@ -161,13 +160,13 @@
   }
 
 
-  /* Board init start! */
+  /* Board init start!!!!! */
 
   // Display Start Button.
   startButton();
 
-  // Background sound Start
-  backgroundSound(world, world.gameOver);
+  // Background sound play
+  backgroundSound(world, gameOverChk());
 
   // Append some sound effect
   audioTagHelper('star1', './src/star.mp3', false, false);
@@ -177,25 +176,7 @@
   world.clickSound = document.getElementById('clicked');
 
 
-  /* Render Loops */
-
-  (function renderLoop() {
-    requestAnimFrame(renderLoop);
-    // Checking start:true, pause:false, gameoverChecker: false.
-    if (world.start && !world.pause && !showVar().checker) {
-      drawMovements();
-      updatingBoard(divs.scoreBoard, divs.dotNumBoard, world);
-    }
-  }());
-
-
-  /* Event Listener related */
-
-  function getMousePos(e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  }
-
+  // Game Starting Flow after start button click.
   function startClick(e) {
     // Removing click events.
     document.getElementById('gameStart').removeEventListener('click', startClick, false);
@@ -204,72 +185,70 @@
     if (world.sound) world.clickSound.play();
 
     // Removing wrapper div of start page
-    divs.theWrapper = showVar().wrapper;
+    divs.theWrapper = utility().wrapper;
     divs.startButtonText = document.getElementById('gameStart');
 
     // Removing sound, debug button.
-    divs.theWrapper.removeChild(showVar().sound);
-    divs.theWrapper.removeChild(showVar().godMode);
+    divs.theWrapper.removeChild(utility().sound);
+    divs.theWrapper.removeChild(utility().godMode);
 
     // Difficulty re-setting base on width when game start.
-      if (window.innerWidth > 1700) {
-        settings.roundStartMax = 20;
-        settings.roundStart = 5;
-      }
-      if (window.innerWidth < 1350) settings.roundStartMax = 15;
-      if (window.innerWidth < 1100) settings.roundStartMax = 12;
-      if (window.innerWidth < 750) {
-        settings.roundStartMax = 9;
-        settings.spawnSpeed = 5000;
-      }
-      if (window.innerWidth < 600) settings.roundStartMax = 5;
-      if (window.innerWidth < 420) settings.roundStartMax = 3;
-
+    if (window.innerWidth > 1700) {
+      settings.roundStartMax = 20;
+      settings.roundStart = 5;
+    }
+    if (window.innerWidth < 1350) settings.roundStartMax = 15;
+    if (window.innerWidth < 1100) settings.roundStartMax = 12;
+    if (window.innerWidth < 750) {
+      settings.roundStartMax = 9;
+      settings.spawnSpeed = 5000;
+    }
+    if (window.innerWidth < 600) settings.roundStartMax = 5;
+    if (window.innerWidth < 420) settings.roundStartMax = 3;
 
     // Showing start messages.
     tutorial(divs.startButtonText, world);
 
+    // setTimeout for waiting tutorial ends.
     setTimeout(function () {
       // Player Spawn.
       playerSpawner(settings, world);
+      divs.player = document.getElementById('playerDot1');
+
       // Player controller event adding(rubberBand).
       setTimeout(function () {
-        document.getElementById('playerDot1').className = 'playerDot animated infinite rubberBand';
+        if (!gameOverChk()) divs.player.className = 'playerDot animated infinite rubberBand';
       }, world.lineEventTimer * 4);
+
       //Removing start button and start game.
       gameStarter();
     }, 3100);
   }
 
-  function soundButton(e) {
-    if (world.sound) world.clickSound.play();
-    world.sound = !(world.sound);
-    soundOnOff(world);
-    backgroundSound(world);
-  }
 
-  function godButton(e) {
-    if (world.sound) world.clickSound.play();
-    settings.godmode = !(settings.godmode);
-    godOnOff(settings);
-  }
+  /* Render Loops */
 
-  // press spaceBar = pause
-  function gamePause(e) {
-    if (e.keyCode === 32 && world.pauseLimit > 0 && world.start) {
-      if (world.sound) world.clickSound.play();
-      world.pause = !world.pause;
-      world.pauseLimit -= 0.5;
-      gamePauseScreen(world);
+  (function renderLoop() {
+    requestAnimFrame(renderLoop);
+    // Checking start:true, pause:false, gameoverChecker: false.
+    if (world.start && !world.pause && !gameOverChk()) {
+      drawMovements();
+      updatingBoard(divs.scoreBoard, divs.dotNumBoard, world);
     }
-  }
+  }());
+
+
+  /* Event Listener related */
+
+  // Retrieve methods.
+  var eFunc = eventFunc(settings, world, mouse, divs);
 
   (function () {
-    document.addEventListener('mousemove', getMousePos, false);
-    document.addEventListener('keydown', gamePause, false);
+    document.addEventListener('mousemove', eFunc.getMousePos, false);
+    document.addEventListener('keydown', eFunc.gamePause, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
-    document.getElementById('sound').addEventListener('click', soundButton, false);
-    document.getElementById('godmode').addEventListener('click', godButton, false);
+    document.getElementById('sound').addEventListener('click', eFunc.soundButton, false);
+    document.getElementById('godmode').addEventListener('click', eFunc.godButton, false);
   }());
 
 }(window));

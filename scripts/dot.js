@@ -15,7 +15,8 @@ var Dots = function (dotNum, settings, world, bonus) {
   var dx = Math.random() > 0.5 ? speedX * mult : -speedX * mult;
   var dy = Math.random() > 0.5 ? speedY * mult : -speedY * mult;
 
-  (function init() {
+  // Initiation.
+  (function() {
     // Create an enemy dot.
     dots = bonus ? createDots('bonus', null, dotNum) : createDots('dots', null, dotNum);
 
@@ -30,7 +31,7 @@ var Dots = function (dotNum, settings, world, bonus) {
     var randomSeed = Math.random() * 2 < 1 ? upside : downside;
     dots.style.top = Math.floor(randomSeed) + 'px';
     dots.style.left = Math.floor(Math.random() * (w - 150) + 75) + 'px';
-    
+
     // coloring
     if (!bonus) dots.style.backgroundColor = world.colorSeed[speedX];
     if (bonus) dots.innerHTML = '<i class="fa fa-star fa-spin"></i>';
@@ -72,17 +73,13 @@ var Dots = function (dotNum, settings, world, bonus) {
 
 };
 
+// bonus false: enemy dot | true  bonus star.
 var dotSpawner = function (settings, world, bonus) {
-  // enemy dot
-  if (!showVar().checker && bonus === false) {
-    world.dotList.push(new Dots(world.dotNumIdx, settings, world, bonus));
-    world.dotNumIdx++;
-    world.dotLength = world.dotList.length;
-  }
-  // bonus dot
-  if (!showVar().checker && bonus === true) {
-    world.bonus.push(new Dots(world.bonusIdx, settings, world, bonus));
-    world.bonusIdx++;
-    world.bonusLength = world.bonus.length;
+  var arr = bonus ? world.bonus : world.dotList;
+  var idx = bonus ? world.bonusIdx : world.dotLength;
+  if (!gameOverChk()) {
+    arr.push(new Dots(idx, settings, world, bonus))
+    bonus ? world.bonusIdx++ : world.dotLength++;
+    bonus ? world.bonusLength = arr.length : world.dotLength = arr.length;
   }
 };

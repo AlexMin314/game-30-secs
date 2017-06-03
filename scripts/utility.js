@@ -1,5 +1,7 @@
 (function () {
 
+  /* Caching info and Div related utility */
+
   // Caching div info.
   var divInfo = {};
   divInfo.gameBoard = document.getElementById('board');
@@ -13,156 +15,49 @@
   divInfo.counterE = null;
   divInfo.instruction = null;
 
-  // Line(enemy) length.
-  var lineLength = 0;
-  var gameoverChecker = false;
-
   // Show information to public.
-  window.showVar = function () {
+  window.utility = function () {
     return {
-      checker: gameoverChecker,
       godMode: divInfo.godModeE,
       sound: divInfo.soundE,
       gameBoard: divInfo.gameBoard,
       wrapper: divInfo.wrapper,
-      countBeep: divInfo.counterE
+      countBeep: divInfo.counterE,
+      starE1: divInfo.starE1,
+      starE2: divInfo.starE2
     };
   }
 
-  /* Game Logics */
 
-  // Create new dots (player, enemy, bonus).
-  window.createDots = function (type, pNum, dNum) {
-    var newDiv = document.createElement('div');
-    newDiv.className = type;
-    newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
-    divInfo.gameBoard.appendChild(newDiv);
-    return document.getElementById(newDiv.id);
-  };
+  /* Helper functions */
 
-  // Collision detection of Player Pattern.
-  window.collision = function (arr, world, settings, gameOver, bonus) {
-    // Player coordinate.
-    var xThis = Math.floor(this.showInfo().x);
-    var yThis = Math.floor(this.showInfo().y);
-    var pRadius = Math.floor(this.showInfo().radius);
-
-    // Checking debug mode and game over or not.
-    if (!gameoverChecker) {
-      arr.map(function (e, i) {
-        // Target(enemy,bonus) coordinate.
-        var xTarget = Math.floor(e.showInfo().x);
-        var yTarget = Math.floor(e.showInfo().y);
-        var dRadius = Math.floor(e.showInfo().radius);
-        var distance = Math.sqrt(Math.pow(xThis - xTarget, 2) + Math.pow(yThis - yTarget, 2));
-
-        // Enemy collision (Circle).
-        if (distance < pRadius + dRadius &&
-          gameOver === true &&
-          bonus === false &&
-          !settings.godmode) {
-          // Game over.
-          gameoverChecker = true;
-          gameOverAndResult(world);
-        }
-
-        // Bonus collision (Circle).
-        if (distance < pRadius + dRadius && bonus === true) {
-          world.score += world.bonusScore;
-          world.bonusCounter++;
-          // Remove bonus and play sound.
-          removeBonus(e, i, world);
-          if (world.sound && world.bonusCounter % 2 === 1) divInfo.starE1.play();
-          if (world.sound && world.bonusCounter % 2 === 0) divInfo.starE2.play();
-        }
-      });
-
-      // Line(enemy) collision.
-      if (world.lineEvent && gameOver === true && !settings.godmode) {
-        // Distance from player to dot1, dot2.
-        var distA = Math.sqrt(Math.pow(world.dot1.showInfo().x - xThis, 2) + Math.pow(world.dot1.showInfo().y - yThis, 2));
-        var distB = Math.sqrt(Math.pow(world.dot2.showInfo().x - xThis, 2) + Math.pow(world.dot2.showInfo().y - yThis, 2));
-        if (distA + distB < 2 * Math.sqrt(Math.pow(lineLength / 2, 2) + Math.pow(pRadius, 2))) {
-          // Gameover
-          gameoverChecker = true;
-          gameOverAndResult(world);
-        }
-      }
-    }
-  };
-
-  // Removing bonus from the board.
-  window.removeBonus = function (e, i, world) {
-    divInfo.gameBoard.removeChild(e.showInfo().dots);
-    world.bonus.splice(i, 1);
-    world.bonusLength = world.bonus.length;
-  }
-
-  // Gives wall limit to target(player).
-  window.wall = function () {
-    var rect = this.getBoundingClientRect();
-    var w = Math.floor(window.innerWidth);
-    var h = Math.floor(window.innerHeight);
-    if (rect.bottom > h) this.style.top = (h - rect.height) + 'px';
-    if (rect.top < 0) this.style.top = '0px';
-    if (rect.left < 0) this.style.left = '0px';
-    if (rect.right > w) this.style.left = (w - rect.width) + 'px';
-  }
-
-  // Line event - drawing line
-  window.drawLine = function (x1, y1, x2, y2, id) {
-    // Calculate angle to rotate line div.
-    var calc = Math.atan2(y2 - y1, x2 - x1);
-    calc = calc * 180 / Math.PI;
-
-    // Line length(distance between the dot1 dot2).
-    lineLength = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-
-    // CSS.
-    if (!gameoverChecker) {
-      var lineDiv = document.getElementById(id);
-      lineDiv.style.height = '2px';
-      lineDiv.style.width = lineLength + 'px';
-      lineDiv.style.backgroundColor = 'red';
-      lineDiv.style.position = 'absolute';
-      lineDiv.style.top = y1 + 'px';
-      lineDiv.style.left = x1 + 'px';
-      lineDiv.style.transform = 'rotate(' + calc + 'deg)';
-      lineDiv.style.transformOrigin = '0%';
-      lineDiv.style['-webkit-transform'] = 'rotate(' + calc + 'deg)';
-      lineDiv.style['-webkit-transform-origin'] = '0% 0%';
-      lineDiv.style['-ms-transform'] = 'rotate(' + calc + 'deg)';
-    }
-  };
-
-  // Line event trigger.
-  window.lineEventTrigger = function (world) {
-    // Append line div
-    var lineDiv = document.createElement('div');
-    lineDiv.id = 'line';
-    divInfo.gameBoard.appendChild(lineDiv);
-
-    // pick 2 dots.
-    var dotIdx1 = Math.floor(Math.random() * world.dotLength);
-    var dotIdx2 = Math.floor(Math.random() * world.dotLength);
-    while (dotIdx1 === dotIdx2) dotIdx2 = Math.floor(Math.random() * world.dotLength);
-    world.dot1 = world.dotList[dotIdx1];
-    world.dot2 = world.dotList[dotIdx2];
-
-    // triggering.
-    world.lineEvent = true;
-  };
-
-
-  /* Start and GameOver, Pause Divs */
-
-  // wrapper as a helper.
-  window.makeWrapper = function () {
+  // Wrapper as a helper.
+  function makeWrapper () {
     var wrapperDiv = document.createElement('div');
     wrapperDiv.id = 'wrapper';
     divInfo.gameBoard.appendChild(wrapperDiv);
     divInfo.wrapper = document.getElementById('wrapper');
+  }
+
+  // Append helper
+  function appendTo (type, parent, id) {
+    var temp = document.createElement(type);
+    temp.id = id;
+    parent.appendChild(temp);
+    return temp;
+  }
+
+  // Audio tag helper
+  window.audioTagHelper = function (id, src, loop, auto, volume) {
+    var audioTag = appendTo ('audio', divInfo.gameBoard, id)
+    audioTag.src = src;
+    audioTag.loop = loop;
+    audioTag.autoplay = auto;
+    audioTag.volume = volume || 1;
   };
+
+
+  /* Start and GameOver, Pause Divs */
 
   // Appending Start Button div.
   window.startButton = function () {
@@ -170,73 +65,63 @@
     makeWrapper();
 
     // Appending Start Button to wrapper.
-    var sButton = document.createElement('div');
-    sButton.id = 'gameStart';
+    var sButton = appendTo('div', divInfo.wrapper, 'gameStart');
     sButton.innerHTML = 'START<br>BUTTON';
-    divInfo.wrapper.appendChild(sButton);
 
-    // Appending Start Button to wrapper.
-    var soundButton = document.createElement('div');
-    soundButton.id = 'sound';
+    // Appending Sound Button to wrapper.
+    var soundButton = appendTo('div', divInfo.wrapper, 'sound');
     soundButton.innerHTML = '<i class="fa fa-volume-up"></i> on';
-    divInfo.wrapper.appendChild(soundButton);
     divInfo.soundE = document.getElementById('sound');
 
     // Appending Start Button to wrapper.
-    var godmodeButton = document.createElement('div');
-    godmodeButton.id = 'godmode';
+    var godmodeButton = appendTo('div', divInfo.wrapper, 'godmode');
     godmodeButton.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
-    divInfo.wrapper.appendChild(godmodeButton);
     divInfo.godModeE = document.getElementById('godmode');
 
     // Appending Instruction texts.
-    var instructionDiv = document.createElement('div');
-    instructionDiv.id = 'instruction';
+    var instructionDiv = appendTo('div', divInfo.wrapper, 'instruction');
     instructionDiv.innerHTML = 'DODGE DOTS <i class="fa fa-star fa-spin"></i> GRAB STARS<br>' + '<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
-    divInfo.wrapper.appendChild(instructionDiv);
     divInfo.instruction = document.getElementById('instruction');
-
   };
 
   // Game over and Showing game result.
   window.gameOverAndResult = function (world) {
     // Removing dot elements.
     divInfo.gameBoard.innerHTML = '';
+
+    // Clear beep sound.
     clearInterval(world.thirtySecBeep);
 
-    // Game over sound
-    if (world.sound) backgroundSound(world, true);
+    // Play game over sound
+    if (world.sound) backgroundSound(world, gameOverChk());
 
-    // Appending Wrapper to game board.
+    // Appending Wrapper to game board for game over screen.
     makeWrapper();
 
     // Appending scoreResultDiv to the wrapper
-    var scoreResultDiv = document.createElement('div');
-    scoreResultDiv.id = 'scoreResult';
+    var scoreResultDiv = appendTo('div', divInfo.wrapper, 'scoreResult');
     scoreResultDiv.innerHTML = 'SCORE: ' + world.score;
-    divInfo.wrapper.appendChild(scoreResultDiv);
 
     // Appending gameOverDiv to the wrapper
-    var gameOverDiv = document.createElement('div');
-    gameOverDiv.id = 'gameOver';
+    var gameOverDiv = appendTo('div', divInfo.wrapper, 'gameOver');
     gameOverDiv.innerHTML = 'GAME OVER';
-    divInfo.wrapper.appendChild(gameOverDiv);
 
     // Appending retryDiv to the wrapper
-    var retryDiv = document.createElement('div');
-    retryDiv.id = 'retry';
+    var retryDiv = appendTo('div', divInfo.wrapper, 'retry')
     retryDiv.innerHTML = '<i class="fa fa-repeat"></i>  RETRY';
-    divInfo.wrapper.appendChild(retryDiv);
 
     // Event Listening on RETRY.
     document.getElementById('retry').addEventListener('click', function (e) {
+      // Beep sound when retry clicked.
       if (world.sound) world.clickSound.play();
+
+      // Reload page.
       setInterval(function () {
-        // Reload page.
         window.location.reload(false);
       }, 700);
     }, false);
-  }
+
+  };
 
   // Game Pause Screen display.
   window.gamePauseScreen = function (world) {
@@ -266,18 +151,8 @@
   window.backgroundSound = function (world, gameOver) {
     if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.4);
     if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false, true, 0.4);
+    // Mute.
     if (!world.sound) divInfo.gameBoard.removeChild(document.getElementById('bgSound'));
-  };
-
-  // Creating audio tag.
-  window.audioTagHelper = function (id, src, loop, auto, volume) {
-    var audioTag = document.createElement('audio');
-    audioTag.id = id;
-    audioTag.src = src;
-    audioTag.loop = loop;
-    audioTag.autoplay = auto;
-    audioTag.volume = volume || 1;
-    divInfo.gameBoard.appendChild(audioTag);
   };
 
   // Change godMode(debug) button when it is clicked.
@@ -305,16 +180,12 @@
   // Append Score and Dot number
   window.boardInfo = function (world) {
     // Adding Score at right side of game board.
-    var scoreDiv = document.createElement('div');
-    scoreDiv.id = 'score';
+    var scoreDiv = appendTo('div', divInfo.gameBoard, 'score');
     scoreDiv.innerHTML = 'SCORE.<br>' + world.score;
-    divInfo.gameBoard.appendChild(scoreDiv);
 
     // Adding Dot number at right side of game board.
-    var dotNum = document.createElement('div');
-    dotNum.id = 'dotNum';
+    var dotNum = appendTo('div', divInfo.gameBoard, 'dotNum');
     dotNum.innerHTML = 'DOTS<br>' + world.dotLength;
-    divInfo.gameBoard.appendChild(dotNum);
   };
 
   // Updating Dot Numbers and Scores on gameBoard.
@@ -333,11 +204,11 @@
       startButtonText.innerHTML = 'GOOD<br>LUCK'
     }, interval * 1);
     setTimeout(function () {
-      // Store element to reducing dom access
+      // Store element to reducing dom access.
       divInfo.starE1 = document.getElementById('star1');
       divInfo.starE2 = document.getElementById('star2');
       divInfo.counterE = document.getElementById('counter');
-      // Count 1 sound play
+      // Count 1 sound play.
       if (world.sound) divInfo.counterE.play();
       startButtonText.style.fontSize = '200px';
       startButtonText.style.paddingTop = '0px';

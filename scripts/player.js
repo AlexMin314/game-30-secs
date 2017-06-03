@@ -7,7 +7,8 @@ var Player = function (settings, world) {
   var pY = 0;
   var pRadius = 0;
 
-  (function init() {
+  // Initiation.
+  (function() {
     // Create Player dot.
     playerDot = createDots('playerDot', playerNum);
 
@@ -31,7 +32,7 @@ var Player = function (settings, world) {
     // Set new Coordinates for next frame.
     playerDot.style.left = nextX + "px";
     playerDot.style.top = nextY + "px";
-    
+
     // Set wall boundary to player controller
     wall.apply(playerDot);
   };
