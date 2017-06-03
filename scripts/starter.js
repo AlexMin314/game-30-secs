@@ -1,6 +1,6 @@
 /* Game Starter functions */
 
-function gameStarter(settings, world) {
+var gameStarter = function (settings, world) {
   // Remove start screen.
   document.getElementById('board').removeChild(utility().wrapper);
   world.start = true;
@@ -40,10 +40,10 @@ function gameStarter(settings, world) {
   setInterval(function () {
     world.score++;
   }, 1000)
-}
+};
 
 // Dot enemy spawn.
-function dotSpawnStart(settings, world) {
+var dotSpawnStart = function (settings, world) {
   if (world.dotLength < settings.roundStartMax) {
     for (var i = 0; i < settings.roundUpSpawn; i++) {
       dotSpawner(settings, world, false);
@@ -52,7 +52,7 @@ function dotSpawnStart(settings, world) {
 }
 
 // Bonus spawn.
-function bonusSpawnStart(settings, world) {
+var bonusSpawnStart = function (settings, world) {
   if (world.bonusLength < settings.bonusMax) {
     for (var j = 0; j < settings.bonusSpawn; j++) {
       dotSpawner(settings, world, true);
@@ -61,7 +61,7 @@ function bonusSpawnStart(settings, world) {
 }
 
 // Draw movement of player and dots.
-function drawMovements(settings, world, mouse) {
+var drawMovements = function (settings, world, mouse) {
   // player movement.
   world.playerList.map(function (e, i, arr) {
     collision.call(e, world.dotList, world, settings, true, false);
