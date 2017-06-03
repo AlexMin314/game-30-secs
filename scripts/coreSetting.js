@@ -1,4 +1,4 @@
-(function (window) {
+(function () {
 
   /* Game settings */
 
@@ -251,4 +251,4 @@
     document.getElementById('godmode').addEventListener('click', eFunc.godButton, false);
   }());
 
-}(window));
+}());
