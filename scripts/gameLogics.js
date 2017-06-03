@@ -5,12 +5,12 @@
   var lineLength = 0;
   var gameoverChecker = false;
 
-  window.gameOverChk = function () {
+  this.gameOverChk = function () {
     return gameoverChecker;
   }
 
   // Create new dots (player, enemy, bonus).
-  window.createDots = function (type, pNum, dNum) {
+  this.createDots = function (type, pNum, dNum) {
     var newDiv = document.createElement('div');
     newDiv.className = type;
     newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
@@ -19,7 +19,7 @@
   };
 
   // Collision detection of Player Pattern.
-  window.collision = function (arr, world, settings, gameOver, bonus) {
+  this.collision = function (arr, world, settings, gameOver, bonus) {
     // Player coordinate.
     var xThis = Math.floor(this.showInfo().x);
     var yThis = Math.floor(this.showInfo().y);
@@ -78,14 +78,14 @@
   }; // colision function end.
 
   // Removing bonus from the board.
-  window.removeBonus = function (e, i, world) {
+  this.removeBonus = function (e, i, world) {
     utility().gameBoard.removeChild(e.showInfo().dots);
     world.bonus.splice(i, 1);
     world.bonusLength = world.bonus.length;
   }
 
   // Gives wall limit to target(player).
-  window.wall = function () {
+  this.wall = function () {
     var rect = this.getBoundingClientRect();
     var w = Math.floor(window.innerWidth);
     var h = Math.floor(window.innerHeight);
@@ -97,7 +97,7 @@
   }
 
   // Line event - drawing line
-  window.drawLine = function (x1, y1, x2, y2, id) {
+  this.drawLine = function (x1, y1, x2, y2, id) {
     // Calculate angle to rotate line div.
     var calc = Math.atan2(y2 - y1, x2 - x1);
     calc = calc * 180 / Math.PI;
@@ -122,7 +122,7 @@
   };
 
   // Line event trigger.
-  window.lineEventTrigger = function (world) {
+  this.lineEventTrigger = function (world) {
     // Append line div
     var lineDiv = appendTo('div', utility().gameBoard, 'line');
 
@@ -137,7 +137,7 @@
     world.lineEvent = true;
   };
 
-  window.difficulty = function (settings, start) {
+  this.difficulty = function (settings, start) {
     if (window.innerWidth > 1700) {
       if (settings.roundStartMax < 20 && start === true) {
         settings.roundStartMax = 20;

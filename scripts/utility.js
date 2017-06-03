@@ -26,7 +26,7 @@
       starE1: divInfo.starE1,
       starE2: divInfo.starE2
     };
-  }
+  };
 
 
   /* Helper functions */
@@ -234,7 +234,7 @@
     setTimeout(function () {
       startCountBeep(world, startButtonText, '1');
     }, interval * 4);
-  }
+  };
 
 
   /* Cross browsing */
