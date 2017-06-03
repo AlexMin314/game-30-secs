@@ -49,7 +49,7 @@
 
   // Audio tag helper
   window.audioTagHelper = function (id, src, loop, auto, volume) {
-    var audioTag = appendTo ('audio', divInfo.gameBoard, id)
+    var audioTag = appendTo ('audio', divInfo.gameBoard, id);
     audioTag.src = src;
     audioTag.loop = loop;
     audioTag.autoplay = auto;
