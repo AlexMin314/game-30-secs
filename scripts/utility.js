@@ -45,7 +45,7 @@
     temp.id = id;
     parent.appendChild(temp);
     return temp;
-  }
+  };
 
   // Audio tag helper
   this.audioTagHelper = function (id, src, loop, auto, volume) {
@@ -55,6 +55,12 @@
     audioTag.autoplay = auto;
     audioTag.volume = volume || 1;
   };
+
+  // Tutorial helper
+  function startCountBeep(world, target, num) {
+    if (world.sound) divInfo.counterE.play();
+    target.innerHTML = num;
+  }
 
 
   /* Start and GameOver, Pause Divs */
@@ -198,31 +204,35 @@
   // Showing starting messages.
   this.tutorial = function (startButtonText, world) {
     var interval = 700;
+
     setTimeout(function () {
       startButtonText.innerHTML = 'EVERY<br>30 SECS'
     }, interval * 0);
+
     setTimeout(function () {
       startButtonText.innerHTML = 'GOOD<br>LUCK'
     }, interval * 1);
+
     setTimeout(function () {
       // Store element to reducing dom access.
       divInfo.starE1 = document.getElementById('star1');
       divInfo.starE2 = document.getElementById('star2');
       divInfo.counterE = document.getElementById('counter');
-      // Count 1 sound play.
-      if (world.sound) divInfo.counterE.play();
+
       startButtonText.style.fontSize = '200px';
       startButtonText.style.paddingTop = '0px';
       startButtonText.style.border = '0px';
-      startButtonText.innerHTML = '3'
+
+      // Counting sound play.
+      startCountBeep(world, startButtonText, '3');
     }, interval * 2);
+
     setTimeout(function () {
-      if (world.sound) divInfo.counterE.play();
-      startButtonText.innerHTML = '2'
+      startCountBeep(world, startButtonText, '2');
     }, interval * 3);
+
     setTimeout(function () {
-      if (world.sound) divInfo.counterE.play();
-      startButtonText.innerHTML = '1'
+      startCountBeep(world, startButtonText, '1');
     }, interval * 4);
   }
 
