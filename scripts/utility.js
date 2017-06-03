@@ -80,7 +80,8 @@
 
     // Appending Instruction texts.
     var instructionDiv = appendTo('div', divInfo.wrapper, 'instruction');
-    instructionDiv.innerHTML = 'DODGE DOTS <i class="fa fa-star fa-spin"></i> GRAB STARS<br>' + '<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
+    instructionDiv.innerHTML = 'DODGE DOTS <i class="fa fa-star fa-spin"></i> GRAB STARS<br>';
+    instructionDiv.innerHTML += '<p>MOUSE CONTROL | PAUSE: SPACEBAR</p>';
     divInfo.instruction = document.getElementById('instruction');
   };
 
@@ -235,13 +236,13 @@
       function (callback) {
         window.setTimeout(callback, 1000 / settings.FPS);
       };
-  })();
+  }());
 
   // map() polipill from MDN.
   if (!Array.prototype.map) {
     Array.prototype.map = function (callback, thisArg) {
       var T, A, k;
-      if (this == null) throw new TypeError(' this is null or not defined');
+      if (this === null) throw new TypeError(' this is null or not defined');
       var O = Object(this);
       var len = O.length >>> 0;
       if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');

@@ -15,12 +15,12 @@ var gameStarter = function (settings, world) {
 
   // Dot spwan.
   setInterval(function () {
-    if (!world.pause) dotSpawnStart(settings, world);
+    if (!world.pause) spawnStart(settings, world, false);
   }, settings.spawnSpeed);
 
   // Bonuse spwan.
   setInterval(function () {
-    if (!world.pause) bonusSpawnStart(settings, world);
+    if (!world.pause) spawnStart(settings, world, true);
   }, settings.bonusSpawnSpeed);
 
   // Line event triggering.
@@ -42,23 +42,18 @@ var gameStarter = function (settings, world) {
   }, 1000)
 };
 
-// Dot enemy spawn.
-var dotSpawnStart = function (settings, world) {
-  if (world.dotLength < settings.roundStartMax) {
-    for (var i = 0; i < settings.roundUpSpawn; i++) {
-      dotSpawner(settings, world, false);
+// Dot enemy spawn(bonus: false) | Bonus Spawn(bonus: ture)
+var spawnStart = function (settings, world, bonus) {
+  var leng = bonus ? world.bonusLength : world.dotLength;
+  var max = bonus ? settings.bonusMax : settings.roundStartMax;
+  var howManyInOneTic = bonus ? settings.bonusSpawn : settings.roundUpSpawn;
+  if (leng < max) {
+    // Current spawn tic : enemy(1), start(1).
+    for (var i = 0; i < howManyInOneTic; i++) {
+      dotSpawner(settings, world, bonus);
     }
   }
-}
-
-// Bonus spawn.
-var bonusSpawnStart = function (settings, world) {
-  if (world.bonusLength < settings.bonusMax) {
-    for (var j = 0; j < settings.bonusSpawn; j++) {
-      dotSpawner(settings, world, true);
-    }
-  }
-}
+};
 
 // Draw movement of player and dots.
 var drawMovements = function (settings, world, mouse) {

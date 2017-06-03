@@ -57,9 +57,15 @@
 
       // Line(enemy) collision.
       if (world.lineEvent && gameOver === true && !settings.godmode) {
+        var dot1X = world.dot1.showInfo().x;
+        var dot1Y = world.dot1.showInfo().y;
+        var dot2X = world.dot2.showInfo().x;
+        var dot2Y = world.dot2.showInfo().y;
+
         // Distance from player to dot1, dot2.
-        var distA = Math.sqrt(Math.pow(world.dot1.showInfo().x - xThis, 2) + Math.pow(world.dot1.showInfo().y - yThis, 2));
-        var distB = Math.sqrt(Math.pow(world.dot2.showInfo().x - xThis, 2) + Math.pow(world.dot2.showInfo().y - yThis, 2));
+        var distA = Math.sqrt(Math.pow(dot1X - xThis, 2) + Math.pow(dot1Y - yThis, 2));
+        var distB = Math.sqrt(Math.pow(dot2X - xThis, 2) + Math.pow(dot2Y - yThis, 2));
+
         // Using isosceles triangle case (not accurate but enough).
         var colRange = 2 * Math.sqrt(Math.pow(lineLength / 2, 2) + Math.pow(pRadius, 2));
         if (distA + distB < colRange) {
