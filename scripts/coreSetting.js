@@ -35,6 +35,7 @@
   world.dotLength = 0;
   world.spwanDist = 70;
   world.colorSeed = [, , '#14ff00', '#00fff7', '#faff00', '#ff00de'];
+  world.addChk = 0;
   // Bonus(Star).
   world.bonus = [];
   world.bonusIdx = 0;
@@ -109,7 +110,9 @@
     // 30 Sec checker.
     world.thirtySecBeep = setInterval(function () {
       utility().countBeep.play();
-      if (window.innerWidth > 600) settings.roundStartMax++;
+      world.addChk++;
+      // Addtional emeny dot spawn every 60 secs.
+      if (window.innerWidth > 600 && world.addChk % 2 === 1) settings.roundStartMax++;
     }, world.thirtySec);
 
     // Score Tracking.
@@ -202,11 +205,6 @@
       // Player Spawn.
       playerSpawner(settings, world);
       divs.player = document.getElementById('playerDot1');
-
-      // Player controller event adding(rubberBand).
-      setTimeout(function () {
-        if (!gameOverChk()) divs.player.className = 'playerDot animated infinite rubberBand';
-      }, world.lineEventTimer * 4);
 
       //Removing start button and start game.
       gameStarter();
