@@ -16,7 +16,7 @@
   divInfo.instruction = null;
 
   // Show information to public.
-  window.utility = function () {
+  this.utility = function () {
     return {
       godMode: divInfo.godModeE,
       sound: divInfo.soundE,
@@ -40,7 +40,7 @@
   }
 
   // Append helper
-  window.appendTo = function (type, parent, id) {
+  this.appendTo = function (type, parent, id) {
     var temp = document.createElement(type);
     temp.id = id;
     parent.appendChild(temp);
@@ -48,7 +48,7 @@
   }
 
   // Audio tag helper
-  window.audioTagHelper = function (id, src, loop, auto, volume) {
+  this.audioTagHelper = function (id, src, loop, auto, volume) {
     var audioTag = appendTo ('audio', divInfo.gameBoard, id);
     audioTag.src = src;
     audioTag.loop = loop;
@@ -60,7 +60,7 @@
   /* Start and GameOver, Pause Divs */
 
   // Appending Start Button div.
-  window.startButton = function () {
+  this.startButton = function () {
     // Appending Wrapper to game board.
     makeWrapper();
 
@@ -85,7 +85,7 @@
   };
 
   // Game over and Showing game result.
-  window.gameOverAndResult = function (world) {
+  this.gameOverAndResult = function (world) {
     // Removing dot elements.
     divInfo.gameBoard.innerHTML = '';
 
@@ -124,7 +124,7 @@
   };
 
   // Game Pause Screen display.
-  window.gamePauseScreen = function (world) {
+  this.gamePauseScreen = function (world) {
     divInfo.pause.style.visibility = 'hidden';
     if (world.pauseLimit % 1 !== 0) {
       divInfo.pause.style.visibility = 'visible';
@@ -137,7 +137,7 @@
   /* Sound and Godmode setting */
 
   // Change sound button when it is clicked.
-  window.soundOnOff = function (world) {
+  this.soundOnOff = function (world) {
     if (world.sound) {
       divInfo.soundE.style.color = 'white';
       divInfo.soundE.innerHTML = '<i class="fa fa-volume-up"></i> on';
@@ -148,15 +148,15 @@
   };
 
   // Appending background sound, game over.
-  window.backgroundSound = function (world, gameOver) {
-    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.4);
+  this.backgroundSound = function (world, gameOver) {
+    if (!gameOver && world.sound) audioTagHelper('bgSound', './src/bg.mp3', true, true, 0.2);
     if (gameOver && world.sound) audioTagHelper('bgSound', './src/over.mp3', false, true, 0.4);
     // Mute.
     if (!world.sound) divInfo.gameBoard.removeChild(document.getElementById('bgSound'));
   };
 
   // Change godMode(debug) button when it is clicked.
-  window.godOnOff = function (settings) {
+  this.godOnOff = function (settings) {
     if (!settings.godmode) {
       divInfo.godModeE.style.color = 'white';
       divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-off fa-lg" title="DebugMode"></i>';
@@ -178,7 +178,7 @@
   /* Game info related */
 
   // Append Score and Dot number
-  window.boardInfo = function (world) {
+  this.boardInfo = function (world) {
     // Adding Score at right side of game board.
     var scoreDiv = appendTo('div', divInfo.gameBoard, 'score');
     scoreDiv.innerHTML = 'SCORE.<br>' + world.score;
@@ -189,13 +189,13 @@
   };
 
   // Updating Dot Numbers and Scores on gameBoard.
-  window.updatingBoard = function (scoreBoard, dotNumBoard, world) {
+  this.updatingBoard = function (scoreBoard, dotNumBoard, world) {
     scoreBoard.innerHTML = 'SCORE<br>' + world.score;
     dotNumBoard.innerHTML = 'DOTS<br>' + world.dotLength;
   };
 
   // Showing starting messages.
-  window.tutorial = function (startButtonText, world) {
+  this.tutorial = function (startButtonText, world) {
     var interval = 700;
     setTimeout(function () {
       startButtonText.innerHTML = 'EVERY<br>30 SECS'
