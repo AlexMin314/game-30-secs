@@ -1,11 +1,11 @@
-(function() {
+(function () {
   /* Game Logics */
 
   // Line(enemy) length.
   var lineLength = 0;
   var gameoverChecker = false;
 
-  window.gameOverChk = function() {
+  window.gameOverChk = function () {
     return gameoverChecker;
   }
 
@@ -118,9 +118,7 @@
   // Line event trigger.
   window.lineEventTrigger = function (world) {
     // Append line div
-    var lineDiv = document.createElement('div');
-    lineDiv.id = 'line';
-    utility().gameBoard.appendChild(lineDiv);
+    var lineDiv = appendTo('div', utility().gameBoard, 'line');
 
     // pick 2 dots.
     var dotIdx1 = Math.floor(Math.random() * world.dotLength);
@@ -132,5 +130,40 @@
     // triggering.
     world.lineEvent = true;
   };
-  
+
+  window.difficulty = function (settings, start) {
+    if (window.innerWidth > 1700) {
+      if (settings.roundStartMax < 20 && start === true) {
+        settings.roundStartMax = 20;
+        settings.spawnSpeed = 3500;
+      }
+      if (!start) settings.roundStartMax = 20;
+      settings.roundStart = 5;
+    }
+    if (window.innerWidth < 1350) {
+      if (settings.roundStartMax < 15 && start === true) {
+        settings.roundStartMax = 15;
+        settings.spawnSpeed = 3500;
+      }
+      if (!start) settings.roundStartMax = 15;
+    }
+    if (window.innerWidth < 1100) {
+      if (settings.roundStartMax < 12 && start === true) {
+        settings.roundStartMax = 12;
+        settings.spawnSpeed = 3500;
+      }
+      if (!start) settings.roundStartMax = 12;
+    }
+    if (window.innerHeight < 600) {
+      if (window.innerWidth < 750) {
+        settings.roundStart = 2;
+        settings.roundStartMax = 9;
+        settings.spawnSpeed = 5000;
+        settings.speedScale = 1.0
+      }
+      if (window.innerWidth < 600) settings.roundStartMax = 5;
+      if (window.innerWidth < 420) settings.roundStartMax = 3;
+    }
+  }
+
 }());

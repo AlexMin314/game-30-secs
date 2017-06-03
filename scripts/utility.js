@@ -40,7 +40,7 @@
   }
 
   // Append helper
-  function appendTo (type, parent, id) {
+  window.appendTo = function (type, parent, id) {
     var temp = document.createElement(type);
     temp.id = id;
     parent.appendChild(temp);

@@ -175,7 +175,6 @@
   audioTagHelper('clicked', './src/clicked.mp3', false, false);
   world.clickSound = document.getElementById('clicked');
 
-
   // Game Starting Flow after start button click.
   function startClick(e) {
     // Removing click events.
@@ -193,18 +192,7 @@
     divs.theWrapper.removeChild(utility().godMode);
 
     // Difficulty re-setting base on width when game start.
-    if (window.innerWidth > 1700) {
-      settings.roundStartMax = 20;
-      settings.roundStart = 5;
-    }
-    if (window.innerWidth < 1350) settings.roundStartMax = 15;
-    if (window.innerWidth < 1100) settings.roundStartMax = 12;
-    if (window.innerWidth < 750) {
-      settings.roundStartMax = 9;
-      settings.spawnSpeed = 5000;
-    }
-    if (window.innerWidth < 600) settings.roundStartMax = 5;
-    if (window.innerWidth < 420) settings.roundStartMax = 3;
+    difficulty(settings, false);
 
     // Showing start messages.
     tutorial(divs.startButtonText, world);
@@ -234,6 +222,8 @@
     if (world.start && !world.pause && !gameOverChk()) {
       drawMovements();
       updatingBoard(divs.scoreBoard, divs.dotNumBoard, world);
+      // anti-cheat.
+      difficulty(settings, true);
     }
   }());
 
