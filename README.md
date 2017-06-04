@@ -21,8 +21,8 @@ Playable link : https://alexmin314.github.io/game-every-30-secs/
 * Automatically adjusting game difficulty based on the width of the browser.
 * Now, more dots spawn in the bigger screen.
 * The dots velocity slightly decreased.
-* After 60 Sec, 1 more dot will be spawned.
-* The dots which is newly spawned have slightly more velocity.
+* Every 60 Sec, 1 more dot will be spawned.
+* The dots which is newly spawned have slightly more velocity(checking every 30 secs).
 
 ## Sources
 * Sound: https://www.youtube.com/audiolibrary/music
