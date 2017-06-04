@@ -3,6 +3,10 @@
 Playable link : https://alexmin314.github.io/game-every-30-secs/
 
 
+
+
+
+
 ## Stack
 * Javascript, HTML5(no canvas), CSS3
 
@@ -13,6 +17,11 @@ Playable link : https://alexmin314.github.io/game-every-30-secs/
 * Keep yourself away from the laser.
 * Move your red dot using a mouse.
 * Pause the game with spacebar. (3 times limit)
+
+## Play Tips
+* Surviving is first than capturing the stars. The star-spawn is 2 max. No need to rush.
+* Use game pause(spacebar) when you have a problem. (3 times limit)
+* The game pause makes you easy to find escaping path or stops your red dot before colliding into an enemy. 
 
 ## Sources
 * Sound: https://www.youtube.com/audiolibrary/music
