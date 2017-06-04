@@ -1,5 +1,5 @@
 # game-every-30-secs
-<img src="http://i.imgur.com/8sGfNVK.png" width="700px" />
+<img src="http://i.imgur.com/8sGfNVK.png" width="800px" />
 Playable link : https://alexmin314.github.io/game-every-30-secs/
 
 ## Stack
