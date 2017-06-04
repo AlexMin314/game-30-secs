@@ -7,9 +7,8 @@
   // Dots(emeny).
   settings.roundStart = 3; // num
   settings.roundStartMax = 18; // num
-  settings.roundUpTimer = 1500; // ms
   settings.roundUpSpawn = 1; // num
-  settings.speedScale = 1.2; // multiplyer
+  settings.speedScale = 1.0; // multiplyer
   settings.spawnSpeed = 3500; // ms
   settings.bounceBuffer = 5; // px
   // Bonus(star).

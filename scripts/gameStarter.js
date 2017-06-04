@@ -31,8 +31,10 @@ var gameStarter = function (settings, world) {
   // 30 Sec checker.
   world.thirtySecBeep = setInterval(function () {
     utility().countBeep.play();
-    world.addChk++;
+    // Speed Scale effective on only new spawn dot.
+    settings.speedScale += 0.05;
     // Addtional emeny dot spawn every 60 secs.
+    world.addChk++;
     if (window.innerWidth > 600 && world.addChk % 2 === 1) settings.roundStartMax++;
   }, world.thirtySec);
 
