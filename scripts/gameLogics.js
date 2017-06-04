@@ -1,23 +1,11 @@
 (function () {
   /* Game Logics */
 
-  // Line(enemy) length.
-  var lineLength = 0;
   var gameoverChecker = false;
 
   this.gameOverChk = function () {
     return gameoverChecker;
   }
-
-  // Create new dots (player, enemy, bonus).
-  this.createDots = function (type, pNum, dNum) {
-    // Make different ID(string) on Dots.
-    var divId = type + (type === 'playerDot' ? pNum : dNum);
-    // Create and Append the Div.
-    var newDiv = appendTo('div', utility().gameBoard, divId)
-    newDiv.className = type;
-    return document.getElementById(newDiv.id);
-  };
 
   // Collision detection of Player Pattern.
   this.collision = function (arr, world, settings, gameOver, bonus) {
@@ -68,7 +56,8 @@
         var distB = Math.sqrt(Math.pow(dot2X - xThis, 2) + Math.pow(dot2Y - yThis, 2));
 
         // Using isosceles triangle case (not accurate but enough).
-        var colRange = 2 * Math.sqrt(Math.pow(lineLength / 2, 2) + Math.pow(pRadius, 2));
+        var lowerBase = world.line[0].showLine().leng;
+        var colRange = 2 * Math.sqrt(Math.pow(lowerBase / 2, 2) + Math.pow(pRadius, 2));
         if (distA + distB < colRange) {
           // Gameover
           gameoverChecker = true;
@@ -97,33 +86,8 @@
     if (rect.right > w) this.style.left = (w - rect.width) + 'px';
   }
 
-  // Line event - drawing line
-  this.drawLine = function (x1, y1, x2, y2, id) {
-    // Calculate angle to rotate line div.
-    var calc = Math.atan2(y2 - y1, x2 - x1);
-    calc = calc * 180 / Math.PI;
-
-    // Line length(distance between the dot1 dot2).
-    lineLength = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
-
-    if (!gameoverChecker) {
-      var lineDiv = document.getElementById(id);
-      lineDiv.style.height = '2px';
-      lineDiv.style.width = lineLength + 'px';
-      lineDiv.style.backgroundColor = 'red';
-      lineDiv.style.position = 'absolute';
-      lineDiv.style.top = y1 + 'px';
-      lineDiv.style.left = x1 + 'px';
-      lineDiv.style.transform = 'rotate(' + calc + 'deg)';
-      lineDiv.style.transformOrigin = '0%';
-      lineDiv.style['-webkit-transform'] = 'rotate(' + calc + 'deg)';
-      lineDiv.style['-webkit-transform-origin'] = '0% 0%';
-      lineDiv.style['-ms-transform'] = 'rotate(' + calc + 'deg)';
-    }
-  };
-
   // Line event trigger.
-  this.lineEventTrigger = function (world) {
+  this.lineEventTrigger = function (settings, world) {
     // Append line div
     var lineDiv = appendTo('div', utility().gameBoard, 'line');
 
@@ -134,8 +98,11 @@
     world.dot1 = world.dotList[dotIdx1];
     world.dot2 = world.dotList[dotIdx2];
 
-    // triggering.
+    // triggering
     world.lineEvent = true;
+
+    // Spawning.
+    lineSpawner(settings, world, world.dot1, world.dot2, 'line');
   };
 
   // Game diffculty setting + anti-cheat.

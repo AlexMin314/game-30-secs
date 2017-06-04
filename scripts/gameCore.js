@@ -42,6 +42,7 @@
   world.bonusScore = 100;
   world.bonusCounter = 0;
   // Line Event(Enemy).
+  world.line = [];
   world.lineEvent = false;
   world.dot1 = null;
   world.dot2 = null;
@@ -89,7 +90,7 @@
   audioTagHelper('clicked', './src/clicked.mp3', false, false);
   world.clickSound = document.getElementById('clicked');
 
-  // Game Starting Flow after start button click.
+  // *Game Starting* Flow after start button click.
   function startClick(e) {
     // Removing click events.
     document.getElementById('gameStart').removeEventListener('click', startClick, false);

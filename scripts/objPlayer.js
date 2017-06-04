@@ -47,8 +47,3 @@ var Player = function (settings, world) {
   };
 
 };
-
-var playerSpawner = function(settings, world) {
-  world.playerList.push(new Player(settings, world));
-  world.playerLength = world.playerList.length;
-};

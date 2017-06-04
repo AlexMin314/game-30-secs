@@ -25,8 +25,8 @@ var gameStarter = function (settings, world) {
 
   // Line event triggering.
   setTimeout(function () {
-    lineEventTrigger(world);
-  }, world.lineEventTimer);
+    lineEventTrigger(settings, world);
+  }, 5000);//world.lineEventTimer);
 
   // 30 Sec checker.
   world.thirtySecBeep = setInterval(function () {
@@ -57,25 +57,33 @@ var spawnStart = function (settings, world, bonus) {
   }
 };
 
-// Draw movement of player and dots.
-var drawMovements = function (settings, world, mouse) {
-  // player movement.
-  world.playerList.map(function (e, i, arr) {
-    collision.call(e, world.dotList, world, settings, true, false);
-    collision.call(e, world.bonus, world, settings, true, true);
-    return e.drawPlayerMove(mouse);
-  });
 
-  // dot(enemy) movement.
-  world.dotList.map(function (e) {
-    return e.drawDotMove();
-  });
+// bonus false: enemy dot | true  bonus star.
+var dotSpawner = function (settings, world, bonus) {
+  var arr = bonus ? world.bonus : world.dotList;
+  var idx = bonus ? world.bonusIdx : world.dotLength;
+  if (!gameOverChk()) {
+    arr.push(new Dots(idx, settings, world, bonus))
+    bonus ? world.bonusIdx++ : world.dotLength++;
+    bonus ? world.bonusLength = arr.length : world.dotLength = arr.length;
+  }
+};
 
-  // bonus(star) movement.
-  world.bonus.map(function (e) {
-    return e.drawDotMove();
-  });
+var playerSpawner = function(settings, world) {
+  world.playerList.push(new Player(settings, world));
+  world.playerLength = world.playerList.length;
+};
 
-  // line(enemy) movement.
-  if (world.lineEvent) drawLine(world.dot1.showInfo().x, world.dot1.showInfo().y, world.dot2.showInfo().x, world.dot2.showInfo().y, 'line');
-}
+var lineSpawner = function(settings, world, x1, y1, x2, y2, id) {
+  world.line.push(new LineObj(settings, world, x1, y1, x2, y2, id));
+};
+
+// Create new dots (player, enemy, bonus).
+var createDots = function (type, pNum, dNum) {
+  // Make different ID(string) on Dots.
+  var divId = type + (type === 'playerDot' ? pNum : dNum);
+  // Create and Append the Div.
+  var newDiv = appendTo('div', utility().gameBoard, divId)
+  newDiv.className = type;
+  return document.getElementById(newDiv.id);
+};

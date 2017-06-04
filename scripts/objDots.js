@@ -72,14 +72,3 @@ var Dots = function (dotNum, settings, world, bonus) {
   };
 
 };
-
-// bonus false: enemy dot | true  bonus star.
-var dotSpawner = function (settings, world, bonus) {
-  var arr = bonus ? world.bonus : world.dotList;
-  var idx = bonus ? world.bonusIdx : world.dotLength;
-  if (!gameOverChk()) {
-    arr.push(new Dots(idx, settings, world, bonus))
-    bonus ? world.bonusIdx++ : world.dotLength++;
-    bonus ? world.bonusLength = arr.length : world.dotLength = arr.length;
-  }
-};
