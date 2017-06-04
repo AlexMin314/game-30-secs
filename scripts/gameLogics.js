@@ -45,7 +45,8 @@
       });
 
       // Line(enemy) collision.
-      if (world.lineEvent && gameOver === true && !settings.godmode) {
+      if (world.lineEvent && gameOver === true &&
+        !settings.godmode && bonus === false) {
         var dot1X = world.dot1.showInfo().x;
         var dot1Y = world.dot1.showInfo().y;
         var dot2X = world.dot2.showInfo().x;
