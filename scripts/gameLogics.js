@@ -2,10 +2,12 @@
   /* Game Logics */
 
   var gameoverChecker = false;
+  var startWidth = 0;
+  var startHeight = 0;
 
   this.gameOverChk = function () {
     return gameoverChecker;
-  }
+  };
 
   // Collision detection of Player Pattern.
   this.collision = function (arr, world, settings, gameOver, bonus) {
@@ -107,38 +109,34 @@
   };
 
   // Game diffculty setting + anti-cheat.
-  this.difficulty = function (settings, start) {
-    if (window.innerWidth > 1700) {
-      if (settings.roundStartMax < 21 && start === true) {
-        settings.roundStartMax = 21;
-        settings.spawnSpeed = 3500;
-      }
-      if (!start) settings.roundStartMax = 21;
-      settings.roundStart = 7;
+  this.difficulty = function (settings, start, width, height) {
+    var divider = 300;
+    var dotN = 3;
+
+    // Set init width,height before game start.
+    if (!start) {
+      startWidth = width;
+      startHeight = height;
+      var multi = Math.floor(width / divider) + 1;
+      settings.roundStart = multi;
+      settings.roundStartMax = multi * dotN;
     }
-    if (window.innerWidth < 1350) {
-      if (settings.roundStartMax < 15 && start === true) {
-        settings.roundStartMax = 15;
-        settings.spawnSpeed = 3500;
+
+    // Detecting changes on resolution after game start.
+    if (start && (startWidth !== width || startHeight !== height)) {
+      var multi = Math.floor(width / divider) + 1;
+      settings.roundStart = multi;
+      settings.roundStartMax = multi * dotN;
+      if (width <= 600 && height < 600) {
+        settings.roundStart = multi - dotN;
+        settings.roundStartMax = multi * dotN - dotN;
       }
-      if (!start) settings.roundStartMax = 15;
-    }
-    if (window.innerWidth < 1100) {
-      if (settings.roundStartMax < 12 && start === true) {
-        settings.roundStartMax = 12;
-        settings.spawnSpeed = 3500;
+      if (width <= 600 && height > 600) {
+        settings.roundStart = multi + dotN;
+        settings.roundStartMax = multi * dotN + dotN;
       }
-      if (!start) settings.roundStartMax = 12;
-    }
-    if (window.innerHeight < 600) {
-      if (window.innerWidth < 750) {
-        settings.roundStart = 2;
-        settings.roundStartMax = 9;
-        settings.spawnSpeed = 5000;
-        settings.speedScale = 1.0
-      }
-      if (window.innerWidth < 600) settings.roundStartMax = 5;
-      if (window.innerWidth < 420) settings.roundStartMax = 3;
+      startWidth = width;
+      startHeight = height;
     }
   };
 

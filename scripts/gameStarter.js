@@ -35,7 +35,7 @@ var gameStarter = function (settings, world) {
     settings.speedScale += 0.05;
     // Addtional emeny dot spawn every 60 secs.
     world.addChk++;
-    if (window.innerWidth > 600 && world.addChk % 2 === 1) settings.roundStartMax++;
+    if (window.innerWidth > 600 && world.addChk % 2 === 0) settings.roundStartMax++;
   }, world.thirtySec);
 
   // Score Tracking.

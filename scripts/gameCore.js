@@ -107,7 +107,7 @@
     divs.theWrapper.removeChild(utility().godMode);
 
     // Difficulty re-setting base on width when game start.
-    difficulty(settings, false);
+    difficulty(settings, false, window.innerWidth, window.innerHeight);
 
     // Showing start messages.
     tutorial(divs.startButtonText, world);
@@ -135,7 +135,7 @@
       drawMovements(settings, world, mouse);
       updatingBoard(divs.scoreBoard, divs.dotNumBoard, world);
       // anti-cheat.
-      difficulty(settings, true);
+      difficulty(settings, true, window.innerWidth, window.innerHeight);
     }
   }());
 
