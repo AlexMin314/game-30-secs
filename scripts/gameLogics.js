@@ -109,12 +109,12 @@
   // Game diffculty setting + anti-cheat.
   this.difficulty = function (settings, start) {
     if (window.innerWidth > 1700) {
-      if (settings.roundStartMax < 20 && start === true) {
-        settings.roundStartMax = 20;
+      if (settings.roundStartMax < 21 && start === true) {
+        settings.roundStartMax = 21;
         settings.spawnSpeed = 3500;
       }
-      if (!start) settings.roundStartMax = 20;
-      settings.roundStart = 5;
+      if (!start) settings.roundStartMax = 21;
+      settings.roundStart = 7;
     }
     if (window.innerWidth < 1350) {
       if (settings.roundStartMax < 15 && start === true) {
