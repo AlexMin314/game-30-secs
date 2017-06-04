@@ -11,10 +11,10 @@
 
   // Create new dots (player, enemy, bonus).
   this.createDots = function (type, pNum, dNum) {
-    var newDiv = document.createElement('div');
-    newDiv.className = type;
-    newDiv.id = type + (type === 'playerDot' ? pNum : dNum);
-    utility().gameBoard.appendChild(newDiv);
+    // Make different ID(string) on Dots.
+    var divId = type + (type === 'playerDot' ? pNum : dNum);
+    // Create and Append the Div.
+    var newDiv = appendTo('div', utility().gameBoard, divId)
     return document.getElementById(newDiv.id);
   };
 
@@ -137,6 +137,7 @@
     world.lineEvent = true;
   };
 
+  // Game diffculty setting + anti-cheat.
   this.difficulty = function (settings, start) {
     if (window.innerWidth > 1700) {
       if (settings.roundStartMax < 20 && start === true) {
@@ -170,6 +171,6 @@
       if (window.innerWidth < 600) settings.roundStartMax = 5;
       if (window.innerWidth < 420) settings.roundStartMax = 3;
     }
-  }
+  };
 
 }());

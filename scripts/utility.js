@@ -33,16 +33,14 @@
 
   // Wrapper as a helper.
   function makeWrapper () {
-    var wrapperDiv = document.createElement('div');
-    wrapperDiv.id = 'wrapper';
-    divInfo.gameBoard.appendChild(wrapperDiv);
+    var wrapperDiv = appendTo('div',divInfo.gameBoard, 'wrapper')
     divInfo.wrapper = document.getElementById('wrapper');
   }
 
   // Append helper
   this.appendTo = function (type, parent, id) {
     var temp = document.createElement(type);
-    temp.id = id;
+    temp.id = id || 'tempId';
     parent.appendChild(temp);
     return temp;
   };
