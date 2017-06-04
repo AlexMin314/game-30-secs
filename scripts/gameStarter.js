@@ -26,7 +26,7 @@ var gameStarter = function (settings, world) {
   // Line event triggering.
   setTimeout(function () {
     lineEventTrigger(settings, world);
-  }, 5000);//world.lineEventTimer);
+  }, world.lineEventTimer);
 
   // 30 Sec checker.
   world.thirtySecBeep = setInterval(function () {
