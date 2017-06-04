@@ -2,14 +2,8 @@
 
 Playable link : https://alexmin314.github.io/game-every-30-secs/
 
-
-
-
-
-
 ## Stack
 * Javascript, HTML5(no canvas), CSS3
-
 
 ## How to play
 * Dodge the dots.
@@ -21,7 +15,14 @@ Playable link : https://alexmin314.github.io/game-every-30-secs/
 ## Play Tips
 * Surviving is first than capturing the stars. The star-spawn is 2 max. No need to rush.
 * Use game pause(spacebar) when you have a problem. (3 times limit)
-* The game pause makes you easy to find escaping path or stops your red dot before colliding into an enemy. 
+* The game pause makes you easy to find escaping path or stops your red dot before colliding into an enemy.
+
+## Patch Note (04/06/2017)
+* Automatically adjusting game difficulty based on the width of the browser.
+* Now, more dots spawned in the bigger screen.
+* The dots velocity slightly decreased.
+* After 60 Sec, 1 more dot will be spawned.
+* The dots which is newly spawned have slightly more velocity.
 
 ## Sources
 * Sound: https://www.youtube.com/audiolibrary/music
