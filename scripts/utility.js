@@ -33,7 +33,7 @@
 
   // Wrapper as a helper.
   function makeWrapper () {
-    var wrapperDiv = appendTo('div',divInfo.gameBoard, 'wrapper')
+    var wrapperDiv = appendTo('div', divInfo.gameBoard, 'wrapper')
     divInfo.wrapper = document.getElementById('wrapper');
   }
 

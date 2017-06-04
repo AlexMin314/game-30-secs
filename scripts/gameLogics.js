@@ -15,6 +15,7 @@
     var divId = type + (type === 'playerDot' ? pNum : dNum);
     // Create and Append the Div.
     var newDiv = appendTo('div', utility().gameBoard, divId)
+    newDiv.className = type;
     return document.getElementById(newDiv.id);
   };
 
