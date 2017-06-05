@@ -21,7 +21,7 @@ var Dots = function (dotNum, settings, world, bonus) {
     dots = bonus ? createDots('bonus', null, dotNum) : createDots('dots', null, dotNum);
 
     // distance from the center
-    var d = world.spwanDist;
+    var d = world.spawnDist;
     var h = window.innerHeight;
     var w = window.innerWidth;
 

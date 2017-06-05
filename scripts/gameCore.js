@@ -32,7 +32,7 @@
   world.dotList = [];
   world.dotNumIdx = 0;
   world.dotLength = 0;
-  world.spwanDist = 70;
+  world.spawnDist = 70;
   world.colorSeed = [null, null, '#14ff00', '#00fff7', '#faff00', '#ff00de'];
   world.addChk = 0;
   // Bonus(Star).
