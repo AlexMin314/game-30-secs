@@ -92,7 +92,7 @@
   // Line event trigger.
   this.lineEventTrigger = function (settings, world) {
     // Append line div
-    var lineDiv = appendTo('div', utility().gameBoard, 'line');
+    var lineDiv = utility().appendTo('div', utility().gameBoard, 'line');
 
     // pick 2 dots.
     var dotIdx1 = Math.floor(Math.random() * world.dotLength);

@@ -1,6 +1,7 @@
 html {
   font-family: sans-serif, helvetica;
   background-color: black;
+  background-image: url('../src/bgImg.jpg');
 }
 
 *::-webkit-media-controls-start-playback-button {

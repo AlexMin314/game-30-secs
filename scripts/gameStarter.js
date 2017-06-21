@@ -83,7 +83,7 @@ var createDots = function (type, pNum, dNum) {
   // Make different ID(string) on Dots.
   var divId = type + (type === 'playerDot' ? pNum : dNum);
   // Create and Append the Div.
-  var newDiv = appendTo('div', utility().gameBoard, divId)
+  var newDiv = utility().appendTo('div', utility().gameBoard, divId)
   newDiv.className = type;
   return document.getElementById(newDiv.id);
 };

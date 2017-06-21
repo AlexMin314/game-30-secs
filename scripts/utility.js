@@ -24,7 +24,9 @@
       wrapper: divInfo.wrapper,
       countBeep: divInfo.counterE,
       starE1: divInfo.starE1,
-      starE2: divInfo.starE2
+      starE2: divInfo.starE2,
+      appendTo: appendTo,
+      audio: audioTagHelper
     };
   };
 
@@ -38,7 +40,7 @@
   }
 
   // Append helper
-  this.appendTo = function (type, parent, id) {
+  var appendTo = function (type, parent, id) {
     var temp = document.createElement(type);
     temp.id = id || 'tempId';
     parent.appendChild(temp);
@@ -46,7 +48,7 @@
   };
 
   // Audio tag helper
-  this.audioTagHelper = function (id, src, loop, auto, volume) {
+  var audioTagHelper = function (id, src, loop, auto, volume) {
     var audioTag = appendTo ('audio', divInfo.gameBoard, id);
     audioTag.src = src;
     audioTag.loop = loop;
@@ -171,10 +173,8 @@
       divInfo.godModeE.style.color = 'red';
       divInfo.godModeE.innerHTML = '<i class="fa fa-toggle-on fa-lg" title="DebugMode"></i>';
       // inserd Debug Mode ON message.
-      var debug = document.createElement('div');
-      debug.id = 'debug';
+      var debug = appendTo('div', divInfo.wrapper, 'debug')
       debug.innerHTML = 'Debug Mode ON';
-      divInfo.wrapper.appendChild(debug);
       divInfo.debugE = document.getElementById('debug');
     }
   };

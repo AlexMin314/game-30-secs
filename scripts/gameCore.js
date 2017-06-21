@@ -84,10 +84,10 @@
   backgroundSound(world, gameOverChk());
 
   // Append some sound effect
-  audioTagHelper('star1', './src/star.mp3', false, false);
-  audioTagHelper('star2', './src/star.mp3', false, false);
-  audioTagHelper('counter', './src/count.mp3', false, false);
-  audioTagHelper('clicked', './src/clicked.mp3', false, false);
+  utility().audio('star1', './src/star.mp3', false, false);
+  utility().audio('star2', './src/star.mp3', false, false);
+  utility().audio('counter', './src/count.mp3', false, false);
+  utility().audio('clicked', './src/clicked.mp3', false, false);
   world.clickSound = document.getElementById('clicked');
 
   // *Game Starting* Flow after start button click.
