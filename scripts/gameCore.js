@@ -147,6 +147,7 @@
 
   (function () {
     document.addEventListener('mousemove', eFunc.getMousePos, false);
+    document.addEventListener('touchmove', eFunc.getTouchPos, false);
     document.addEventListener('keydown', eFunc.gamePause, false);
     document.getElementById('gameStart').addEventListener('click', startClick, false);
     document.getElementById('sound').addEventListener('click', eFunc.soundButton, false);
