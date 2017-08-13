@@ -3,6 +3,10 @@ html {
   background-color: black;
   background-image: url('../src/bgImg.jpg');
 }
+html, body {
+  padding: 0;
+  margin: 0;
+}
 
 *::-webkit-media-controls-start-playback-button {
   display: none!important;
@@ -17,25 +21,6 @@ span {
 p {
   color: grey;
   font-size: 19px;
-}
-
-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    -ms-transform: translateX(-50%) translateY(-50%);
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-    -ms-filter: brightness(0.5);
-    -moz-filter: brightness(0.5);
-    -webkit-filter: brightness(0.6);
-    background-size: cover;
 }
 
 
@@ -211,4 +196,76 @@ video {
 #retry:hover {
   color: rgb(255, 0, 153);
   font-weight: bold;
+}
+
+@media screen and (max-width:480px) {
+  #gameOver, #gameStart {
+    height: 150px;
+    width: 250px;
+    font-size: 50px;
+    padding: 0;
+    margin-bottom: 10px;
+    padding-top: 30px;
+    top: 40%;
+  }
+  #gameOver {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
+  }
+  #wrapper {
+    height: 100%;
+    width: 300px;
+    padding: 0;
+  }
+  #instruction {
+    margin-top: 150%;
+  }
+  #retry {
+    width: 250px;
+    margin-top: 100%;
+  }
+  #scoreResult, #pause {
+    width: 250px;
+    margin-top: 40%;
+  }
+}
+@media screen and (max-width:330px) {
+  #wrapper {
+    width: 250px;
+  }
+}
+@media screen and (max-width:740px) and (max-height:420px) {
+  #gameOver, #gameStart {
+    font-size: 40px;
+    top: 45%;
+    height: 100px;
+  }
+  #gameOver {
+    position: absolute;
+    height: 60px;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
+  }
+  #wrapper {
+    height: 100%;
+    padding: 0;
+  }
+  #instruction {
+    margin-top: 60%;
+  }
+  #scoreResult {
+    margin-top: 10%;
+  }
+  #retry {
+    margin-top: 30%;
+  }
 }

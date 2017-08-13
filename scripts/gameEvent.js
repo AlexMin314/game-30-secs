@@ -11,6 +11,7 @@ var eventFunc = function (settings, world, mouse, divs) {
     getTouchPos: function (e) {
       // stop touch event
       e.stopPropagation();
+      e.preventDefault();
       mouse.x = e.touches[0].clientX;
       mouse.y = e.touches[0].clientY;
     },
