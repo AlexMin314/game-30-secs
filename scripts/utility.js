@@ -220,8 +220,7 @@
       startButtonText.style.fontSize = '200px';
       startButtonText.style.paddingTop = '0px';
       startButtonText.style.border = '0px';
-      if (window.innerWidth < 420) startButtonText.style.fontSize = '90px';
-      if (window.innerWidth < 740 && window.innerHeight < 420) startButtonText.style.fontSize = '90px';
+      if (window.innerWidth < 740) startButtonText.style.fontSize = '90px';
 
       // Counting sound play.
       startCountBeep(world, startButtonText, '3');
