@@ -3,7 +3,7 @@
   /* Game settings */
 
   var settings = {};
-  settings.FPS = 60;
+  settings.FPS = 40;
   // Dots(emeny).
   settings.roundStart = 3; // num
   settings.roundStartMax = 18; // num
