@@ -25,6 +25,7 @@
   /* World settings */
 
   var world = {};
+  world.frame = 0;
   // Player Dot.
   world.playerList = [];
   world.playerLength = 0;
@@ -132,6 +133,7 @@
     requestAnimFrame(renderLoop);
     // Checking start:true, pause:false, gameoverChecker: false.
     if (world.start && !world.pause && !gameOverChk()) {
+      world.frame++;
       drawMovements(settings, world, mouse);
       updatingBoard(divs.scoreBoard, divs.dotNumBoard, world);
       // anti-cheat.
