@@ -5,10 +5,10 @@
   var settings = {};
   settings.FPS = 40;
   // Dots(emeny).
-  settings.roundStart = 3; // num
+  settings.roundStart = 1; // num
   settings.roundStartMax = 18; // num
   settings.roundUpSpawn = 1; // num
-  settings.speedScale = 1.0; // multiplyer
+  settings.speedScale = 0.8; // multiplyer
   settings.spawnSpeed = 3500; // ms
   settings.bounceBuffer = 5; // px
   // Bonus(star).
