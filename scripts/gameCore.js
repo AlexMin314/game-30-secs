@@ -3,12 +3,12 @@
   /* Game settings */
 
   var settings = {};
-  settings.FPS = 40;
+  settings.FPS = 50;
   // Dots(emeny).
   settings.roundStart = 1; // num
   settings.roundStartMax = 18; // num
   settings.roundUpSpawn = 1; // num
-  settings.speedScale = 0.8; // multiplyer
+  settings.speedScale = 1; // multiplyer
   settings.spawnSpeed = 3500; // ms
   settings.bounceBuffer = 5; // px
   // Bonus(star).
