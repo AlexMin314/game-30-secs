@@ -38,5 +38,3 @@ Playable link : https://alexmin314.github.io/game-every-30-secs/
   <img src="http://i.imgur.com/OwAqHcz.png" width="300px" />
 
 
-## Contact
-* Alex Min m98stone@gmail.com
